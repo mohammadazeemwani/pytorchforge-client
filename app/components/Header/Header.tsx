@@ -17,7 +17,7 @@ function Header({ className }: HeaderProps) {
 
   return (
     <header className={cn(
-      'block mt-2 mb-4',
+      'block mt-3 mb-9',
       className
     )}>
       {showLogo && (
@@ -65,7 +65,7 @@ function Header({ className }: HeaderProps) {
           layoutId='theme-change-container'
           layout="position"
         >
-          <ThemeToggler className='scale-[0.59]' />
+          <ThemeToggler svgClass='w-[1.6rem]' />
         </motion.div>
       </motion.nav>
     </header>

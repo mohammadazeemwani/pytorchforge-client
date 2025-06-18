@@ -2,9 +2,11 @@ import * as React from 'react';
 import { useTheme } from '~/providers/Theme.provider';
 import { cn } from '~/utils/general';
 
-type ThemeTogglerProps = { } & React.ComponentProps<'label'>
+type ThemeTogglerProps = { 
+  svgClass?: string
+} & React.ComponentProps<'label'>
 
-function ThemeToggler({ className, ...delegated }: ThemeTogglerProps) {
+function ThemeToggler({ className, svgClass, ...delegated }: ThemeTogglerProps) {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -25,7 +27,10 @@ function ThemeToggler({ className, ...delegated }: ThemeTogglerProps) {
 
       {/* sun icon */}
       <svg
-        className="swap-off h-10 w-10 fill-current"
+        className={cn(
+          "swap-off h-10 w-10 fill-current",
+          svgClass
+        )}
         xmlns="http://www.w3.org/2000/svg"
         
         viewBox="0 0 24 24">
@@ -35,7 +40,10 @@ function ThemeToggler({ className, ...delegated }: ThemeTogglerProps) {
 
       {/* moon icon */}
       <svg
-        className="swap-on h-10 w-10 fill-current"
+        className={cn(
+          "swap-on h-10 w-10 fill-current",
+          svgClass
+        )}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24">
         <path
