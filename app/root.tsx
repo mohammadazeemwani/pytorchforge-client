@@ -46,8 +46,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <ThemeProvider>
       <body
         className={cn(
-          "flex flex-col justify-between min-h-[99vh] mx-auto",
-          "max-w-[90%]",
+          'drawer-content',
+          "flex flex-col justify-between min-h-[99vh]",
+          "custom-body",
         )}
       >
         <Header />

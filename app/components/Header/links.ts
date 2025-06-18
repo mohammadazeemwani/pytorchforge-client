@@ -1,9 +1,9 @@
-type Link = {
+export type NavigationLinks = {
   href: string
   label: string
 }
 
-export const links: Link[] = [
+export const links: NavigationLinks[] = [
   { href: '/help', label: 'help' },
   { href: '/about', label: 'about' },
 ]

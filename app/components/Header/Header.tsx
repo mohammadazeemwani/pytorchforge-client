@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { links } from './links';
+import type { NavigationLinks } from './links';
 import { Link as NativeLink, useLocation } from 'react-router';
 import { cn } from '~/utils/general';
 import { MainLogo } from '../MainLogo';
 import ThemeToggler from '../ThemeToggler';
-import { motion } from 'motion/react';
+import { AnimatePresence, m, motion } from 'motion/react';
 const Link = motion.create(NativeLink)
 
 type HeaderProps = { } & React.ComponentProps<'header'>
@@ -12,48 +13,59 @@ type HeaderProps = { } & React.ComponentProps<'header'>
 function Header({ className }: HeaderProps) {
   const location = useLocation();
   const showLogo = React.useMemo(() => location.pathname !== '/', [location.pathname])
+  const [hoveredLinkHref, setHoveredLinkHref] = React.useState<null | NavigationLinks['href']>(null)
 
   return (
     <header className={cn(
-      'flex justify-between',
+      'block mt-2 mb-4',
       className
     )}>
       {showLogo && (
-        <Link to="/">
+        <Link to="/" className='w-fit float-left'>
           <MainLogo className='w-[3rem]' />
         </Link>
       )}
       <motion.nav 
         className={cn(
-          'flex gap-[2rem] justify-between items-center',
-          'mr-[-0.7rem] px-[0.7rem] py-[0.5rem] bg-primary/10',
-          'rounded-lg'
+          'flex gap-[1rem] justify-between items-center',
+          'pr-[0.7rem] pl-[1.4rem] py-[0.1rem] bg-primary/10',
+          'rounded-[1.7rem] float-right',
+          showLogo ? 'w-fit' : 'w-full',
         )}
-        animate={{
-          width: showLogo ? 'auto': '100%'
-        }}
+        layout="size"
+        transition={{ type: 'spring', duration: 0.7, stiffness: 600, damping: 60 , restDelta: 0.001}}
       >
+        <AnimatePresence>
         {links.map((link, i) => (
           <Link 
             layoutId={link.href}
             layout="position"
+            transition={{ type: 'spring', duration: 0.4, stiffness: 600, damping: 60 , restDelta: 0.001}}
             key={i} 
             to={link.href}
             className={cn(
-              location.pathname !== link.href ? 'link link-primary' : '',
-            )}
+              'relative rounded-[0.55rem]',
+              'py-[0.15rem] px-3',
+            )}   
+            onHoverStart={() => setHoveredLinkHref(link.href)}
+            onHoverEnd={() => setHoveredLinkHref(null)}         
           >
-            <button className='btn btn-ghost border-0 hover:bg-[var(--color-base-100)]'>
-              {link.label}
-            </button>
+            {location.pathname === link.href && (
+              <motion.div 
+                className='z-1 absolute inset-0 header-btn-active rounded-[0.55rem]' 
+                layoutId='current-route-style'
+              />
+            )}
+            <span className='z-2 relative'>{link.label}</span> 
           </Link>
         ))}
+        </AnimatePresence>
         <motion.div 
           className='w-fit'
           layoutId='theme-change-container'
           layout="position"
         >
-          <ThemeToggler className='scale-[0.8]' />
+          <ThemeToggler className='scale-[0.59]' />
         </motion.div>
       </motion.nav>
     </header>
