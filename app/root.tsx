@@ -15,8 +15,7 @@ import Header from "./components/Header"
 import Footer from "./components/Footer"
 import { cn } from "./utils/general"
 import React from "react"
-import { getSystemPreferredTheme } from "./helpers/theme"
-// import { themeChange } from "theme-change"
+
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

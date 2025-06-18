@@ -1,4 +1,5 @@
 import type { Route } from "./+types/home"
+import { MainLogo } from "~/components/MainLogo"
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -11,5 +12,11 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <>home page</>
+  return (
+    <section
+      className="flex flex-col items-center"
+    >
+      <MainLogo className="w-[14rem]" />
+    </section>
+  )
 }

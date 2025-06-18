@@ -17,6 +17,7 @@ export function MainLogo({ className }: MainLogoProps) {
         className
       )}
       layoutId="main-logo"
+      layout="preserve-aspect"
     >
       <img src="logo.svg" className="h-full w-full" />
     </motion.div>
