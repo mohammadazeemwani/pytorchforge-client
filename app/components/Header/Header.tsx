@@ -16,9 +16,14 @@ function Header({ className }: HeaderProps) {
       className
     )}>
       <Link to="/">
-        <MainLogo className='w-[2.2rem]' />
+        <MainLogo className='w-[3rem]' />
       </Link>
-      <nav className='flex gap-[2rem] justify-between items-center'>
+      <nav 
+        className={cn(
+          'flex gap-[2rem] justify-between items-center',
+          'w-full mr-[-0.7rem] px-[0.7rem] py-2 bg-primary/10'
+        )}
+      >
         {links.map((link, i) => (
           <Link 
             key={i} 
@@ -30,7 +35,7 @@ function Header({ className }: HeaderProps) {
             {link.label}
           </Link>
         ))}
-        <ThemeToggler />
+        <ThemeToggler className='scale-[0.8]' />
       </nav>
     </header>
   );

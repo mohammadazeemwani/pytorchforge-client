@@ -1,12 +1,20 @@
 import * as React from 'react';
 import { useTheme } from '~/providers/Theme.provider';
+import { cn } from '~/utils/general';
 
+type ThemeTogglerProps = { } & React.ComponentProps<'label'>
 
-function ThemeToggler() {
+function ThemeToggler({ className, ...delegated }: ThemeTogglerProps) {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <label className="swap swap-rotate">
+    <label 
+      className={cn(
+        "swap swap-rotate",
+        className
+      )}
+      {...delegated}
+    >
       {/* this hidden checkbox controls the state */}
       <input 
         type="checkbox" 
