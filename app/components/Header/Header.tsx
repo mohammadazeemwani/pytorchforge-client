@@ -28,8 +28,8 @@ function Header({ className }: HeaderProps) {
       <motion.nav 
         className={cn(
           'flex gap-[1rem] justify-between items-center',
-          'pr-[0.7rem] pl-[1.4rem] py-[0.1rem] bg-primary/10',
-          'rounded-[1.7rem] float-right',
+          'pr-[0.7rem] pl-[1.4rem] py-[0.2rem] bg-base-200',
+          'rounded-[1.1rem] float-right',
           showLogo ? 'w-fit' : 'w-full',
         )}
         layout="size"
@@ -46,6 +46,7 @@ function Header({ className }: HeaderProps) {
             className={cn(
               'relative rounded-[0.55rem]',
               'py-[0.15rem] px-3',
+              'text-[1.16rem]',
             )}   
             onHoverStart={() => setHoveredLinkHref(link.href)}
             onHoverEnd={() => setHoveredLinkHref(null)}         
@@ -65,7 +66,7 @@ function Header({ className }: HeaderProps) {
           layoutId='theme-change-container'
           layout="position"
         >
-          <ThemeToggler svgClass='w-[1.6rem]' />
+          <ThemeToggler svgClass='w-[1.5rem]' />
         </motion.div>
       </motion.nav>
     </header>

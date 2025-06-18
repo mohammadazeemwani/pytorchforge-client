@@ -12,9 +12,9 @@
 }
 
 .custom-body {
-  @apply w-full mx-auto max-w-[90%] sm:max-w-[640px]
+  @apply w-full mx-auto max-w-[90%] md:max-w-[720px]
 }
 
 .header-btn-active {
-  @apply bg-[var(--color-base-200)] inset-shadow-sm inset-shadow-primary/15
+  @apply bg-[var(--color-base-100)] inset-shadow-sm inset-shadow-base-300
 }
