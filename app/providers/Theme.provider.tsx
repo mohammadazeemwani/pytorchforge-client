@@ -1,22 +1,23 @@
 import React from "react"
-import { defaultTheme } from "~/constants/general"
+import { defaultThemeType, themeTypeToName } from "~/constants/general"
 import { getSystemPreferredTheme } from "~/helpers/theme"
 import type { Theme } from "~/types/theme"
 type ThemeValue = {
-  theme: Theme,
+  theme: Theme
   /** Toggles the theme from dark to light */
   toggleTheme: () => void
 }
-export const ThemeContext = React.createContext<ThemeValue | undefined>(undefined) // it is the initial value
-
+export const ThemeContext = React.createContext<ThemeValue | undefined>(
+  undefined,
+) // it is the initial value
 
 type ThemeProviderProps = {
   children: React.ReactNode
 }
 
 /**
- * 
- * @param param0 
+ *
+ * @param param0
  * @returns There are three places to set the theme when dealing completely with client side stuff: SPA or SSG
  * - ContextState - so theme can be accessed across components > and pages in case of SSG
  * - In document.documentElement.dataset.theme - cz we are using daisyUI and it is it's way of handling theme
@@ -26,7 +27,7 @@ type ThemeProviderProps = {
  *  3. We use 1. OR 2. to derive initial theme and there after store in localStorage, so after refresh the user sees the one theme in localStorage
  */
 export default function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = React.useState(defaultTheme)
+  const [theme, setTheme] = React.useState(defaultThemeType)
 
   React.useEffect(() => {
     // after hydration, we will change the theme as per the system preference
@@ -37,12 +38,12 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
       // and we will not just set the defaultTheme,, but update both localStorage and defaultTheme with the system theme
       const userTheme = getSystemPreferredTheme()
       localStorage.setItem("theme", userTheme)
-      document.documentElement.dataset.theme = userTheme
+      document.documentElement.dataset.theme = themeTypeToName[userTheme]
       setTheme(userTheme)
     } else {
       // we update with theme in localStorage
-      const savedTheme = localStorage.getItem('theme') as Theme;
-      document.documentElement.dataset.theme = savedTheme;
+      const savedTheme = localStorage.getItem("theme") as Theme
+      document.documentElement.dataset.theme = themeTypeToName[savedTheme]
       setTheme(savedTheme)
     }
   }, [])
@@ -55,28 +56,25 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
     if (theme === "dark") {
       setTheme("light")
       localStorage.setItem("theme", "light")
-      document.documentElement.dataset.theme = 'light'
+      document.documentElement.dataset.theme = themeTypeToName['light']
     } else {
       setTheme("dark")
       localStorage.setItem("theme", "dark")
-      document.documentElement.dataset.theme = 'dark'
+      document.documentElement.dataset.theme = themeTypeToName['dark']
     }
   }, [theme])
 
   return (
-    <ThemeContext.Provider
-      value={{ theme, toggleTheme }}
-    >
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   )
 }
 
-
 export function useTheme() {
-  const context = React.useContext(ThemeContext);
+  const context = React.useContext(ThemeContext)
   if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider')
+    throw new Error("useTheme must be used within a ThemeProvider")
   }
-  return context;
+  return context
 }

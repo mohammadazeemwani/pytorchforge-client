@@ -1,3 +1,12 @@
-import type { Theme } from "~/types/theme";
+import type { Theme } from "~/types/theme"
 
-export const defaultTheme: Theme = 'light'
+export const defaultThemeType: Theme = "light"
+
+/**
+ *  Make sure that the named themes are defined in app.css with daisyUI configuration 
+ *  @usage use for docuemnt -> html setting. For other places, reference of light and dark is just OK.
+*/
+export const themeTypeToName: Record<Theme, string> = {
+  light: "retro",
+  dark: 'luxury'
+}

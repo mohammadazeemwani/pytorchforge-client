@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router"
-import { defaultTheme } from "./constants/general"
+import { defaultThemeType } from "./constants/general"
 import ThemeProvider from "./providers/Theme.provider"
 
 import type { Route } from "./+types/root"
@@ -15,7 +15,6 @@ import Header from "./components/Header"
 import Footer from "./components/Footer"
 import { cn } from "./utils/general"
 import React from "react"
-
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -44,29 +43,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <ThemeProvider>
-      <body
-        className={cn(
-          'drawer',
-        )}
-      >
-      <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-      <div 
-        className={cn(
-          'drawer-content',
-          "flex flex-col justify-between min-h-[99vh]",
-          "custom-body",
-        )}
-      >
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </div>
-      <div className="drawer-side">
-        <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
-      </div>
-      </body>
-      <ScrollRestoration />
-      <Scripts />
+        <body className={cn("drawer")}>
+          <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+          <div
+            className={cn(
+              "drawer-content",
+              "flex flex-col justify-between min-h-[99vh]",
+              "custom-body",
+            )}
+          >
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+          <div className="drawer-side">
+            <label
+              htmlFor="my-drawer-3"
+              aria-label="close sidebar"
+              className="drawer-overlay"
+            ></label>
+          </div>
+        </body>
+        <ScrollRestoration />
+        <Scripts />
       </ThemeProvider>
     </html>
   )

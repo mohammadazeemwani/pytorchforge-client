@@ -20,7 +20,6 @@ function ThemeToggler({ className, ...delegated }: ThemeTogglerProps) {
         type="checkbox" 
         checked={theme === 'light'}
         className="theme-controller" 
-        value="synthwave" 
         onChange={() => toggleTheme()}
       />
 

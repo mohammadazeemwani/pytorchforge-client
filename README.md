@@ -1,6 +1,7 @@
 # ML Pipelines Public Client
 This repository will serve as the main public client that will be accessible. All over the globe.
 > Live: https://pipeline-ui.pages.dev/
+> Old deployment: https://26b9963d.pipeline-ui.pages.dev/
 
 # Run locally 
 To run the project locally, follow below commands: 
