@@ -46,6 +46,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <ThemeProvider>
       <body
         className={cn(
+          'drawer',
+        )}
+      >
+      <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+      <div 
+        className={cn(
           'drawer-content',
           "flex flex-col justify-between min-h-[99vh]",
           "custom-body",
@@ -54,9 +60,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
-        <ScrollRestoration />
-        <Scripts />
+      </div>
+      <div className="drawer-side">
+        <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
+      </div>
       </body>
+      <ScrollRestoration />
+      <Scripts />
       </ThemeProvider>
     </html>
   )
