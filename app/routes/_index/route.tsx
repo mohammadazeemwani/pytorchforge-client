@@ -1,5 +1,5 @@
-import type { Route } from "./+types/home"
-import { MainLogo } from "~/components/MainLogo"
+import type { Route } from "./+types/route"
+import { HeroSection } from "./HeroSection"
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -16,7 +16,7 @@ export default function Home() {
     <section
       className="flex flex-col items-center"
     >
-      <MainLogo className="w-[14rem]" />
+      <HeroSection />
     </section>
   )
 }

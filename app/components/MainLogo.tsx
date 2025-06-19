@@ -9,7 +9,7 @@ import { cn } from "~/utils/general";
 
 type MainLogoProps = { } & React.ComponentProps<'div'> & MotionProps
 
-export function MainLogo({ className }: MainLogoProps) {
+export function MainLogo({ className, ...delegated }: MainLogoProps) {
   return (
     <motion.div 
       className={cn(
@@ -18,7 +18,8 @@ export function MainLogo({ className }: MainLogoProps) {
       )}
       layoutId="main-logo"
       layout="preserve-aspect"
-      transition={{ type: 'spring', duration: 1, stiffness: 450, damping: 60 , restDelta: 0.001}}
+      transition={{ type: 'spring', duration: 1.2, stiffness: 400, damping: 60 , restDelta: 0.001}}
+      {...delegated}
     >
       <img src="logo.svg" className="h-full w-full" />
     </motion.div>

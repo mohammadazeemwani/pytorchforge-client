@@ -38,7 +38,7 @@ function Header({ className }: HeaderProps) {
     >
       {showLogo && (
         <Link to="/" className=' w-[3rem] z-2 mr-auto'>
-          <MainLogo className='w-[3rem]' />
+          <MainLogo />
         </Link>
       )}
       <nav 
