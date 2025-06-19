@@ -17,12 +17,12 @@ export function HeroSection({ className, ...delegated }: HeroSectionProps) {
     >
       <div 
         aria-roledescription="serves as a container for heading"
-        className="flex flex-col gap-2 justify-between"
+        className="flex flex-col gap-2 justify-between mt-[0.5rem]"
       >
-        <LettersPullUp text="Visual Platform for" className="text-4xl"/>
-        <LettersPullUp text="deep learning" className="text-4xl"/>
+        <LettersPullUp text="Visual Platform for" className="text-base-content text-4xl sm:text-5xl md:text-5xl"/>
+        <LettersPullUp text="deep learning" className="text-base-content text-4xl sm:text-5xl md:text-5xl"/>
       </div>
-      <MainLogo className="scale-[0.5] not-prose mt-[-5rem]" />
+      <MainLogo className="scale-[0.5] not-prose mt-[-5.2rem] sm:mt-[-6rem]" />
     </section>
   )
 }
