@@ -54,10 +54,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             )}
           >
             <Header />
-            <div className="flex">
-              <SideBar variant="first-paint" />
-              <main className="flex-1">{children}</main>
-            </div>
+            <main className="flex-1">{children}</main>
             <Footer />
           </div>
           <div className="drawer-side">
@@ -66,7 +63,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
               aria-label="close sidebar"
               className="drawer-overlay"
             ></label>
-            <SideBar variant="sidebar" />
+            <SideBar 
+              variant="sidebar" 
+              className="menu bg-base-200 min-h-full w-[15rem] p-4"             
+            />
           </div>
         </body>
         <ScrollRestoration />

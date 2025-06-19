@@ -10,3 +10,5 @@ export const themeTypeToName: Record<Theme, string> = {
   light: "retro",
   dark: 'luxury'
 }
+
+export const applicationVersion = '1.0.1'

@@ -39,9 +39,13 @@ function Header({ className }: HeaderProps) {
       )}
       ref={containerRef}
     >
-      <div className='z-2 mr-auto flex'>
-
-        <ToggleSidebarButton className='sidebarNotShown:hidden' /> 
+      <div className='mr-auto flex items-center'>
+        <ToggleSidebarButton 
+          className={cn(
+            'sidebarBreakpoint:hidden',
+            'rounded-2xl'
+          )}
+        /> 
         {showLogo && (
           <Link to="/" className='w-[3rem]'>
             <MainLogo />
@@ -50,9 +54,10 @@ function Header({ className }: HeaderProps) {
       </div>
       <nav 
         className={cn(
-          'z-2 relative flex gap-5 justify-between items-center',
+          'relative flex gap-5 justify-between items-center',
           'pr-[0.7rem] pl-[0.9rem] py-[0.28rem]',
           showLogo ? 'w-fit': `w-full`,
+          'max-sidebarBreakpoint:w-fit',
         )}
         // layout="size"
         // animate={{ width: showLogo ? '30%': '100%' }}
@@ -77,11 +82,11 @@ function Header({ className }: HeaderProps) {
           >
             {location.pathname === link.href && (
               <motion.div 
-                className='z-3 absolute inset-0 header-btn-active rounded-[0.55rem]' 
+                className='absolute inset-0 header-btn-active rounded-[0.55rem]' 
                 layoutId='current-route-style'
               />
             )}
-            <span className='z-4 relative'>{link.label}</span> 
+            <span className='relative'>{link.label}</span> 
           </Link>
         ))}
         <motion.div 
@@ -96,7 +101,8 @@ function Header({ className }: HeaderProps) {
       <motion.div 
         className={cn(
           'bg-base-200 rounded-[1.1rem]',
-          'z-1 absolute top-0 bottom-0 right-0',
+          'z-[-1] absolute top-0 bottom-0 right-0',
+          'max-sidebarBreakpoint:w-[230px]!',
         )}
         layout
         animate={{ width: showLogo ? 230 : containerRect?.width ?? '100%' }}
