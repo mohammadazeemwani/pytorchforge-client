@@ -9,7 +9,7 @@
 
 /* 
   the [720px]: responsive is as per the custom body after which we have space to show sidebar contents in side
-  the [+120px]: is of sidebar itself
+  the [+120px*2]: 12px is of the container when sidebar is not shown and *2 because on both sides
 */
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,

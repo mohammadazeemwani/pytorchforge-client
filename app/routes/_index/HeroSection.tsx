@@ -22,7 +22,7 @@ export function HeroSection({ className, ...delegated }: HeroSectionProps) {
         <LettersPullUp text="Visual Platform for" className="text-base-content text-4xl sm:text-5xl md:text-5xl"/>
         <LettersPullUp text="deep learning" className="text-base-content text-4xl sm:text-5xl md:text-5xl"/>
       </div>
-      <MainLogo className="scale-[0.5] not-prose mt-[-5.2rem] sm:mt-[-6rem]" />
+      <MainLogo className="scale-[0.46] not-prose mt-[-5.2rem] sm:mt-[-8rem]" />
     </section>
   )
 }
