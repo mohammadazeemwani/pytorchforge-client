@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '~/utils/general';
 import ApplicationVersion from '../ApplicationVersion';
+import { Link } from 'react-router';
 
 type SideBarProps = {
   variant: 'sidebar' | 'first-paint'
@@ -19,12 +20,9 @@ function SideBar({ variant, className, ...delegated}: SideBarProps) {
       {variant === 'sidebar' && (
         <div className='prose dark:prose-invert'>
           <ApplicationVersion />
-          <hr />
+          <div className='divider divider-base divider-start'>Section</div>
           <div>
-            <p>Version number</p>
-            <p>We will put sitemap links here</p>
-            <p>Home</p>
-            <p>Inference</p> ... etc
+            <Link to="/new-pipeline">New Pipeline</Link>
           </div>
         </div>
       )}
