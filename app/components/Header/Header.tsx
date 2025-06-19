@@ -5,7 +5,7 @@ import { Link as NativeLink, useLocation } from 'react-router';
 import { cn } from '~/utils/general';
 import { MainLogo } from '../MainLogo';
 import ThemeToggler from '../ThemeToggler';
-import { AnimatePresence, LayoutGroup, m, motion } from 'motion/react';
+import { AnimatePresence, LayoutGroup, motion } from 'motion/react';
 import { useWindowWidth } from '~/hooks/useWindowWidth';
 const Link = motion.create(NativeLink)
 
@@ -31,21 +31,20 @@ function Header({ className }: HeaderProps) {
     <LayoutGroup>
     <header 
       className={cn(
-        'relative block mt-3 mb-9',
+        'relative flex mt-3 mb-9',
         className
       )}
       ref={containerRef}
     >
       {showLogo && (
-        <Link to="/" className='z-2 float-left'>
+        <Link to="/" className=' w-[3rem] z-2 mr-auto'>
           <MainLogo className='w-[3rem]' />
         </Link>
       )}
       <nav 
         className={cn(
           'z-2 relative flex gap-5 justify-between items-center',
-          'pr-[0.7rem] pl-[0.9rem] py-[0.2rem]',
-          'float-right',
+          'pr-[0.7rem] pl-[0.9rem] py-[0.28rem]',
           showLogo ? 'w-fit': `w-full`,
         )}
         // layout="size"
@@ -91,9 +90,9 @@ function Header({ className }: HeaderProps) {
         className={cn(
           'bg-base-200 rounded-[1.1rem]',
           'z-1 absolute top-0 bottom-0 right-0',
-          showLogo ? 'w-[230px]': 'w-full'
         )}
-        layout="size"
+        layout
+        animate={{ width: showLogo ? 230 : containerRect?.width ?? '100%' }}
         transition={{ type: 'spring', duration: 0.7, stiffness: 600, damping: 60 , restDelta: 0.001 }}
       />
     </header>
