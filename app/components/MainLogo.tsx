@@ -18,7 +18,7 @@ export function MainLogo({ className }: MainLogoProps) {
       )}
       layoutId="main-logo"
       layout="preserve-aspect"
-      transition={{ type: 'spring', duration: 1, stiffness: 500, damping: 50 , restDelta: 0.001}}
+      transition={{ type: 'spring', duration: 1, stiffness: 450, damping: 60 , restDelta: 0.001}}
     >
       <img src="logo.svg" className="h-full w-full" />
     </motion.div>

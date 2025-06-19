@@ -5,42 +5,60 @@ import { Link as NativeLink, useLocation } from 'react-router';
 import { cn } from '~/utils/general';
 import { MainLogo } from '../MainLogo';
 import ThemeToggler from '../ThemeToggler';
-import { AnimatePresence, m, motion } from 'motion/react';
+import { AnimatePresence, LayoutGroup, m, motion } from 'motion/react';
+import { useWindowWidth } from '~/hooks/useWindowWidth';
 const Link = motion.create(NativeLink)
 
 type HeaderProps = { } & React.ComponentProps<'header'>
 
 function Header({ className }: HeaderProps) {
   const location = useLocation();
+  const windowWidth = useWindowWidth();
   const showLogo = React.useMemo(() => location.pathname !== '/', [location.pathname])
+  const containerRef = React.useRef<HTMLElement | null>(null)
+  const [containerRect, setContainerRect] = React.useState<null | DOMRect>(null)
   const [hoveredLinkHref, setHoveredLinkHref] = React.useState<null | NavigationLinks['href']>(null)
 
+  React.useEffect(() => {
+    if (containerRef.current) {
+      setContainerRect(containerRef.current.getBoundingClientRect())
+    }
+  }, [windowWidth])
+
+  console.log(containerRect?.width)
+
   return (
-    <header className={cn(
-      'block mt-3 mb-9',
-      className
-    )}>
+    <LayoutGroup>
+    <header 
+      className={cn(
+        'relative block mt-3 mb-9',
+        className
+      )}
+      ref={containerRef}
+    >
       {showLogo && (
-        <Link to="/" className='w-fit float-left'>
+        <Link to="/" className='z-2 float-left'>
           <MainLogo className='w-[3rem]' />
         </Link>
       )}
-      <motion.nav 
+      <nav 
         className={cn(
-          'flex gap-[1rem] justify-between items-center',
-          'pr-[0.7rem] pl-[1.4rem] py-[0.2rem] bg-base-200',
-          'rounded-[1.1rem] float-right',
-          showLogo ? 'w-fit' : 'w-full',
+          'z-2 relative flex gap-5 justify-between items-center',
+          'pr-[0.7rem] pl-[0.9rem] py-[0.2rem]',
+          'float-right',
+          showLogo ? 'w-fit': `w-full`,
         )}
-        layout="size"
-        transition={{ type: 'spring', duration: 0.7, stiffness: 600, damping: 60 , restDelta: 0.001}}
+        // layout="size"
+        // animate={{ width: showLogo ? '30%': '100%' }}
+        // animate={{ width: showLogo ? '': `${containerRect?.width}px` }}
+        // animate={{ width: showLogo ? '230px': `${containerRect?.width}px` }}
+        // transition={{ type: 'spring', duration: 0.7, stiffness: 600, damping: 60 , restDelta: 0.001, from: 'left'}}
       >
-        <AnimatePresence>
         {links.map((link, i) => (
           <Link 
             layoutId={link.href}
             layout="position"
-            transition={{ type: 'spring', duration: 0.4, stiffness: 600, damping: 60 , restDelta: 0.001}}
+            transition={{ type: 'spring', duration: 0.7, stiffness: 600, damping: 60 , restDelta: 0.001}}
             key={i} 
             to={link.href}
             className={cn(
@@ -53,23 +71,33 @@ function Header({ className }: HeaderProps) {
           >
             {location.pathname === link.href && (
               <motion.div 
-                className='z-1 absolute inset-0 header-btn-active rounded-[0.55rem]' 
+                className='z-3 absolute inset-0 header-btn-active rounded-[0.55rem]' 
                 layoutId='current-route-style'
               />
             )}
-            <span className='z-2 relative'>{link.label}</span> 
+            <span className='z-4 relative'>{link.label}</span> 
           </Link>
         ))}
-        </AnimatePresence>
         <motion.div 
-          className='w-fit'
+          className='w-fit inline'
           layoutId='theme-change-container'
           layout="position"
         >
           <ThemeToggler svgClass='w-[1.5rem]' />
         </motion.div>
-      </motion.nav>
+      </nav>
+
+      <motion.div 
+        className={cn(
+          'bg-base-200 rounded-[1.1rem]',
+          'z-1 absolute top-0 bottom-0 right-0',
+          showLogo ? 'w-[230px]': 'w-full'
+        )}
+        layout="size"
+        transition={{ type: 'spring', duration: 0.7, stiffness: 600, damping: 60 , restDelta: 0.001 }}
+      />
     </header>
+    </LayoutGroup>
   );
 }
 
