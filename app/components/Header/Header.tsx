@@ -26,10 +26,6 @@ function Header({ className }: HeaderProps) {
     }
   }, [windowWidth])
 
-  const sidebarToggleBreakpoint = React.useMemo(() => {
-    return 720 + 120
-  }, [])
-
   return (
     <LayoutGroup>
     <header 
