@@ -7,6 +7,7 @@ import { MainLogo } from '../MainLogo';
 import ThemeToggler from '../ThemeToggler';
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react';
 import { useWindowWidth } from '~/hooks/useWindowWidth';
+import { ToggleSidebarButton } from '../SideBar/ToggleSidebarButton';
 const Link = motion.create(NativeLink)
 
 type HeaderProps = { } & React.ComponentProps<'header'>
@@ -25,7 +26,9 @@ function Header({ className }: HeaderProps) {
     }
   }, [windowWidth])
 
-  console.log(containerRect?.width)
+  const sidebarToggleBreakpoint = React.useMemo(() => {
+    return 720 + 120
+  }, [])
 
   return (
     <LayoutGroup>
@@ -36,11 +39,15 @@ function Header({ className }: HeaderProps) {
       )}
       ref={containerRef}
     >
-      {showLogo && (
-        <Link to="/" className=' w-[3rem] z-2 mr-auto'>
-          <MainLogo />
-        </Link>
-      )}
+      <div className='z-2 mr-auto flex'>
+
+        <ToggleSidebarButton className='sidebarNotShown:hidden' /> 
+        {showLogo && (
+          <Link to="/" className='w-[3rem]'>
+            <MainLogo />
+          </Link>
+        )}
+      </div>
       <nav 
         className={cn(
           'z-2 relative flex gap-5 justify-between items-center',

@@ -15,6 +15,7 @@ import Header from "./components/Header"
 import Footer from "./components/Footer"
 import { cn } from "./utils/general"
 import React from "react"
+import SideBar from "./components/SideBar/SideBar"
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -53,7 +54,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
             )}
           >
             <Header />
-            <main className="flex-1">{children}</main>
+            <div className="flex">
+              <SideBar variant="first-paint" />
+              <main className="flex-1">{children}</main>
+            </div>
             <Footer />
           </div>
           <div className="drawer-side">
@@ -62,6 +66,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               aria-label="close sidebar"
               className="drawer-overlay"
             ></label>
+            <SideBar variant="sidebar" />
           </div>
         </body>
         <ScrollRestoration />
