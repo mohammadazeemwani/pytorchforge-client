@@ -9,7 +9,8 @@ export function ToggleSidebarButton({ className, ...delegated }: ToggleSidebarBu
       htmlFor="my-drawer-3" 
       aria-label="open sidebar" 
       className={cn(
-        "btn btn-square btn-ghost",
+        'bg-base-200',
+        'flex items-center justify-center',
         className
       )}
       {...delegated}
@@ -18,7 +19,7 @@ export function ToggleSidebarButton({ className, ...delegated }: ToggleSidebarBu
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
-        className="inline-block h-6 w-6 stroke-current"
+        className="inline-block h-6 w-6 stroke-current mt-[-0.2rem]"
       >
         <path
           strokeLinecap="round"

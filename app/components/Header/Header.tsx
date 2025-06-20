@@ -30,7 +30,7 @@ function Header({ className }: HeaderProps) {
     <LayoutGroup>
     <header 
       className={cn(
-        'relative flex mt-3 mb-9',
+        'relative flex mt-[var(--header-gutter)] mb-9',
         className
       )}
       ref={containerRef}
@@ -39,7 +39,7 @@ function Header({ className }: HeaderProps) {
         <ToggleSidebarButton 
           className={cn(
             'sidebarBreakpoint:hidden',
-            'rounded-2xl'
+            'rounded-[0.8rem] h-[97%] px-[0.5rem] mr-2 sm:mr-4'
           )}
         /> 
         {showLogo && (
@@ -78,11 +78,11 @@ function Header({ className }: HeaderProps) {
           >
             {location.pathname === link.href && (
               <motion.div 
-                className='absolute inset-0 header-btn-active rounded-[0.55rem]' 
+                className='z-1 absolute inset-0 header-btn-active rounded-[0.55rem]' 
                 layoutId='current-route-style'
               />
             )}
-            <span className='relative'>{link.label}</span> 
+            <span className='z-2 relative'>{link.label}</span> 
           </Link>
         ))}
         <motion.div 
@@ -96,7 +96,7 @@ function Header({ className }: HeaderProps) {
 
       <motion.div 
         className={cn(
-          'bg-base-200 rounded-[1.1rem]',
+          'bg-base-200 rounded-[1rem]',
           'z-[-1] absolute top-0 bottom-0 right-0',
           'max-sidebarBreakpoint:w-[230px]!',
         )}

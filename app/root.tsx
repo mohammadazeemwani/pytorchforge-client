@@ -16,6 +16,7 @@ import Footer from "./components/Footer"
 import { cn } from "./utils/general"
 import React from "react"
 import SideBar from "./components/SideBar/SideBar"
+import MainLinksBar from "./components/MainLinksBar"
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -48,23 +49,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
           <div
             className={cn(
-              "drawer-content",
+              "drawer-content relative",
               "flex flex-col justify-between min-h-[99vh]",
               "custom-body",
             )}
           >
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+              {children}
+              <section className="first-paint-sidebar">
+                <MainLinksBar />
+              </section>
+            </main>
             <Footer />
           </div>
-          <div className="drawer-side">
+          <div className="z-20 drawer-side">
             <label
               htmlFor="my-drawer-3"
               aria-label="close sidebar"
               className="drawer-overlay"
             ></label>
             <SideBar 
-              variant="sidebar" 
               className="menu bg-base-200 min-h-full w-[15rem] p-4"             
             />
           </div>

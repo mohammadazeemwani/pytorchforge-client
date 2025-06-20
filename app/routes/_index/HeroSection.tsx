@@ -2,6 +2,7 @@ import React from "react";
 import { cn } from "~/utils/general";
 import { MainLogo } from "~/components/MainLogo";
 import { LettersPullUp } from "~/components/TextAnimate";
+import MainLinksBar from "~/components/MainLinksBar";
 
 type HeroSectionProps = {} & React.ComponentProps<'section'>
 
@@ -22,7 +23,15 @@ export function HeroSection({ className, ...delegated }: HeroSectionProps) {
         <LettersPullUp text="Visual Platform for" className="text-base-content text-4xl sm:text-5xl md:text-5xl"/>
         <LettersPullUp text="deep learning" className="text-base-content text-4xl sm:text-5xl md:text-5xl"/>
       </div>
-      <MainLogo className="scale-[0.46] not-prose mt-[-5.2rem] sm:mt-[-8rem]" />
+      <div className="flex flex-col items-center">
+        <MainLogo className="scale-[0.46] not-prose mt-[-5.2rem] sm:mt-[-8rem]" />
+        <MainLinksBar 
+          showStateOfMainLinkBar={true}
+          showVersion={false}
+          showHorizontalRow={false}
+          linksContainerClass="flex-row"
+        />
+      </div> 
     </section>
   )
 }

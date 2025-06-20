@@ -6,7 +6,6 @@
   themes: all
 }
 
-
 /* 
   the [720px]: responsive is as per the custom body after which we have space to show sidebar contents in side
   the [+120px*2]: 12px is of the container when sidebar is not shown and *2 because on both sides
@@ -14,14 +13,22 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --breakpoint-sidebarBreakpoint: calc(720px + 120px);
+  --twice-first-paint-sidebar-width: 410px;
+  --twice-first-paint-sidebar-gutter: 30px;
+  --breakpoint-sidebarBreakpoint: calc(690px + 410px + 30px);
+  --header-gutter: 1rem;
 }
 
 
 .custom-body {
-  @apply w-full mx-auto max-w-[90%] md:max-w-[720px]
+  @apply w-full mx-auto max-w-[90%] md:max-w-[690px]
 }
 
 .header-btn-active {
   @apply bg-[var(--color-base-100)] inset-shadow-sm inset-shadow-base-300
+}
+
+.first-paint-sidebar {
+  @apply hidden sidebarBreakpoint:flex absolute top-0 right-[100%] mt-[var(--header-gutter)];
+  width: calc(var(--twice-first-paint-sidebar-width)/2);
 }
