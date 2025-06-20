@@ -26,6 +26,7 @@ export function HeroSection({ className, ...delegated }: HeroSectionProps) {
       <div className="flex flex-col items-center">
         <MainLogo className="scale-[0.46] not-prose mt-[-5.2rem] sm:mt-[-8rem]" />
         <MainLinksBar 
+          className=" mt-[-6rem] "
           showStateOfMainLinkBar={true}
           showVersion={false}
           showHorizontalRow={false}

@@ -2,10 +2,10 @@ import * as React from 'react';
 import { links } from './links';
 import type { MotionProps } from 'motion/react';
 import { motion } from 'motion/react';
-import { useLocation, Link as NativeLink } from 'react-router';
+import { useLocation, Link } from 'react-router';
 import { cn } from '~/utils/general';
 import ApplicationVersion from '../ApplicationVersion';
-const Link = motion.create(NativeLink)
+// const Link = motion.create(NativeLink)
 
 
 type MainLinksBarProps = {
@@ -24,7 +24,7 @@ function MainLinksBar({ className, showVersion=true, showHorizontalRow=true, lin
   const location = useLocation();
   const showMainLinksBar = React.useMemo(() => {
     return showStateOfMainLinkBar || links.map(l => l.href).includes(location.pathname)
-  }, [location.pathname])
+  }, [location])
   
   return (
     <motion.div 
@@ -33,26 +33,27 @@ function MainLinksBar({ className, showVersion=true, showHorizontalRow=true, lin
         'mr-7 flex flex-col items-center rounded-[0.85rem]',
         'pt-2.5 pb-4 px-3',
         'origin-top',
+        !showMainLinksBar && 'hidden',
         className
       )}
       layoutId='main-links-bar-container'
-      layout="position"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: showMainLinksBar ? 1: 0}}
+
       {...delegated}
     >
-      <ApplicationVersion 
-        className={cn(
-          'py-1 rounded-lg',
-          !showVersion && 'hidden',
-        )}
-      />
-      <div
-        className={cn(
-          'divider w-[67%] mx-auto',
-          !showHorizontalRow && 'hidden' 
-        )}
-      />
+      {showVersion && (
+        <ApplicationVersion 
+          className={cn(
+            'py-1 rounded-lg',
+          )}
+        />
+      )}
+      {showHorizontalRow && (
+        <div
+          className={cn(
+            'divider w-[67%] mx-auto',
+          )}
+        />
+      )}
       <div
         className={cn(
           'flex flex-col gap-5',
@@ -69,8 +70,6 @@ function MainLinksBar({ className, showVersion=true, showHorizontalRow=true, lin
               'py-[0.3rem] px-3',
               'text-[1.16rem]',
             )}
-            layout="preserve-aspect"
-            layoutId={`sidebar-first-paint-${link.label}`}  
           >
             {location.pathname === link.href && (
               <motion.div 
@@ -78,7 +77,13 @@ function MainLinksBar({ className, showVersion=true, showHorizontalRow=true, lin
                 layoutId='current-sidebar-first-paint-route-style'
               />
             )}
-            <span className='z-2 relative'>{link.label}</span> 
+            <motion.span 
+              className='z-2 relative'
+              layout="position"
+              layoutId={`sidebar-first-paint-${link.label}`}  
+            >
+              {link.label}
+            </motion.span> 
           </Link>
         ))}
         </div>
