@@ -44,7 +44,7 @@ function Header({ className }: HeaderProps) {
         /> 
         {showLogo && (
           <Link to="/" className='w-[3rem]'>
-            <MainLogo />
+            <MainLogo className='' />
           </Link>
         )}
       </div>

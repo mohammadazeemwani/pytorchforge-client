@@ -40,11 +40,17 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
       localStorage.setItem("theme", userTheme)
       document.documentElement.dataset.theme = themeTypeToName[userTheme]
       setTheme(userTheme)
+      userTheme === 'dark' 
+        ? document.documentElement.classList.add('dark')
+        : document.documentElement.classList.remove('dark');
     } else {
       // we update with theme in localStorage
       const savedTheme = localStorage.getItem("theme") as Theme
       document.documentElement.dataset.theme = themeTypeToName[savedTheme]
       setTheme(savedTheme)
+      savedTheme === 'dark' 
+        ? document.documentElement.classList.add('dark')
+        : document.documentElement.classList.remove('dark');
     }
   }, [])
 
@@ -57,10 +63,12 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
       setTheme("light")
       localStorage.setItem("theme", "light")
       document.documentElement.dataset.theme = themeTypeToName['light']
+      document.documentElement.classList.remove('dark')
     } else {
       setTheme("dark")
       localStorage.setItem("theme", "dark")
       document.documentElement.dataset.theme = themeTypeToName['dark']
+      document.documentElement.classList.add('dark')
     }
   }, [theme])
 

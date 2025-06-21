@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @plugin "daisyui" {
   /* themes: cupcake, luxury; */
@@ -28,7 +29,12 @@
   @apply bg-[var(--color-base-100)] inset-shadow-sm inset-shadow-base-300
 }
 
-.first-paint-sidebar {
+.link-bar-right {
   @apply hidden sidebarBreakpoint:flex absolute top-0 right-[100%] mt-[var(--header-gutter)];
+  @apply mr-9;
   width: calc(var(--twice-first-paint-sidebar-width)/2);
+}
+.link-bar-center {
+  /* @apply flex absolute top-[60vh] left-[9%] sm:left-[30%]; */
+  @apply flex;
 }

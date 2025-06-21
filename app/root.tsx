@@ -31,7 +31,13 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "icon",
-    href: "logo.svg",
+    href: "logo-light.svg",
+    media:"(prefers-color-scheme: light)"
+  },
+  {
+    rel: "icon",
+    href: "logo-dark.svg",
+    media:"(prefers-color-scheme: dark)"
   },
 ]
 
@@ -57,9 +63,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Header />
             <main className="flex-1">
               {children}
-              <section className="first-paint-sidebar">
-                <MainLinksBar />
-              </section>
+              <MainLinksBar />
             </main>
             <Footer />
           </div>
