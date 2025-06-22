@@ -20,6 +20,7 @@ export function MembersSection({ className, ...delegated}: MembersSectionProps) 
       id="members-section"
       className={cn(
         'prose dark:prose-invert',
+        'mt-[4.8rem] sm',
         className
       )}
       {...delegated}

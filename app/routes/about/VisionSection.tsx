@@ -12,7 +12,7 @@ export function VisionSection({ className, ...delegated}: VisionSectionProps) {
       id="vision-section"
       className={cn(
         'prose dark:prose-invert',
-        'mt-15 sm:mt-15',
+        'mt-18 sm:mt-20',
         className
       )}
       {...delegated}
