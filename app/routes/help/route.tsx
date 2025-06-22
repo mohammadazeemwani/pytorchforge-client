@@ -1,3 +1,4 @@
+import { LettersPullUp } from "~/components/TextAnimate"
 import type { Route } from "./+types/route"
 
 export function meta({}: Route.MetaArgs) {
@@ -15,7 +16,12 @@ export default function Home() {
     <section
       className="prose dark:prose-invert"
     >
-      <h1>Help Page</h1>
+      <h1>
+        <LettersPullUp 
+          text="Help"
+          className="h1-style"
+        />
+      </h1>
     </section>
   )
 }

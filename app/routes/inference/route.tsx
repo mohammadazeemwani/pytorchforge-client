@@ -1,4 +1,6 @@
+import { cn } from "~/utils/general"
 import type { Route } from "./+types/route"
+import { LettersPullUp } from "~/components/TextAnimate"
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,12 +12,19 @@ export function meta({}: Route.MetaArgs) {
   ]
 }
 
-export default function Home() {
+export default function Inference() {
   return (
     <section
-      className="prose dark:prose-invert"
+      className={cn(
+        "prose dark:prose-invert",
+      )}
     >
-      <h1>Inference of the pipeline will be done here..</h1>
+      <h1>
+        <LettersPullUp 
+          text="Inference"
+          className="h1-style"
+        />
+      </h1>
     </section>
   )
 }

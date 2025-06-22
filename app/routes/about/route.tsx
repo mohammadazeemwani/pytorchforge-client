@@ -18,7 +18,7 @@ export default function Home() {
     <section
       className="prose dark:prose-invert"
     >
-      <h1 className="">
+      <h1>
         <LettersPullUp 
           text="About"
           className="h1-style"

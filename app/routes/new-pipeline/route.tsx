@@ -1,4 +1,6 @@
+import { LettersPullUp } from "~/components/TextAnimate"
 import type { Route } from "./+types/route"
+import { cn } from "~/utils/general"
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,12 +12,19 @@ export function meta({}: Route.MetaArgs) {
   ]
 }
 
-export default function Home() {
+export default function NewPipeline({}: Route.ComponentProps) {
   return (
     <section
-      className="prose dark:prose-invert"
+      className={cn(
+        "prose dark:prose-invert",
+      )}
     >
-      <h1>New Pipeline code/form will be written here...</h1>
+      <h1>
+        <LettersPullUp 
+          text="New Pipeline"
+          className="h1-style"
+        />
+      </h1>
     </section>
   )
 }
