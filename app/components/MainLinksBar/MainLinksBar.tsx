@@ -62,9 +62,9 @@ function MainLinksBar({
             className="flex items-start"
           >
             <h2 className="mt-2 text-2xl font-semibold" >
-              Choose a workflow
+              Choose a <i>workflow</i>
             </h2>
-            <Loaders variant="settings" className="scale-[0.49]" />
+            <Loaders variant="settings" className="scale-[0.45] mr-[-0.7rem] mt-[-0.1rem]" />
           </motion.div>
         ) : (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -72,13 +72,13 @@ function MainLinksBar({
           </motion.div>
         )}
         <div className={cn(
-          "divider w-[67%] mx-auto",
-          showForMainPage && 'mt-0 mb-2 sm:mb-4',
+          "divider w-[57%] mx-auto sm:w-[62%]",
+          showForMainPage && 'mt-[-0.2rem] mb-2 sm:mb-4',
         )} />
         <div
           className={cn(
             "flex flex-col gap-5",
-            showForMainPage && "flex-row gap-2 sm:gap-5",
+            showForMainPage && "flex-row gap-6 sm:gap-8",
             linksContainerClass,
           )}
         >
@@ -89,7 +89,8 @@ function MainLinksBar({
               className={cn(
                 "no-underline w-fit",
                 "relative rounded-[0.55rem]",
-                "py-[0.3rem] px-4",
+                "py-[0.3rem] px-3 sm:px-4",
+                showForMainPage && 'px-0 sm:px-0',
                 "text-[1.16rem] font-normal",
               )}
               layout="preserve-aspect"
@@ -102,9 +103,23 @@ function MainLinksBar({
                   layoutId="current-sidebar-first-paint-route-style"
                 />
               )}
-              <span className={cn("z-2 relative", showForMainPage && "link")}>
-                {link.label}
-              </span>
+              {showForMainPage === true && (
+                <button 
+                  className={cn(
+                    "btn text-[1.1rem] sm:text-[1.2rem]",
+                    link.href === '/new-pipeline' 
+                      ? 'btn-primary'
+                      : 'btn-neutral dark:btn-accent btn-dash'
+                  )}
+                >
+                  {link.label}
+                </button>
+              )}
+              {showForMainPage === false && (
+                <span className={cn("z-2 relative")}>
+                  {link.label}
+                </span>
+              )}
             </Link>
           ))}
         </div>

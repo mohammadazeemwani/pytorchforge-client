@@ -8,7 +8,7 @@ export const defaultThemeType: Theme = "light"
 */
 export const themeTypeToName: Record<Theme, string> = {
   light: "retro",
-  dark: 'luxury'
+  dark: 'coffee'
 }
 
 export const applicationVersion = '1.0.1'

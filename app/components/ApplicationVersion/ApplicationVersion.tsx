@@ -11,6 +11,7 @@ function ApplicationVersion({ className}: ApplicationVersionProps) {
     <div 
       className={cn(
         'px-4 py-1.5 rounded-[0.9rem] border-1 border-base w-fit tracking-widest',
+        'font-mono',
         className
       )}
     >

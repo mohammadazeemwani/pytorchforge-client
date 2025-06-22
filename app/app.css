@@ -4,7 +4,44 @@
 
 @plugin "daisyui" {
   /* themes: cupcake, luxury; */
-  themes: all
+  themes: all;
+
+  --radius-selector: 1rem
+}
+
+@plugin "daisyui/theme" {
+  name: "retro";
+  default: false;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(91.637% 0.034 90.515);
+  --color-base-200: oklch(88.272% 0.049 91.774);
+  --color-base-300: oklch(84.133% 0.065 90.856);
+  --color-base-content: oklch(41% 0.112 45.904);
+  --color-primary: oklch(80% 0.114 19.571);
+  --color-primary-content: oklch(39% 0.141 25.723);
+  --color-secondary: oklch(92% 0.084 155.995);
+  --color-secondary-content: oklch(44% 0.119 151.328);
+  --color-accent: oklch(68% 0.162 75.834);
+  --color-accent-content: oklch(41% 0.112 45.904);
+  --color-neutral: oklch(44% 0.011 73.639);
+  --color-neutral-content: oklch(86% 0.005 56.366);
+  --color-info: oklch(58% 0.158 241.966);
+  --color-info-content: oklch(96% 0.059 95.617);
+  --color-success: oklch(51% 0.096 186.391);
+  --color-success-content: oklch(96% 0.059 95.617);
+  --color-warning: oklch(64% 0.222 41.116);
+  --color-warning-content: oklch(96% 0.059 95.617);
+  --color-error: oklch(70% 0.191 22.216);
+  --color-error-content: oklch(40% 0.123 38.172);
+  --radius-selector: 0.25rem;
+  --radius-field: 1rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 1;
 }
 
 /* 
@@ -14,12 +51,20 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: 'Canela Text Trial', sans-serif;
   --twice-first-paint-sidebar-width: 410px;
   --twice-first-paint-sidebar-gutter: 30px;
   --breakpoint-sidebarBreakpoint: calc(690px + 410px + 30px);
   --header-gutter: 1rem;
 }
 
+html {
+  overflow-y: scroll;
+}
+* {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
 
 .custom-body {
   @apply w-full mx-auto max-w-[90%] md:max-w-[690px]
@@ -37,4 +82,17 @@
 .link-bar-center {
   /* @apply flex absolute top-[60vh] left-[9%] sm:left-[30%]; */
   @apply flex;
+}
+
+.h1-style {
+  @apply text-base-content text-4xl sm:text-5xl md:text-5xl tracking-[0.03rem] font-serif;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif
+}
+
+.clearfix {
+  overflow: auto;
 }

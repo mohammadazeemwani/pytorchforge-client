@@ -30,7 +30,7 @@ function Header({ className }: HeaderProps) {
     <LayoutGroup>
     <header 
       className={cn(
-        'relative flex mt-[var(--header-gutter)] mb-9',
+        'relative flex mt-[var(--header-gutter)] mb-[3rem]',
         className
       )}
       ref={containerRef}
@@ -39,12 +39,12 @@ function Header({ className }: HeaderProps) {
         <ToggleSidebarButton 
           className={cn(
             'sidebarBreakpoint:hidden',
-            'rounded-[0.8rem] h-[97%] px-[0.5rem] mr-2 sm:mr-4'
+            'rounded-[0.8rem] h-[97%] px-[0.5rem] mr-3 sm:mr-4'
           )}
         /> 
         {showLogo && (
           <Link to="/" className='w-[3rem]'>
-            <MainLogo className='' />
+            <MainLogo className='w-[3rem] h-[3rem]' />
           </Link>
         )}
       </div>

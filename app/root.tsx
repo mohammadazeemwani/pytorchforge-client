@@ -30,6 +30,10 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
   {
+    rel: "stylesheet",
+    href: "https://fonts.cdnfonts.com/css/canela-text-trial",
+  },
+  {
     rel: "icon",
     href: "logo-light.svg",
     media:"(prefers-color-scheme: light)"
@@ -40,6 +44,12 @@ export const links: Route.LinksFunction = () => [
     media:"(prefers-color-scheme: dark)"
   },
 ]
+
+export function loader({}: Route.LoaderArgs) {
+  return {
+    renderDate: new Date().toString()
+  }
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -56,7 +66,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <div
             className={cn(
               "drawer-content relative",
-              "flex flex-col justify-between min-h-[99vh]",
+              "flex flex-col justify-between min-h-[100vh]",
               "custom-body",
             )}
           >
