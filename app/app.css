@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@custom-variant dark (&:where([data-theme="dark"] *));
+@custom-variant dark (&:where([data-theme="coffee"] *));
 
 @plugin "daisyui" {
   /* themes: cupcake, luxury; */

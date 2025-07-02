@@ -30,7 +30,7 @@ function Header({ className }: HeaderProps) {
     <LayoutGroup>
     <header 
       className={cn(
-        'relative flex mt-[var(--header-gutter)] mb-[3rem]',
+        'relative flex mt-[var(--header-gutter)] mb-[3rem] sm:mb-[2.2rem]',
         className
       )}
       ref={containerRef}
