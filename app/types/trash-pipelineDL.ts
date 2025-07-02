@@ -1,4 +1,6 @@
-import type { TensorDtype, Interpolation } from "./utility"
+
+type TensorDtype = 'float32' | 'float64' | 'int32' | 'int64'
+type Interpolation = 'BILINEAR' | 'NEAREST' | 'NEAREST_EXACT' | 'BILINEAR' | 'BICUBIC'
 
 // So here is the game plan 
 //  we need to go through each type and check in first round which is optional 

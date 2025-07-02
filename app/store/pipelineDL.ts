@@ -10,7 +10,7 @@ export const usePipelineDLStore = create<{
   pipeline: PipelineDL
   actions: PipelineDL_StoreAction
 }>()(
-  immer((set) => ({
+  immer((set, get) => ({
     pipeline: getDefaultPipelineDLSchema("image"),
     actions: {
       // --------------------------------------- GENERIC
@@ -20,23 +20,24 @@ export const usePipelineDLStore = create<{
           state.pipeline = getDefaultPipelineDLSchema(mainTask)
         })
       },
-      setSubTask(mainTask, subTask) {
-        const result = pipelineDLSchema.safeParse({ mainTask, subTask })
+      setSubTask(subTask) {
+        const mainTask = get().pipeline.mainTask;
+        const result = pipelineDLSchema.safeParse({ mainTask, subTask });
+        
         if (!result.success) {
-          throw new Error(
-            `Invalid combination of current mainTask: ${mainTask} and provided subTask: ${subTask}`,
-          )
+          throw new Error(`Invalid combination: ${mainTask} + ${subTask}`)
         }
+        
         set((state) => {
-          state.pipeline.subTask = subTask
-        })
+          state.pipeline.subTask = subTask;
+        });
       },
-      setDataFormat(mainTask, dataFormat) {
-        const result = pipelineDLSchema.safeParse({ mainTask, dataFormat })
+      setDataFormat(dataFormat) {
+        const mainTask = get().pipeline.mainTask;
+        const result = pipelineDLSchema.safeParse({ mainTask, dataFormat });
+        
         if (!result.success) {
-          throw new Error(
-            `Invalid combination of current mainTask: ${mainTask} and provided dataFormat: ${dataFormat}`,
-          )
+          throw new Error(`Invalid combination: ${mainTask} + ${dataFormat}`)
         }
         set((state) => {
           state.pipeline.dataFormat = dataFormat
@@ -45,71 +46,164 @@ export const usePipelineDLStore = create<{
 
       //--------------------------------- TRANSFORMERS ---------------------------------------
       setTransformers(transformers) {
+        const mainTask = get().pipeline.mainTask;
+        const result = pipelineDLSchema.safeParse({ mainTask, transformers });
+        
+        if (!result.success) {
+          throw new Error(`Invalid combination: ${mainTask} + ${transformers}`)
+        }
         set((state) => {
-          const mainTask = state.pipeline.mainTask
-          const result = pipelineDLSchema.safeParse({ mainTask, transformers })
-          if (!result.success) {
-            throw new Error(
-              `Invalid transformers: ${transformers} for current mainTask: ${mainTask}`,
-            )
-          }
           state.pipeline.transformers = transformers
         })
       },
-      // updateTransformer(mainTask, transformer, prop, value) {
-
-      // },
-      // removeTransformer(mainTask, transformer) {
-
-      // },
-      // resetTransformer(mainTask, transformer) {
-
-      // },
 
       //--------------------------------- PRE_TRAINED MODELS ---------------------------------------
-      addPretrainedModel(mainTask, pretrainedModel) {},
-      updatePretrainedModel(mainTask, pretrainedModel, prop, value) {},
-      removePretrainedModel(mainTask, pretrainedModel) {},
-      resetPretrainedModel(mainTask, pretrainedModel) {},
+      setPretrainedModels(pretrainedModels) {
+        const mainTask = get().pipeline.mainTask;
+        const result = pipelineDLSchema.safeParse({ mainTask, pretrainedModels });
+        
+        if (!result.success) {
+          throw new Error(`Invalid combination: ${mainTask} + ${pretrainedModels}`)
+        }
+        set((state) => {
+          state.pipeline.pretrainedModels = pretrainedModels
+        })
+      },
 
       //--------------------------------- CUSTOM MODELS ---------------------------------------
-      addCustomModel(customModel) {},
-      updateCustomModel(customModel, prop, value) {},
-      removeCustomModel(customModel) {},
-      resetCustomModel(customModel) {},
+      setCustomModels(customModels) {
+        const mainTask = get().pipeline.mainTask;
+        const result = pipelineDLSchema.safeParse({ mainTask, customModels });
+        
+        if (!result.success) {
+          throw new Error(`Invalid combination: ${mainTask} + ${customModels}`)
+        }
+        set((state) => {
+          state.pipeline.customModels = customModels
+        })
+      },
 
       //--------------------------------- LOSSES ---------------------------------------
-      addLoss(loss) {},
-      updateLoss(loss, prop, value) {},
-      removeLoss(loss) {},
-      resetLoss(loss) {},
+      /**
+       * @param loss the loss to add.
+       * This will add the loss to the losses object with default configuration
+       */
+      addLoss(loss) {
+        set((state) => {
+          state.pipeline.losses[loss] = pipelineDLSchema.parse({}).losses[loss]
+        })
+      },
+      updateLoss(loss, prop, value) {
+        set((state) => {
+          (state.pipeline.losses[loss] as any)[prop] = value
+        })
+      },
+      removeLoss(loss) {
+        set((state) => {
+          delete state.pipeline.losses[loss]
+        })
+      },
+      resetLoss(loss) {
+        set((state) => {
+          state.pipeline.losses[loss] = pipelineDLSchema.parse({}).losses[loss]
+        })
+      },
 
       //--------------------------------- OPTIMIZERS ---------------------------------------
-      addOptimizer(optimizer) {},
-      updateOptimizer(optimizer, prop, value) {},
-      removeOptimizer(optimizer) {},
-      resetOptimizer(optimizer) {},
+      addOptimizer(optimizer) {
+        set((state) => {
+          state.pipeline.optimizers[optimizer] = pipelineDLSchema.parse({}).optimizers[optimizer] as any;
+        })
+      },
+      updateOptimizer(optimizer, prop, value) {
+        set((state) => {
+          (state.pipeline.optimizers[optimizer] as any)[prop] = value
+        })
+      },
+      removeOptimizer(optimizer) {
+        set((state) => {
+          delete state.pipeline.optimizers[optimizer]
+        })
+      },
+      resetOptimizer(optimizer) {
+        set((state) => {
+          state.pipeline.optimizers[optimizer] = pipelineDLSchema.parse({}).optimizers[optimizer] as any;
+        })
+      },
 
       //--------------------------------- MONITORING ---------------------------------------
-      addMonitoring(monitoring) {},
-      removeMonitoring(monitoring) {},
-      resetMonitoring(monitoring) {},
+      addMonitoring(monitoring) {
+        set((state) => {
+          state.pipeline.monitoring.push(monitoring)
+        })
+      },
+      removeMonitoring(monitoring) {
+        set((state) => {
+          const prev = state.pipeline.monitoring;
+          state.pipeline.monitoring = prev.filter(m => m!== monitoring)
+        })
+      },
+      resetMonitoring(monitoring) {
+        set((state) => {
+          state.pipeline.monitoring = pipelineDLSchema.parse({}).monitoring;
+        })
+      },
 
       //--------------------------------- METRICS ---------------------------------------
-      addMetric(metric) {},
-      updateMetric(metric, prop, value) {},
-      removeMetric(metric) {},
-      resetMetric(metric) {},
+      addMetric(metric) {
+        set((state) => {
+          state.pipeline.metrics[metric] = pipelineDLSchema.parse({}).metrics[metric] as any;
+        })
+      },
+      updateMetric(metric, prop, value) {
+        set((state) => {
+          (state.pipeline.metrics[metric] as any)[prop] = value
+        })
+      },
+      removeMetric(metric) {
+        set((state) => {
+          delete state.pipeline.metrics[metric]
+        })
+      },
+      resetMetric(metric) {
+        set((state) => {
+          state.pipeline.metrics[metric] = pipelineDLSchema.parse({}).metrics[metric] as any;
+        })
+      },
 
       //--------------------------------- EARLY_STOPPING ---------------------------------------
-      updateEarlyStopping(prop, value) {},
-      resetEarlyStopping(prop) {},
+      updateEarlyStopping(prop, value) {
+        set((state) => {
+          state.pipeline.earlyStopping[prop] = value
+        })
+      },
+      resetEarlyStopping() {
+        set((state) => {
+          state.pipeline.earlyStopping = pipelineDLSchema.parse({}).earlyStopping
+        })
+      },
 
       //--------------------------------- LR_SCHEDULAR ---------------------------------------
-      addLrSchedular(option) {},
-      updateLrSchedular(option, prop, value) {},
-      removeLrSchedular(option) {},
-      resetLrSchedular(option) {},
+      addLrSchedular(schedular) {
+        set((state) => {
+          state.pipeline.lrSchedular[schedular] = pipelineDLSchema.parse({}).lrSchedular[schedular]
+        })
+      },
+      updateLrSchedular(schedular, prop, value) {
+        set((state) => {
+          (state.pipeline.lrSchedular[schedular] as any)[prop] = value
+        })
+      },
+      removeLrSchedular(schedular) {
+        set((state) => {
+          delete state.pipeline.lrSchedular[schedular]
+        })
+      },
+      resetLrSchedular(schedular) {
+        set((state) => {
+          state.pipeline.lrSchedular[schedular] = pipelineDLSchema.parse({}).lrSchedular[schedular]
+        })
+      },
     },
   })),
 )

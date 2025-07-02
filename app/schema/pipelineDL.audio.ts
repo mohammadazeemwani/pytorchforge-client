@@ -1,17 +1,17 @@
 import * as z from "zod/v4"
-import { 
+import {
   TensorD,
-  pipelineDL_CustomModels_Schema,
-  pipelineDL_Losses_Schema,
-  pipelineDL_Optimizers_Schema,
-  pipelineDL_Monitoring_Schema,
-  pipelineDL_Metrics_Schema,
-  pipelineDL_EarlyStopping_Schema,
-  pipelineDL_LRSchedular_Schema 
+  customModels,
+  pipelineDLLossesSchema,
+  pipelineDLOptimizersSchema,
+  pipelineDLMonitoringSchema,
+  pipelineDLMetricsSchema,
+  pipelineDLEarlyStoppingSchema,
+  pipelineDLLRSchedularSchema,
 } from "./pipelineDL.general"
-import { objectKeys } from 'ts-extras'
+import { objectKeys } from "ts-extras"
 
-export const audioTransformersSchema = {
+export const audioTransformersSchema = z.object({
   Speed: z.object({
     orig_freq: z.number().default(16000),
     factor: z.number().default(1.0),
@@ -34,12 +34,7 @@ export const audioTransformersSchema = {
   Fade: z.object({
     fade_in_len: z.number().optional().default(0),
     fade_out_len: z.number().optional().default(0),
-    fade_shape: z.enum([
-      "half_sine",
-      "linear",
-      "logarithmic",
-      "exponential",
-    ]),
+    fade_shape: z.enum(["half_sine", "linear", "logarithmic", "exponential"]),
   }),
   Vol: z.object({
     gain: z.number().default(1.0),
@@ -89,9 +84,9 @@ export const audioTransformersSchema = {
     iid_masks: z.boolean().optional(),
     p: z.boolean().optional(),
   }),
-}
+})
 
-export const audioPretrainedModelsSchema = {
+export const audioPretrainedModelsSchema = z.object({
   Conformer: z.object({
     input_dim: z.number().default(80),
     num_heads: z.number().default(4),
@@ -119,7 +114,7 @@ export const audioPretrainedModelsSchema = {
     n_hidden: z.number().optional().default(128),
     n_output: z.number().optional().default(128),
   }),
-}
+})
 
 /** gives an array of transformers that can be used when mainTask = 'audio' */
 export const audioTransformers = objectKeys(audioTransformersSchema)
@@ -128,7 +123,7 @@ export const audioTransformers = objectKeys(audioTransformersSchema)
 export const audioPretrainedModels = objectKeys(audioPretrainedModelsSchema)
 
 export const pipelineDLAudioSchema = z.object({
-  mainTask: z.literal('audio'),
+  mainTask: z.literal("audio"),
   subTask: z
     .enum(["classification", "recognition", "conversion", "generation"])
     .default("classification"),
@@ -137,11 +132,11 @@ export const pipelineDLAudioSchema = z.object({
     .default("mp3"),
   transformers: z.array(z.enum(audioTransformers)),
   pretrainedModels: z.array(z.enum(audioPretrainedModels)),
-  customModels: pipelineDL_CustomModels_Schema,
-  losses: pipelineDL_Losses_Schema,
-  optimizers: pipelineDL_Optimizers_Schema,
-  monitoring: pipelineDL_Monitoring_Schema,
-  metrics: pipelineDL_Metrics_Schema,
-  earlyStopping: pipelineDL_EarlyStopping_Schema,
-  lrSchedular: pipelineDL_LRSchedular_Schema
+  customModels: z.array(z.enum(customModels)),
+  losses: pipelineDLLossesSchema,
+  optimizers: pipelineDLOptimizersSchema,
+  monitoring: pipelineDLMonitoringSchema,
+  metrics: pipelineDLMetricsSchema,
+  earlyStopping: pipelineDLEarlyStoppingSchema,
+  lrSchedular: pipelineDLLRSchedularSchema,
 })

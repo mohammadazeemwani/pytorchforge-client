@@ -1,18 +1,18 @@
 import * as z from "zod/v4"
-import { 
-  Interpolation, 
+import {
+  Interpolation,
   TensorD,
-  pipelineDL_CustomModels_Schema,
-  pipelineDL_Losses_Schema,
-  pipelineDL_Optimizers_Schema,
-  pipelineDL_Monitoring_Schema,
-  pipelineDL_Metrics_Schema,
-  pipelineDL_EarlyStopping_Schema,
-  pipelineDL_LRSchedular_Schema
+  customModels,
+  pipelineDLLossesSchema,
+  pipelineDLOptimizersSchema,
+  pipelineDLMonitoringSchema,
+  pipelineDLMetricsSchema,
+  pipelineDLEarlyStoppingSchema,
+  pipelineDLLRSchedularSchema,
 } from "./pipelineDL.general"
 import { objectKeys } from "ts-extras"
 
-export const imageTransformersSchema = {
+export const imageTransformersSchema = z.object({
   Resize: z.object({
     size: z.array(z.number()).default([224, 224]),
     interpolation: Interpolation.optional().default("bilinear"),
@@ -58,9 +58,9 @@ export const imageTransformersSchema = {
     kernel_size: z.number().default(3),
     sigma: z.array(z.number()).default([0.1, 2.0]),
   }),
-}
+})
 
-export const imagePretrainedModelsSchema = {
+export const imagePretrainedModelsSchema = z.object({
   ResNet: z.object({
     pretrained: z.boolean().default(true),
     num_classes: z.number().default(1000),
@@ -87,16 +87,16 @@ export const imagePretrainedModelsSchema = {
     weights: z.string().default("resnet50"),
     num_classes: z.number().default(21),
   }),
-}
+})
 
 /** gives an array of transformers that can be used when mainTask = 'image' */
-export const imageTransformers = objectKeys(imageTransformersSchema);
+export const imageTransformers = objectKeys(imageTransformersSchema)
 
 /** gives an array of pretrainedModels that can be used when mainTask = 'image' */
-export const imagePretrainedModels = objectKeys(imagePretrainedModelsSchema);
+export const imagePretrainedModels = objectKeys(imagePretrainedModelsSchema)
 
 export const pipelineDLImageSchema = z.object({
-  mainTask: z.literal('image'),
+  mainTask: z.literal("image"),
   subTask: z.enum([
     "classification",
     "generation",
@@ -106,11 +106,11 @@ export const pipelineDLImageSchema = z.object({
   dataFormat: z.enum(["png", "jpeg", "jpg", "pytorch-tensor", "pickle"]),
   transformers: z.array(z.enum(imageTransformers)),
   pretrainedModels: z.array(z.enum(imagePretrainedModels)),
-  customModels: pipelineDL_CustomModels_Schema,
-  losses: pipelineDL_Losses_Schema,
-  optimizers: pipelineDL_Optimizers_Schema,
-  monitoring: pipelineDL_Monitoring_Schema,
-  metrics: pipelineDL_Metrics_Schema,
-  earlyStopping: pipelineDL_EarlyStopping_Schema,
-  lrSchedular: pipelineDL_LRSchedular_Schema
+  customModels: z.array(z.enum(customModels)),
+  losses: pipelineDLLossesSchema,
+  optimizers: pipelineDLOptimizersSchema,
+  monitoring: pipelineDLMonitoringSchema,
+  metrics: pipelineDLMetricsSchema,
+  earlyStopping: pipelineDLEarlyStoppingSchema,
+  lrSchedular: pipelineDLLRSchedularSchema,
 })
