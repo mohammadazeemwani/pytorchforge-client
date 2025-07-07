@@ -3,10 +3,10 @@ import type { Route } from "./+types/route"
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Help • ML Pipelines" },
+    { title: "Help • PytorchForge" },
     {
       name: "description",
-      content: "Look for help regarding ML Pipelines",
+      content: "Look for help regarding PytorchForge",
     },
   ]
 }

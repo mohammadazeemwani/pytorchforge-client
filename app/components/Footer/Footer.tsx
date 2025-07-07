@@ -19,7 +19,7 @@ function Footer({ className, ...delegated }: FooterProps) {
       )}
       {...delegated}
     >
-      <MainLogo className='w-[3.3rem]' layoutId={''} layout={false} animate={false} />
+      <MainLogo className='w-[2.5rem]' layoutId={''} layout={false} animate={false} />
       <div className='flex flex-col gap-0.5 justify-center sm:gap-1'>
         {renderedDate && (
           <time className='text-xs sm:text-[0.8rem]' dateTime={renderedDate}>{renderedDate}</time>

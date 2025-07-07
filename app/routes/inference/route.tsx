@@ -4,10 +4,10 @@ import { LettersPullUp } from "~/components/TextAnimate"
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Inference • ML Pipelines" },
+    { title: "Inference • PytorchForge" },
     {
       name: "description",
-      content: "Do Inference for your ML Pipeline",
+      content: "Do Inference for your PytorchForge",
     },
   ]
 }

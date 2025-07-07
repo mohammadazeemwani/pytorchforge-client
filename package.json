@@ -9,20 +9,27 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@base-ui-components/react": "^1.0.0-beta.1",
+    "@hookform/resolvers": "^5.1.1",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-slot": "^1.2.3",
     "@react-router/fs-routes": "^7.6.2",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
     "clsx": "^2.1.1",
     "immer": "^10.1.1",
     "isbot": "^5.1.27",
+    "lucide-react": "^0.525.0",
     "motion": "^12.18.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.60.0",
     "react-router": "^7.5.3",
     "tailwind-merge": "^3.3.1",
     "theme-change": "^2.5.0",
     "ts-extras": "^0.14.0",
-    "zod": "^3.25.67",
+    "zod": "^3.25.74",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

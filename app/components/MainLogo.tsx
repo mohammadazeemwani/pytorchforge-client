@@ -22,8 +22,8 @@ export function MainLogo({ className, ...delegated }: MainLogoProps) {
       transition={{ type: 'spring', duration: 1.1, stiffness: 400, damping: 60 , restDelta: 0.001}}
       {...delegated}
     >
-      <img src="logo-light.svg" className="h-full w-full block dark:hidden" />
-      <img src="logo-dark.svg" className="h-full w-full hidden dark:block" />
+      <img src="/logo-light.svg" className="h-full w-full block dark:hidden" />
+      <img src="/logo-dark.svg" className="h-full w-full hidden dark:block" />
     </motion.div>
   )
 }

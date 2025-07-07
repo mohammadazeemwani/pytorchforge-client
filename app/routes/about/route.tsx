@@ -5,10 +5,10 @@ import { VisionSection } from "./VisionSection"
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "About • ML Pipelines" },
+    { title: "About • PytorchForge" },
     {
       name: "description",
-      content: "Learn about ML Pipelines, its maintainers and vision..",
+      content: "Learn about PytorchForge, its maintainers and vision..",
     },
   ]
 }

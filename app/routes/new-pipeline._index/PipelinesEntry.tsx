@@ -1,6 +1,7 @@
 import React from "react";
 import { cn } from "~/utils/general";
 import { motion, type MotionProps } from "motion/react";
+import { Link } from "react-router";
 
 type PipelinesEntryProps = {} & React.ComponentProps<'div'>
 
@@ -23,7 +24,8 @@ export function PipelinesEntry({ className, ...delegated}: PipelinesEntryProps) 
         title="Deep Learning"
         content="Create pipelines using visual editor using frameworks (currently only torch), load data, apply transformations, view and train scripts and export the models to onnx or pt for tasks like image audio and text."
         contentContainerClass="mt-[0.7rem]"
-        callToAction="Start"
+        callToActionText="Start"
+        callToActionHref="/new-pipeline/dl"
       />
       <PipelineEntryCard 
         lightImageURL="new-pipeline/ml-light.svg"
@@ -32,7 +34,7 @@ export function PipelinesEntry({ className, ...delegated}: PipelinesEntryProps) 
         title="Machine Learning"
         content="Guides through preprocessing using integrated dataframe viewer, training models, evaluate runs ,compare to previous runs, and create scripts for these tasks."
         contentContainerClass="mt-[-0.8rem]"
-        callToAction="Coming Soon"
+        callToActionText="Coming Soon"
         callToActionClass="btn-disabled"
       />
     </div>
@@ -47,8 +49,11 @@ type PipelineEntryCardProps = {
   title: string,
   content: string,
   contentContainerClass?: string,
-  callToAction: string,
+  callToActionText: string,
   callToActionClass?: string,
+
+  /** Defaults to # */
+  callToActionHref?: string
 } & React.ComponentProps<'div'> & MotionProps
 function PipelineEntryCard({ 
   className,
@@ -58,8 +63,9 @@ function PipelineEntryCard({
   title,
   content,
   contentContainerClass,
-  callToAction,
-  callToActionClass
+  callToActionText,
+  callToActionClass,
+  callToActionHref="#",
 }: PipelineEntryCardProps) {
   return (
     <motion.div
@@ -68,7 +74,7 @@ function PipelineEntryCard({
       transition={{ type: 'spring', duration: 1.1, stiffness: 400, damping: 60 , restDelta: 0.001}}
       className={cn(
         className,
-        'card bg-base-200 shadow-sm -z-40'
+        'card bg-base-200 shadow-sm z-0'
       )}
     >
       <figure className={cn("px-10 pt-3 not-prose mx-auto", figureClass)}>
@@ -91,15 +97,17 @@ function PipelineEntryCard({
         <h2>{title}</h2>
         <p className="text-justify">{content}</p>
         <div className="card-actions w-full">
+          <Link to={callToActionHref} prefetch="intent" className="w-full">
           <button
             className={cn(
+              "w-full",
               "btn btn-primary",
-              'w-full',
               callToActionClass
             )}
           >
-            {callToAction}
+            {callToActionText}
           </button>
+          </Link>
         </div>
       </div>
     </motion.div>

@@ -12,6 +12,14 @@ export type InterpolationType = z.infer<typeof Interpolation>
 export const TensorD = z.enum(["float32", "float64", "int32", "int64"]) // Example
 export type TensorDType = z.infer<typeof TensorD>
 
+export const dataFormatPickerSchema = z.object({
+  type: z.enum(["file", "folder"]).default('file'),
+  path: z.string().default('')
+}).default({
+  type: 'file',
+  path: ''
+})
+
 export const pipelineDLCustomModelsSchema = z.object({
   Linear: z.object({
     in_features: z.array(z.number()),
@@ -260,14 +268,14 @@ export const pipelineDLLossesSchema = z.object({
     reduce: z.boolean().optional(),
     reduction: ReductionSchema.optional(),
     label_smoothing: z.number().optional(),
-  }),
+  }).optional(),
 
   BCELoss: z.object({
     weight: z.array(z.number()).optional(),
     size_average: z.boolean().optional(),
     reduce: z.boolean().optional(),
     reduction: ReductionSchema.optional(),
-  }),
+  }).optional(),
 
   BCEWithLogitsLoss: z.object({
     weight: z.array(z.number()).optional(),
@@ -275,20 +283,20 @@ export const pipelineDLLossesSchema = z.object({
     reduce: z.boolean().optional(),
     reduction: ReductionSchema.optional(),
     pos_weight: z.array(z.number()).optional(),
-  }),
+  }).optional(),
 
   MSELoss: z.object({
     size_average: z.boolean().optional(),
     reduce: z.boolean().optional(),
     reduction: ReductionSchema.optional(),
-  }),
+  }).optional(),
 
   L1Loss: z.object({
     size_average: z.boolean().optional(),
     reduce: z.boolean().optional(),
     reduction: ReductionSchema.optional(),
-  }),
-}).partial()
+  }).optional(),
+}).default({})
 
 export const pipelineDLOptimizersSchema = z.object({
   Adam: z.object({
@@ -297,7 +305,7 @@ export const pipelineDLOptimizersSchema = z.object({
     eps: z.number().optional(),
     weight_decay: z.number().optional(),
     amsgrad: z.boolean().optional(),
-  }),
+  }).optional(),
 
   SDG: z.object({
     lr: z.number().optional(),
@@ -305,7 +313,7 @@ export const pipelineDLOptimizersSchema = z.object({
     weight_decay: z.number().optional(),
     dampening: z.number().optional(),
     nesterov: z.number().optional(),
-  }),
+  }).optional(),
 
   RMSprop: z.object({
     lr: z.number().optional(),
@@ -314,22 +322,22 @@ export const pipelineDLOptimizersSchema = z.object({
     weight_decay: z.number().optional(),
     momentum: z.number().optional(),
     centered: z.boolean().optional(),
-  }),
+  }).optional(),
 
   Adagrad: z.object({
     lr: z.number().optional(),
     lr_decay: z.number().optional(),
     weighti_decay: z.number().optional(),
     initial_accumulator: z.number().optional(),
-  }),
+  }).optional(),
 
   NAdam: z.object({
     lr: z.number().optional(),
     betas: z.number().optional(),
     eps: z.number().optional(),
     weight_decay: z.number().optional(),
-  }),
-}).partial()
+  }).optional(),
+}).default({})
 
 /**
  * They don't have types.
@@ -357,7 +365,7 @@ export const pipelineDLMetricsSchema = z.object({
     threshold: z.number().optional(),
     top_k: z.number().optional(),
     average: AverageSchema.optional(),
-  }),
+  }).optional(),
 
   F1Score: z.object({
     task: TaskSchema,
@@ -365,7 +373,7 @@ export const pipelineDLMetricsSchema = z.object({
     threshold: z.number().optional(),
     top_k: z.number().optional(),
     average: AverageSchema.optional(),
-  }),
+  }).optional(),
 
   Recall: z.object({
     task: TaskSchema,
@@ -373,22 +381,36 @@ export const pipelineDLMetricsSchema = z.object({
     threshold: z.number().optional(),
     top_k: z.number().optional(),
     average: AverageSchema.optional(),
-  }),
+  }).optional(),
 
   MeanAbsoluteError: z.object({
     num_outputs: z.number().optional(),
-  }),
-}).partial()
+  }).optional(),
+}).default({})
+
+export const trainingHyperParametersSchema = z.object({
+  batch_size: z.number().default(32),
+  learning_rate: z.number().default(0.1),
+  epochs: z.number().default(10),
+  weight_decay: z.number().default(0)
+}).default({
+  batch_size: 32,
+  learning_rate: 0.1,
+  epochs: 10,
+  weight_decay: 0
+})
 
 const ModeSchema = z.enum(["min", "max"])
 const MonitorSchema = z.enum(["val_loss"])
 export const pipelineDLEarlyStoppingSchema = z.object({
-  patience: z.number(),
+  patience: z.number().default(5),
   min_delta: z.number().optional(),
   mode: ModeSchema.optional(),
   monitor: MonitorSchema.optional(),
   verbose: z.boolean().optional(),
   restore_best_weights: z.boolean().optional(),
+}).default({
+  patience: 5
 })
 
 export const pipelineDLLRSchedularSchema = z.object({
@@ -398,4 +420,6 @@ export const pipelineDLLRSchedularSchema = z.object({
     mode: ModeSchema.optional(),
     threshold: z.number().optional(),
   }),
-}).partial()
+}).default({
+  ReduceLROnPlateau: { patience: 10 }
+})

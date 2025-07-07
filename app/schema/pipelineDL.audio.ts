@@ -8,6 +8,8 @@ import {
   pipelineDLMetricsSchema,
   pipelineDLEarlyStoppingSchema,
   pipelineDLLRSchedularSchema,
+  dataFormatPickerSchema,
+  trainingHyperParametersSchema,
 } from "./pipelineDL.general"
 import { objectKeys } from "ts-extras"
 
@@ -130,13 +132,15 @@ export const pipelineDLAudioSchema = z.object({
   dataFormat: z
     .enum(["wav", "mp3", "flac", "pytorch-tensor", "pickle"])
     .default("mp3"),
-  transformers: z.array(z.enum(audioTransformers)),
-  pretrainedModels: z.array(z.enum(audioPretrainedModels)),
-  customModels: z.array(z.enum(customModels)),
+  dataFormatPicker: dataFormatPickerSchema,
+  transformers: z.array(z.enum(audioTransformers)).default([]),
+  pretrainedModels: z.array(z.enum(audioPretrainedModels)).default([]),
+  customModels: z.array(z.enum(customModels)).default([]),
   losses: pipelineDLLossesSchema,
   optimizers: pipelineDLOptimizersSchema,
   monitoring: pipelineDLMonitoringSchema,
   metrics: pipelineDLMetricsSchema,
+  trainingHyperParameters: trainingHyperParametersSchema,
   earlyStopping: pipelineDLEarlyStoppingSchema,
   lrSchedular: pipelineDLLRSchedularSchema,
 })

@@ -3,7 +3,7 @@ import { HeroSection } from "./HeroSection"
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "ML Pipelines" },
+    { title: "PytorchForge" },
     {
       name: "description",
       content: "Make Pipelines for your next big AI thing",

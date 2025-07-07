@@ -43,8 +43,8 @@ function Header({ className }: HeaderProps) {
           )}
         /> 
         {showLogo && (
-          <Link to="/" className='w-[3rem]'>
-            <MainLogo className='w-[3rem] h-[3rem]' />
+          <Link to="/" className='w-[2.9rem] lg:mb-[-0.2rem]'>
+            <MainLogo className='w-[2.9rem] h-[2.9rem]' />
           </Link>
         )}
       </div>
@@ -90,7 +90,7 @@ function Header({ className }: HeaderProps) {
           layoutId='theme-change-container'
           layout="position"
         >
-          <ThemeToggler svgClass='w-[1.5rem]' />
+          <ThemeToggler svgClass='w-[1.45rem]' />
         </motion.div>
       </nav>
 

@@ -8,6 +8,8 @@ import {
   pipelineDLMetricsSchema,
   pipelineDLEarlyStoppingSchema,
   pipelineDLLRSchedularSchema,
+  dataFormatPickerSchema,
+  trainingHyperParametersSchema,
 } from "./pipelineDL.general"
 import { objectKeys } from "ts-extras"
 
@@ -109,13 +111,15 @@ export const pipelineDLTextSchema = z.object({
   dataFormat: z
     .enum(["csv", "plain-text", "pytorch-tensor", "pickle"])
     .default("plain-text"),
-  transformers: z.array(z.enum(textTransformers)),
-  pretrainedModels: z.array(z.enum(textPretrainedModels)),
-  customModels: z.array(z.enum(customModels)),
+  dataFormatPicker: dataFormatPickerSchema,
+  transformers: z.array(z.enum(textTransformers)).default([]),
+  pretrainedModels: z.array(z.enum(textPretrainedModels)).default([]),
+  customModels: z.array(z.enum(customModels)).default([]),
   losses: pipelineDLLossesSchema,
   optimizers: pipelineDLOptimizersSchema,
   monitoring: pipelineDLMonitoringSchema,
   metrics: pipelineDLMetricsSchema,
+  trainingHyperParameters: trainingHyperParametersSchema,
   earlyStopping: pipelineDLEarlyStoppingSchema,
   lrSchedular: pipelineDLLRSchedularSchema,
 })

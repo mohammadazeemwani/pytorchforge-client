@@ -9,6 +9,8 @@ import {
   pipelineDLMetricsSchema,
   pipelineDLEarlyStoppingSchema,
   pipelineDLLRSchedularSchema,
+  dataFormatPickerSchema,
+  trainingHyperParametersSchema,
 } from "./pipelineDL.general"
 import { objectKeys } from "ts-extras"
 
@@ -97,20 +99,21 @@ export const imagePretrainedModels = objectKeys(imagePretrainedModelsSchema)
 
 export const pipelineDLImageSchema = z.object({
   mainTask: z.literal("image"),
-  subTask: z.enum([
-    "classification",
-    "generation",
-    "object-detection",
-    "image-segmentation",
-  ]),
-  dataFormat: z.enum(["png", "jpeg", "jpg", "pytorch-tensor", "pickle"]),
-  transformers: z.array(z.enum(imageTransformers)),
-  pretrainedModels: z.array(z.enum(imagePretrainedModels)),
-  customModels: z.array(z.enum(customModels)),
+  subTask: z
+    .enum(["classification", "generation", "object-detection", "image-segmentation"])
+    .default('classification'),
+  dataFormat: z
+    .enum(["png", "jpeg", "jpg", "pytorch-tensor", "pickle"])
+    .default('png'),
+  dataFormatPicker: dataFormatPickerSchema,
+  transformers: z.array(z.enum(imageTransformers)).default([]),
+  pretrainedModels: z.array(z.enum(imagePretrainedModels)).default([]),
+  customModels: z.array(z.enum(customModels)).default([]),
   losses: pipelineDLLossesSchema,
   optimizers: pipelineDLOptimizersSchema,
   monitoring: pipelineDLMonitoringSchema,
   metrics: pipelineDLMetricsSchema,
+  trainingHyperParameters: trainingHyperParametersSchema,
   earlyStopping: pipelineDLEarlyStoppingSchema,
   lrSchedular: pipelineDLLRSchedularSchema,
 })

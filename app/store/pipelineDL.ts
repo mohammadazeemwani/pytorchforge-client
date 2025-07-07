@@ -6,12 +6,13 @@ import type { PipelineDL, PipelineDL_StoreAction } from "~/types/pipelineDL"
 import type { MainTask, Transformers } from "~/types/pipelineDL"
 import { getDefaultPipelineDLSchema } from "~/helpers/pipelineDL"
 
+export const defaultMainTask = 'image'
 export const usePipelineDLStore = create<{
   pipeline: PipelineDL
   actions: PipelineDL_StoreAction
 }>()(
   immer((set, get) => ({
-    pipeline: getDefaultPipelineDLSchema("image"),
+    pipeline: getDefaultPipelineDLSchema(defaultMainTask),
     actions: {
       // --------------------------------------- GENERIC
       setTask(mainTask) {
@@ -44,6 +45,11 @@ export const usePipelineDLStore = create<{
         })
       },
 
+      setDataFormatPicker(data) {
+        set((state) => {
+          state.pipeline.dataFormatPicker = data;
+        }) 
+      },
       //--------------------------------- TRANSFORMERS ---------------------------------------
       setTransformers(transformers) {
         const mainTask = get().pipeline.mainTask;

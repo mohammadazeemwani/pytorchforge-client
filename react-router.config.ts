@@ -7,7 +7,10 @@ export default {
   prerender: [
     '/',
     '/help',
-    '/about'
+    '/about',
+    '/inference',
+    '/new-pipeline',
+    '/new-pipeline/dl',
   ],
   future: {
     unstable_middleware: true,

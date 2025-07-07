@@ -15,11 +15,12 @@ import {
   audioPretrainedModelsSchema,
 } from "./pipelineDL.audio"
 
-export const pipelineDLSchema = z.discriminatedUnion("mainTask", [
-  pipelineDLImageSchema,
-  pipelineDLTextSchema,
-  pipelineDLAudioSchema,
-])
+export const pipelineDLSchema = z
+  .discriminatedUnion("mainTask", [
+    pipelineDLImageSchema,
+    pipelineDLTextSchema,
+    pipelineDLAudioSchema,
+  ])
 
 export const pipelineDLTransformersSchema = z.object({
   ...imageTransformersSchema.shape,

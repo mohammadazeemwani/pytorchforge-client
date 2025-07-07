@@ -32,8 +32,8 @@ export function HeroSection({ className, ...delegated }: HeroSectionProps) {
           className="h1-style"
         />
       </div>
-      <Link to="/about">
-        <MainLogo className="w-[14rem] h-[14rem] not-prose my-4" />
+      <Link to="/about" className="mt-[1.4rem] mb-[2.4rem]">
+        <MainLogo className="w-[10rem] h-[10rem] sm:w-[12.5rem] sm:h-[12.5rem] not-prose" />
       </Link>
       <MainLinksBar showForMainPage={true} className=""/>
     </section>

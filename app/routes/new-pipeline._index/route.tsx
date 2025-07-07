@@ -5,10 +5,10 @@ import { PipelinesEntry } from "./PipelinesEntry"
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New Pipeline • ML Pipelines" },
+    { title: "New Pipeline • PytorchForge" },
     {
       name: "description",
-      content: "Start new pipeline for your ML learning project",
+      content: "Start new pipeline for your Machine learning project",
     },
   ]
 }

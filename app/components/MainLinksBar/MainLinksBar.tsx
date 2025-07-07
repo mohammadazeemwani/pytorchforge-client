@@ -27,7 +27,7 @@ function MainLinksBar({
 }: MainLinksBarProps) {
   const location = useLocation()
   const showMainLinksBar = React.useMemo(() => {
-    return showForMainPage || links.map((l) => l.href).includes(location.pathname)
+    return showForMainPage || links.some((l) => location.pathname.startsWith(l.href))
   }, [location])
 
   // const showAtCenter = React.useMemo(() => {

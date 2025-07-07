@@ -6,6 +6,7 @@ export type PipelineDL = z.infer<typeof pipelineDLSchema>
 export type MainTask = PipelineDL['mainTask']
 export type SubTasks = PipelineDL['subTask']
 export type DataFormat = PipelineDL['dataFormat']
+export type DataFormatPicker = PipelineDL['dataFormatPicker']
 export type Transformers = PipelineDL['transformers']
 export type PreTrainedModels = PipelineDL['pretrainedModels']
 export type CustomModels = PipelineDL['customModels']
@@ -34,6 +35,10 @@ export type PipelineDL_StoreAction = {
   setDataFormat: (dataFormat: DataFormat) => void;
 
 
+  /**
+   * @description This will set the data format picker.
+   */
+  setDataFormatPicker: (data: DataFormatPicker) => void;
   //--------------------------------- TRANSFORMERS ---------------------------------------
   /**
    * @description This will add an array of transformers
