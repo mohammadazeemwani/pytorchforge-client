@@ -95,7 +95,7 @@ function PipelineEntryCard({
         )}
       >
         <h2>{title}</h2>
-        <p className="text-justify">{content}</p>
+        <p className="">{content}</p>
         <div className="card-actions w-full">
           <Link to={callToActionHref} prefetch="intent" className="w-full">
           <button

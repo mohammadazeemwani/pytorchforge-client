@@ -13,7 +13,7 @@ function Footer({ className, ...delegated }: FooterProps) {
     <footer
       className={cn(
         'flex justify-between items-center',
-        'mt-[14rem] px-5 pt-2 pb-1',
+        'mt-[14rem] mb-[0.6rem] px-5 pt-2 pb-1',
         'rounded-2xl',
         'bg-[var(--color-base-200)]'
       )}

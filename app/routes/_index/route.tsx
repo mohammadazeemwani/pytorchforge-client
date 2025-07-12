@@ -10,7 +10,7 @@ export function meta({}: Route.MetaArgs) {
     },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://pipeline-ui.pages.dev" },
-    { property: "og:image", content: "/logo-dark.svg" }
+    { property: "og:image", content: "/open-graph.png" }
   ]
 }
 
