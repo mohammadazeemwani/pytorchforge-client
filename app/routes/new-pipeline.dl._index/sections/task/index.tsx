@@ -1,20 +1,35 @@
 import React from "react";
 import { cn } from "~/utils/general";
 import { sectionSlugToLabel } from "~/constants/pipelineDL";
-import { MainTaskField, schema as MainTaskSchema } from "./MainTask.field";
-import { Form, } from "~/components/Form"
-import { useForm, type Control } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { StepBackButton, StepNextButton } from "~/components/StepNavigator";
+import type { UseFormReturn } from "react-hook-form";
 import type { PipelineDL } from "~/types/pipelineDL";
+import { MainTaskField } from "./MainTask.field";
+import { SubTaskField } from "./SubTask.field";
+import { DataFormatField } from "./DataFormat.field";
+import { DataFileField } from "./DataFile.field";
+import { SubmitSteps } from "../../SubmitSteps";
+import { isGoodToGo } from "./helper";
+import { useFormErrorContext } from "~/components/FormErrorShow/FormErrorContext";
 
 
 
 type TaskSectionProps = {
-  control: Control<PipelineDL>
+  form: UseFormReturn<PipelineDL>
 } & React.ComponentProps<'div'>
 
-export function TaskSection({ className, control, ...delegated}: TaskSectionProps) {
+export function TaskSection({ className, form, ...delegated}: TaskSectionProps) {
+  const { setError } = useFormErrorContext()
+
+  const handleNext = React.useCallback(() => {
+    const { success, error } = isGoodToGo({ form });
+    if (success) {
+      setError(null);
+      return true
+    } else {
+      setError(error);
+      return false
+    }
+  }, [setError])
 
   return (
     <div
@@ -26,11 +41,33 @@ export function TaskSection({ className, control, ...delegated}: TaskSectionProp
       {...delegated}
     >
       <h1>{sectionSlugToLabel['task']}</h1>
-
+      <div
+        className={cn(
+          "flex flex-col gap-8",
+          'mb-11',
+        )}
+      >
         <MainTaskField 
-          control={control} 
-          className="not-prose w-[8rem]"
+          form={form} 
+          className="w-[50%]"
         />
+        <SubTaskField 
+          form={form}
+          className="w-[75%]"
+        />
+        <DataFormatField
+          form={form}
+          className="w-[75%]"
+        />
+        <DataFileField
+          form={form}
+          className="w-[75%]"
+        />
+      </div>
+      <SubmitSteps 
+        form={form}
+        isGoodToGoCallback={handleNext} 
+      />
     </div>
   )
 }

@@ -96,12 +96,16 @@
   --header-gutter: 1rem;
 }
 
-html {
+body {
   overflow-y: scroll;
 }
 * {
   scroll-behavior: smooth;
   box-sizing: border-box;
+}
+html {
+  overflow: -moz-scrollbars-vertical; 
+  overflow-y: scroll;
 }
 
 .custom-body {
@@ -137,4 +141,19 @@ h1, h2, h3, h4, h5, h6 {
 
 .muted-content {
   @apply text-base-content/70 dark:text-base-content/65
+}
+
+/* Apply this already to elements on which error-glow will be called, so that we will have a nice animating effect */
+.error-glow-prep {
+  box-shadow: inset 0 0 0 0 transparent;
+  /* try to keep this duration aligned with the shakeDuration in constants for errorForm */
+  transition: box-shadow 0.4s ease;
+}
+.error-glow {
+  box-shadow: inset 0 0 29px 2px rgb(227, 109, 109);
+}
+@media (width >= 40rem) {
+  .error-glow {
+    box-shadow: inset 0 0 49px 15px rgb(227, 109, 109);
+  }
 }

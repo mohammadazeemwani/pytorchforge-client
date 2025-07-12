@@ -1,3 +1,4 @@
+import type { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod/v4'
 import { pipelineDLSchema } from "~/schema/pipelineDL";
 export type PipelineDL = z.infer<typeof pipelineDLSchema>
@@ -6,8 +7,11 @@ export type PipelineDL = z.infer<typeof pipelineDLSchema>
 export type MainTask = PipelineDL['mainTask']
 export type SubTasks = PipelineDL['subTask']
 export type DataFormat = PipelineDL['dataFormat']
-export type DataFormatPicker = PipelineDL['dataFormatPicker']
+export type DataFormatPicker = PipelineDL['dataFile']
 export type Transformers = PipelineDL['transformers']
+export type UnifiedTransformers = Transformers extends (infer ItemType)[] ? ItemType : never;
+
+
 export type PreTrainedModels = PipelineDL['pretrainedModels']
 export type CustomModels = PipelineDL['customModels']
 export type Losses = PipelineDL['losses']
@@ -16,6 +20,11 @@ export type Monitoring = PipelineDL['monitoring']
 export type Metrics = PipelineDL['metrics']
 export type EarlyStopping = PipelineDL['earlyStopping']
 export type LRSchedular = PipelineDL['lrSchedular']
+
+/**
+ * It is highly recommended to all the isGoodToGo functions to use unified parser to parse error strings.  
+ * So they look consistent.
+ */
 
 export type PipelineDL_StoreAction = {
   /** 

@@ -8,7 +8,7 @@ import {
   pipelineDLMetricsSchema,
   pipelineDLEarlyStoppingSchema,
   pipelineDLLRSchedularSchema,
-  dataFormatPickerSchema,
+  dataFileSchema,
   trainingHyperParametersSchema,
 } from "./pipelineDL.general"
 import { objectKeys } from "ts-extras"
@@ -18,7 +18,7 @@ export const textTransformersSchema = z.object({
     .object({
       /** It will be array of regex patterns, the user will type */
       /** UI-ELEMENT: TEXT BOX ~ write values as comma separated */
-      patterns_list: z.array(z.string()).default(["w+"]),
+      patterns_list: z.array(z.string()),
     })
     .optional(),
   SentencePieceTokenizer: z
@@ -30,33 +30,33 @@ export const textTransformersSchema = z.object({
   VocabTransform: z
     .object({
       /** UI-ELEMENT:  TEXTBOX  comma separated */
-      vocab: z.array(z.string()).default([]),
+      vocab: z.array(z.string()),
     })
     .optional(),
   ToTensor: z
     .object({
       /** UI-ELEMENT:  selectMenu  */
-      dtype: TensorD.default("int64"),
+      dtype: TensorD,
     })
     .optional(),
   Truncate: z
     .object({
       /** UI-ELEMENT:  number input box */
-      max_seq_len: z.number().default(128),
+      max_seq_len: z.number(),
     })
     .optional(),
   PadTransform: z
     .object({
       /** UI-ELEMENT: both: number iniput box */
-      max_length: z.number().default(128),
-      pad_value: z.number().default(0),
+      max_length: z.number(),
+      pad_value: z.number(),
     })
     .optional(),
   AddToken: z
     .object({
       /** UI-ELEMENT: text box  */
-      token: z.array(z.string()).default(["<CLS>"]),
-      begin: z.boolean().optional().default(true),
+      token: z.array(z.string()),
+      begin: z.boolean().optional(),
     })
     .optional(),
   BERTTokenizer: z
@@ -98,10 +98,10 @@ export const textPretrainedModelsSchema = z.object({
 })
 
 /** gives an array of transformers that can be used when mainTask = 'text' */
-export const textTransformers = objectKeys(textTransformersSchema)
+export const textTransformers = objectKeys(textTransformersSchema.shape)
 
 /** gives an array of pretrainedModels that can be used when mainTask = 'text' */
-export const textPretrainedModels = objectKeys(textPretrainedModelsSchema)
+export const textPretrainedModels = objectKeys(textPretrainedModelsSchema.shape)
 
 export const pipelineDLTextSchema = z.object({
   mainTask: z.literal("text"),
@@ -111,15 +111,7 @@ export const pipelineDLTextSchema = z.object({
   dataFormat: z
     .enum(["csv", "plain-text", "pytorch-tensor", "pickle"])
     .default("plain-text"),
-  dataFormatPicker: dataFormatPickerSchema,
   transformers: z.array(z.enum(textTransformers)).default([]),
   pretrainedModels: z.array(z.enum(textPretrainedModels)).default([]),
   customModels: z.array(z.enum(customModels)).default([]),
-  losses: pipelineDLLossesSchema,
-  optimizers: pipelineDLOptimizersSchema,
-  monitoring: pipelineDLMonitoringSchema,
-  metrics: pipelineDLMetricsSchema,
-  trainingHyperParameters: trainingHyperParametersSchema,
-  earlyStopping: pipelineDLEarlyStoppingSchema,
-  lrSchedular: pipelineDLLRSchedularSchema,
 })

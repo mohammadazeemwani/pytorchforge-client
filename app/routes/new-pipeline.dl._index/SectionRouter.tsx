@@ -5,14 +5,14 @@ import { PreProcessingSection } from "./sections/preProcessing";
 import { ModelSection } from "./sections/model";
 import { TrainingSection } from "./sections/training";
 import { SummarySection } from "./sections/summary";
-import type { Control } from "react-hook-form";
+import type { UseFormReturn } from "react-hook-form";
 import type { PipelineDL } from "~/types/pipelineDL";
 import * as z from 'zod/v4'
 
 
 type SectionRouterProps = {
   section: typeof sectionSlugs[number],
-  control: Control<PipelineDL>
+  form: UseFormReturn<PipelineDL>
 } & React.ComponentProps<'div'>
 
 export function SectionRouter({ section, ...delegated}: SectionRouterProps) {

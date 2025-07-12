@@ -1,9 +1,8 @@
 import React from "react";
 import { cn } from "~/utils/general";
-import { useController, useForm, type Control } from 'react-hook-form'
+import type { UseFormReturn } from 'react-hook-form'
 import { z } from 'zod'
 import type { MainTask, PipelineDL } from "~/types/pipelineDL";
-import { usePipelineDLStore } from "~/store/pipelineDL";
 import {
   Select,
   SelectContent,
@@ -12,9 +11,7 @@ import {
   SelectValue,
 } from "~/components/Select"
 import {
-  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,28 +27,29 @@ export const schema = z.object({
 })
 
 type MainTaskFieldProps = {
-  control: Control<PipelineDL>,
+  form: UseFormReturn<PipelineDL>,
   className?: string
 }
-export function MainTaskField({ control, className}: MainTaskFieldProps) {
+export function MainTaskField({ form, className, ...delegated}: MainTaskFieldProps) {
 
   return (
     <FormField
-      control={control}
+      control={form.control}
       name="mainTask"
       render={({ field }) => (
-        <FormItem className={cn('', className)}>
+        <FormItem className={cn('', className)} {...delegated}>
           <FormLabel>Main Task</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder="Select your main task" />
+                <SelectValue placeholder="Select main task" />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {mainTasks.map((task) => (
-                <SelectItem value={task}>{task}</SelectItem>
+              {mainTasks.map((task, i) => (
+                <SelectItem key={i} value={task}>{task}</SelectItem>
               ))}
+              {/* <SelectItem value="fjlksd">testing</SelectItem> */}
             </SelectContent>
           </Select>
           <FormMessage />

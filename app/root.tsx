@@ -53,7 +53,12 @@ export function loader({}: Route.LoaderArgs) {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html 
+      lang="en"
+      className={cn(
+        'error-glow-prep' // this is imp for animation that happens in FormErrorContext
+      )}
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -61,7 +66,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <ThemeProvider>
-        <body className={cn("drawer")}>
+        <body className={cn(
+          "drawer",
+        )}>
           <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
           <div
             className={cn(

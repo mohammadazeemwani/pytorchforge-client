@@ -16,9 +16,9 @@ export function StepNextButton({ label="Next", className, ...delegated}: StepNex
         'btn btn-primary',
         className
       )}
-      {...delegated}
       disabled={!canGoNext}
       onClick={() => goNext()}
+      {...delegated}
     >
       {label}
     </button>
@@ -39,9 +39,9 @@ export function StepBackButton({ label="Back", className, ...delegated}: StepBac
         'btn btn-soft btn-primary',
         className
       )}
-      {...delegated}
       disabled={!canGoBack}
       onClick={() => goBack()}
+      {...delegated}
     >
       {label}
     </button>

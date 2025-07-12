@@ -1,8 +1,12 @@
 import React from "react";
 import { cn } from "~/utils/general";
 import { sectionSlugToLabel } from "~/constants/pipelineDL";
+import type { UseFormReturn } from "react-hook-form";
+import type { PipelineDL } from "~/types/pipelineDL";
 
-type SummarySectionProps = {} & React.ComponentProps<'div'>
+type SummarySectionProps = {
+  form: UseFormReturn<PipelineDL>
+} & React.ComponentProps<'div'>
 
 export function SummarySection({ className, ...delegated}: SummarySectionProps) {
   return (

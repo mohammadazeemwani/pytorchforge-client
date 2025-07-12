@@ -2,63 +2,59 @@ import * as z from "zod/v4"
 import {
   Interpolation,
   TensorD,
+  arrayNumberSchema,
   customModels,
-  pipelineDLLossesSchema,
-  pipelineDLOptimizersSchema,
-  pipelineDLMonitoringSchema,
-  pipelineDLMetricsSchema,
-  pipelineDLEarlyStoppingSchema,
-  pipelineDLLRSchedularSchema,
-  dataFormatPickerSchema,
-  trainingHyperParametersSchema,
 } from "./pipelineDL.general"
 import { objectKeys } from "ts-extras"
 
 export const imageTransformersSchema = z.object({
   Resize: z.object({
-    size: z.array(z.number()).default([224, 224]),
-    interpolation: Interpolation.optional().default("bilinear"),
+    size: z.array(z.number()),
+    interpolation: Interpolation.optional(),
   }),
   RandomCrop: z.object({
-    size: z.array(z.number()).default([224, 224]),
-    padding: z.array(z.number()).optional(),
+    size: z.array(z.number()),
+    padding: z.array(z.number()),
     pad_if_needed: z.boolean().optional(),
   }),
   RandomHorizontalFlip: z.object({
-    p: z.number().default(0.5),
+    p: z.number(),
   }),
   ColorJitter: z.object({
-    brightness: z.number().default(0.4),
-    contrast: z.number().default(0.4),
-    saturation: z.number().default(0.4),
-    hue: z.number().default(0.1),
+    brightness: z.number(),
+    contrast: z.number(),
+    saturation: z.number(),
+    hue: z.number(),
   }),
   Grayscale: z.object({
-    num_output_channels: z.number().default(1),
+    num_output_channels: z.number(),
   }),
   RandomAdjustSharpness: z.object({
-    sharpness_factor: z.number().default(2),
-    p: z.number().optional().default(0.5),
+    sharpness_factor: z.number(),
+    p: z.number().optional(),
   }),
   Normalize: z.object({
-    mean: z.array(z.number()).default([0.5]),
-    std: z.array(z.number()).default([0.5]),
+    mean: z.array(z.number()),
+    std: z.array(z.number()),
   }),
   ConvertImageDtype: z.object({
-    dtype: TensorD.default("float32"),
+    dtype: TensorD,
   }),
-  ToTensor: z.object({
-    /** Empty object means no param input */
-  }),
+  ToTensor: z
+    .object({
+      /** UI-ELEMENT:  selectMenu  */
+      dtype: TensorD,
+    })
+    .optional(),
   RandomErasing: z.object({
-    p: z.number().default(0.5),
-    scale: z.array(z.number()).default([0.02, 0.33]).optional(),
-    ratio: z.array(z.number()).default([0.3, 3.3]).optional(),
-    value: z.number().default(0).optional(),
+    p: z.number(),
+    scale: z.array(z.number()),
+    ratio: z.array(z.number()),
+    value: z.number().optional(),
   }),
   GaussianBlur: z.object({
-    kernel_size: z.number().default(3),
-    sigma: z.array(z.number()).default([0.1, 2.0]),
+    kernel_size: z.number(),
+    sigma: z.array(z.number()),
   }),
 })
 
@@ -92,28 +88,25 @@ export const imagePretrainedModelsSchema = z.object({
 })
 
 /** gives an array of transformers that can be used when mainTask = 'image' */
-export const imageTransformers = objectKeys(imageTransformersSchema)
+export const imageTransformers = objectKeys(imageTransformersSchema.shape)
 
 /** gives an array of pretrainedModels that can be used when mainTask = 'image' */
-export const imagePretrainedModels = objectKeys(imagePretrainedModelsSchema)
+export const imagePretrainedModels = objectKeys(imagePretrainedModelsSchema.shape)
 
 export const pipelineDLImageSchema = z.object({
   mainTask: z.literal("image"),
   subTask: z
-    .enum(["classification", "generation", "object-detection", "image-segmentation"])
-    .default('classification'),
+    .enum([
+      "classification",
+      "generation",
+      "object-detection",
+      "image-segmentation",
+    ])
+    .default("classification"),
   dataFormat: z
     .enum(["png", "jpeg", "jpg", "pytorch-tensor", "pickle"])
-    .default('png'),
-  dataFormatPicker: dataFormatPickerSchema,
+    .default("png"),
   transformers: z.array(z.enum(imageTransformers)).default([]),
   pretrainedModels: z.array(z.enum(imagePretrainedModels)).default([]),
   customModels: z.array(z.enum(customModels)).default([]),
-  losses: pipelineDLLossesSchema,
-  optimizers: pipelineDLOptimizersSchema,
-  monitoring: pipelineDLMonitoringSchema,
-  metrics: pipelineDLMetricsSchema,
-  trainingHyperParameters: trainingHyperParametersSchema,
-  earlyStopping: pipelineDLEarlyStoppingSchema,
-  lrSchedular: pipelineDLLRSchedularSchema,
 })

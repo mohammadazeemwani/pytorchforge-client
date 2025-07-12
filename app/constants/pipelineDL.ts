@@ -1,4 +1,7 @@
 import { objectKeys } from "ts-extras"
+import type { MainTask } from "~/types/pipelineDL";
+
+export const defaultTask: MainTask = 'image'
 
 /** Order matters. here */
 export const sectionSlugToLabel = {
