@@ -8,6 +8,9 @@ export function meta({}: Route.MetaArgs) {
       name: "description",
       content: "Make Pipelines for your next big AI thing",
     },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://pipeline-ui.pages.dev" },
+    { property: "og:image", content: "/logo-dark.svg" }
   ]
 }
 
