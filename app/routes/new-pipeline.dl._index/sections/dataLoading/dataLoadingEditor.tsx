@@ -19,7 +19,15 @@ export function DataLoadingEditor({ form, className }: DataLoadingEditorProps) {
   const mainTask = form.watch('mainTask');
   const subTask = form.watch('subTask')
   const code = React.useMemo(() => {
-    return getDefaultDataLoadingCode(mainTask, subTask)
+    const formValue = form.getValues('dataLoading')
+    if (!formValue) {
+      const defaultCode = getDefaultDataLoadingCode(mainTask, subTask)
+      form.setValue('dataLoading', defaultCode)
+      return defaultCode;
+    } else {
+      return formValue
+    }
+
   }, [mainTask, subTask])
   const { theme } = useTheme()
   const editorTheme = theme === 'dark' ? monokai : gruvboxLight

@@ -50,7 +50,8 @@ export function getDefaultPipelineDLSchema(
       break
   }
   const commons: DeepPartial<PipelineDL> = {
-    dataLoading: getDefaultDataLoadingCode(discriminatedOnMainTask.mainTask!, discriminatedOnMainTask.subTask!),
+    // NOTE: We need to keep it undefined for future proof purposes. 
+    // dataLoading: getDefaultDataLoadingCode(discriminatedOnMainTask.mainTask!, discriminatedOnMainTask.subTask!),
     usePreTrained: true,
     trainingHyperParameters: {
       batch_size: 32,
