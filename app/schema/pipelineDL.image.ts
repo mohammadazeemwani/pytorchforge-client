@@ -10,14 +10,14 @@ import { objectKeys } from "ts-extras"
 export const imageTransformersSchema = z.object({
   Resize: z
     .object({
-      size: z.array(z.number()),
+      size: z.array(z.number()).nonempty('value can\'t be empty'),
       interpolation: Interpolation.optional(),
     })
     .optional(),
   RandomCrop: z
     .object({
-      size: z.array(z.number()),
-      padding: z.array(z.number()),
+      size: z.array(z.number()).nonempty('value can\'t be empty'),
+      padding: z.array(z.number()).nonempty('value can\'t be empty'),
       pad_if_needed: z.boolean().optional(),
     })
     .optional(),
@@ -47,8 +47,8 @@ export const imageTransformersSchema = z.object({
     .optional(),
   Normalize: z
     .object({
-      mean: z.array(z.number()),
-      std: z.array(z.number()),
+      mean: z.array(z.number()).nonempty('value can\'t be empty'),
+      std: z.array(z.number()).nonempty('value can\'t be empty'),
     })
     .optional(),
   ConvertImageDtype: z
@@ -65,15 +65,15 @@ export const imageTransformersSchema = z.object({
   RandomErasing: z
     .object({
       p: z.number(),
-      scale: z.array(z.number()),
-      ratio: z.array(z.number()),
+      scale: z.array(z.number()).nonempty('value can\'t be empty'),
+      ratio: z.array(z.number()).nonempty('value can\'t be empty'),
       value: z.number().optional(),
     })
     .optional(),
   GaussianBlur: z
     .object({
       kernel_size: z.number(),
-      sigma: z.array(z.number()),
+      sigma: z.array(z.number()).nonempty('value can\'t be empty'),
     })
     .optional(),
 })

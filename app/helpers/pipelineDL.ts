@@ -26,7 +26,8 @@ export function getDefaultPipelineDLSchema(
         mainTask: "image",
         subTask: "classification",
         dataFormat: "png",
-        transformers: ['ToTensor']
+        transformers: ['ToTensor'],
+        pretrainedModel: 'ResNet'
       }
       break
     case "text":
@@ -34,7 +35,8 @@ export function getDefaultPipelineDLSchema(
         mainTask: "text",
         subTask: "classification",
         dataFormat: "csv",
-        transformers: ['ToTensor']
+        transformers: ['ToTensor'],
+        pretrainedModel: 'Transformer'
       }
       break
     case "audio":
@@ -42,7 +44,8 @@ export function getDefaultPipelineDLSchema(
         mainTask: "audio",
         subTask: "classification",
         dataFormat: "mp3",
-        transformers: ['ToTensor']
+        transformers: ['ToTensor'],
+        pretrainedModel: 'WaveRNN'
       }
       break
   }
@@ -256,6 +259,43 @@ export function getDefaultPipelineDLSchema(
         n_hidden: 128,
         n_output: 128
       }
+    },
+    /**
+     * any default value needed will be added here and ya:
+     * as @haroon mentioned, customModelsData should contain atleast one by user.
+     * and we have to make user that customModels the array not data is not empty.
+     */
+    customModelsData: {
+      Linear: {},
+      Bilinear: {},
+      Conv1d: {},
+      Conv2d: {},
+      Conv3d: {},
+      ConvTranspose1d: {},
+      ConvTranspose2d: {},
+      ConvTranspose3d: {},
+      MaxPool1d: {},
+      MaxPool2d: {},
+      MaxPool3d: {},
+      AvgPool1d: {},
+      AvgPool2d: {},
+      AvgPool3d: {},
+      BatchNorm1d: {},
+      BatchNorm2d: {},
+      BatchNorm3d: {},
+      LayerNorm: {},
+      Transformer: {},
+      MultiheadAttention: {},
+      Dropout: {},
+      Dropout1d: {},
+      Dropout2d: {},
+      Dropout3d: {},
+      Embedding: {},
+      PixelShuffle: {},
+      Upsample: {},
+      LSTM: {},
+      Flatten: {},
+      Unfold: {}
     }
   }
 
@@ -385,7 +425,7 @@ export function getAllowedPreTrainedModel(mainTask: MainTask) {
 }
 
 // doesn't depend on mainTask
-export function getAllowedCustomModel() {
+export function getAllowedCustomModels() {
   const inner =
     pipelineDLSchema.def.left.shape.customModels
   const values = inner.unwrap().options

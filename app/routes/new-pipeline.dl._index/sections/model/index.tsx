@@ -8,7 +8,7 @@ import { isGoodToGo } from "./helper";
 import { useFormErrorContext } from "~/components/FormErrorShow/FormErrorContext";
 import { UsePreTrainedCheckField } from "./UsePreTrainedCheck.field";
 import { PreTrainedModelField } from "./PreTrainedModel/PreTrainedModel.field";
-import { CustomModelField } from "./CustomModel/CustomModel.field";
+import { CustomModelField } from "./CustomModels/CustomModels.field";
 
 
 type ModelSectionProps = {
@@ -28,7 +28,7 @@ export function ModelSection({ className, form, ...delegated}: ModelSectionProps
       setError(error);
       return false
     }
-  }, [setError])
+  }, [setError, form])
 
   return (
     <div

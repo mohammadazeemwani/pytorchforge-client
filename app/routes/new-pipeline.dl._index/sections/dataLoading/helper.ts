@@ -21,7 +21,6 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
   const stepSchema = schemaNonDiscriminated
 
   const data = form.getValues()
-  console.log('data', data)
   const result = stepSchema.safeParse(data);
 
   return result;

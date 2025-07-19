@@ -23,10 +23,8 @@ type DnDItemProps =
   }
 & ( 
 | { gearChildren: undefined }
-| { 
-    gearChildren: React.ReactNode, 
-    gearChildTitle: string,
-    gearChildDescription?: string
+| {
+  
   }
 )
 
@@ -42,7 +40,6 @@ export function DnDItem(props: DnDItemProps) {
   const {
     id,
     children,
-    gearChildren,
     className, // from div props
     ...delegated
   } = props;
@@ -85,7 +82,6 @@ export function DnDItem(props: DnDItemProps) {
         <GripVertical className="text-base-content w-[1.2rem]"/>
       </div>
       {children}
-      {gearChildren}
     </div>
   )
 }

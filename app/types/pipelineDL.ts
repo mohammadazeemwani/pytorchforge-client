@@ -15,7 +15,7 @@ export type UnifiedTransformers = Transformers extends (infer ItemType)[] ? Item
 
 
 export type PreTrainedModels = PipelineDL['pretrainedModel']
-export type CustomModels = PipelineDL['customModels']
+export type CustomModels = PipelineDL['customModels'][number]
 export type Losses = PipelineDL['losses']
 export type Optimizers = PipelineDL['optimizers']
 export type Monitoring = PipelineDL['monitoring']

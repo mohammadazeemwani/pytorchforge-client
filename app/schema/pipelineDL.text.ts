@@ -9,7 +9,7 @@ export const textTransformersSchema = z.object({
     .object({
       /** It will be array of regex patterns, the user will type */
       /** UI-ELEMENT: TEXT BOX ~ write values as comma separated */
-      patterns_list: z.array(z.string()),
+      patterns_list: z.array(z.string()).nonempty('value can\'t be empty'),
     })
     .optional(),
   SentencePieceTokenizer: z
@@ -21,7 +21,7 @@ export const textTransformersSchema = z.object({
   VocabTransform: z
     .object({
       /** UI-ELEMENT:  TEXTBOX  comma separated */
-      vocab: z.array(z.string()),
+      vocab: z.array(z.string()).optional(),
     })
     .optional(),
   ToTensor: z
@@ -46,20 +46,20 @@ export const textTransformersSchema = z.object({
   AddToken: z
     .object({
       /** UI-ELEMENT: text box  */
-      token: z.array(z.string()),
+      token: z.array(z.string()).nonempty('value can\'t be empty'),
       begin: z.boolean().optional(),
     })
     .optional(),
   BERTTokenizer: z
     .object({
       /** UI-ELEMENT: file path */
-      tokenizer: z.string().default("facebook/bart-base"),
+      tokenizer: z.string(),
     })
     .optional(),
   LabelToIndex: z
     .object({
       /** UI-ELEMENT:  text box []*/
-      label_names: z.array(z.string()).default([]),
+      label_names: z.array(z.string()).optional(),
     })
     .optional(),
 })

@@ -1,18 +1,19 @@
 import type { ComponentType } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import type { PipelineDL, PreTrainedModels } from "~/types/pipelineDL";
-import { ResNetSection } from "./PreTrainedModelParamFields/ResNet/ResNet.section";
+import { ResNetSection } from "./PreTrainedModelParamSections/ResNet/ResNet.section";
 import { cn } from "~/utils/general";
-import { EfficientNetSection } from "./PreTrainedModelParamFields/EfficientNet/EfficientNet.section";
-import { VisionTransformerSection } from "./PreTrainedModelParamFields/VisionTransformer/VisionTransformer.section";
-import { FasterRCNNSection } from "./PreTrainedModelParamFields/FasterRCNN/FasterRCNN.section";
-import { MaskRCNNSection } from "./PreTrainedModelParamFields/MaskRCNN/MaskRCNN.section";
-import { DeepLabV3Section } from "./PreTrainedModelParamFields/DeepLabV3/DeepLabV3.section";
-import { GloVeSection } from "./PreTrainedModelParamFields/GloVe/GloVe.section";
-import { FastTextSection } from "./PreTrainedModelParamFields/FastText/FastText.section";
-import { TransformerSection } from "./PreTrainedModelParamFields/Transformer/Transformer.section";
-import { ConformerSection } from "./PreTrainedModelParamFields/Conformer/Conformer.section";
-import { Wave2LetterSection } from "./PreTrainedModelParamFields/Wave2Letter/Wave2Letter.section";
+import { EfficientNetSection } from "./PreTrainedModelParamSections/EfficientNet/EfficientNet.section";
+import { VisionTransformerSection } from "./PreTrainedModelParamSections/VisionTransformer/VisionTransformer.section";
+import { FasterRCNNSection } from "./PreTrainedModelParamSections/FasterRCNN/FasterRCNN.section";
+import { MaskRCNNSection } from "./PreTrainedModelParamSections/MaskRCNN/MaskRCNN.section";
+import { DeepLabV3Section } from "./PreTrainedModelParamSections/DeepLabV3/DeepLabV3.section";
+import { GloVeSection } from "./PreTrainedModelParamSections/GloVe/GloVe.section";
+import { FastTextSection } from "./PreTrainedModelParamSections/FastText/FastText.section";
+import { TransformerSection } from "./PreTrainedModelParamSections/Transformer/Transformer.section";
+import { ConformerSection } from "./PreTrainedModelParamSections/Conformer/Conformer.section";
+import { Wave2LetterSection } from "./PreTrainedModelParamSections/Wave2Letter/Wave2Letter.section";
+import { WaveRNNSection } from "./PreTrainedModelParamSections/WaveRNN/WaveRNN.section";
 
 export type PreTrainedSectionProps = {
   form: UseFormReturn<PipelineDL>,
@@ -32,7 +33,8 @@ const preTrained2FormSectionMapper: Record<
   FastText: FastTextSection,
   Transformer: TransformerSection,
   Conformer: ConformerSection,
-  Wave2Letter: Wave2LetterSection
+  Wave2Letter: Wave2LetterSection,
+  WaveRNN: WaveRNNSection
 }
 
 export function getPreTrainedParamModifierComponent(

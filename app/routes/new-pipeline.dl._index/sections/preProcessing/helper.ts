@@ -1,4 +1,6 @@
 import type { UseFormReturn } from "react-hook-form"
+import { objectEntries, objectFromEntries } from "ts-extras"
+import { z } from "zod/v4"
 import { pipelineDLSchema } from "~/schema/pipelineDL"
 import type { PipelineDL } from "~/types/pipelineDL"
 
@@ -19,6 +21,10 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
   const schemaNonDiscriminated = pipelineDLSchema.def.left.pick({
     transformersData: true
   });
+  const selectedTransformers = form.getValues('transformers')
+  const allowedTransformersDataEntries = objectEntries(schemaNonDiscriminated.shape.transformersData.shape).filter(e => {
+    return selectedTransformers?.includes(e[0] as any)
+  })
 
   const schemaDiscriminatedVariant = pipelineDLSchema.def.right.options.find(
     (opt) => opt.shape.mainTask.value === mainTask
@@ -27,7 +33,10 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
     transformers: true,
   })
 
-  const stepSchema = schemaNonDiscriminated.and(schemaDiscriminated)
+  const stepSchema = z.object({
+    transformers: schemaDiscriminated.shape.transformers,
+    transformersData: z.object(objectFromEntries(allowedTransformersDataEntries))
+  })
 
   const data = form.getValues()
   const result = stepSchema.safeParse(data);
