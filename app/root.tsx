@@ -35,12 +35,12 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "icon",
-    href: "logo-light.svg",
+    href: "/logo-light.svg",
     media:"(prefers-color-scheme: light)"
   },
   {
     rel: "icon",
-    href: "logo-dark.svg",
+    href: "/logo-dark.svg",
     media:"(prefers-color-scheme: dark)"
   },
 ]

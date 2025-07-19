@@ -29,6 +29,9 @@ export type TensorDType = z.infer<typeof TensorD>
 
 export const dataFileSchema = z
   .file({ error: 'Data File needs to be selected'})
+
+export const dataLoadingSchema = z.string()
+export const usePreTrainedSchema = z.boolean()
 export const pipelineDLCustomModelsSchema = z.object({
   Linear: z.object({
     in_features: z.array(z.number()),
@@ -266,7 +269,8 @@ export const pipelineDLCustomModelsSchema = z.object({
     dilation: z.number().optional(),
   }),
 })
-export const customModels = objectKeys(pipelineDLCustomModelsSchema)
+export const customModels = objectKeys(pipelineDLCustomModelsSchema.shape)
+export const customModelsSchema = z.array(z.enum(customModels))
 
 const ReductionSchema = z.enum(["None", "Mean", "Sum"])
 export const pipelineDLLossesSchema = z

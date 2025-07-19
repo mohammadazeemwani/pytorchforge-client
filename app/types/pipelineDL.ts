@@ -6,13 +6,15 @@ export type PipelineDL = z.infer<typeof pipelineDLSchema>
 
 export type MainTask = PipelineDL['mainTask']
 export type SubTasks = PipelineDL['subTask']
+export type SubTasksDiscriminated<T extends MainTask> = 
+  Extract<PipelineDL, { mainTask: T}>['subTask']
 export type DataFormat = PipelineDL['dataFormat']
 export type DataFormatPicker = PipelineDL['dataFile']
 export type Transformers = PipelineDL['transformers']
 export type UnifiedTransformers = Transformers extends (infer ItemType)[] ? ItemType : never;
 
 
-export type PreTrainedModels = PipelineDL['pretrainedModels']
+export type PreTrainedModels = PipelineDL['pretrainedModel']
 export type CustomModels = PipelineDL['customModels']
 export type Losses = PipelineDL['losses']
 export type Optimizers = PipelineDL['optimizers']

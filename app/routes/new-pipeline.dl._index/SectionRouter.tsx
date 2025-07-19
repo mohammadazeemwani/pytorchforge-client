@@ -8,6 +8,7 @@ import { SummarySection } from "./sections/summary";
 import type { UseFormReturn } from "react-hook-form";
 import type { PipelineDL } from "~/types/pipelineDL";
 import * as z from 'zod/v4'
+import { DataLoadingSection } from "./sections/dataLoading";
 
 
 type SectionRouterProps = {
@@ -21,6 +22,8 @@ export function SectionRouter({ section, ...delegated}: SectionRouterProps) {
       return <TaskSection {...delegated} />
     case 'preProcessing':
       return <PreProcessingSection {...delegated} />
+    case 'dataLoading':
+      return <DataLoadingSection {...delegated} />
     case 'model':
       return <ModelSection {...delegated} />
     case 'training':

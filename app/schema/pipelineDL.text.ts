@@ -1,15 +1,6 @@
 import * as z from "zod/v4"
 import {
   TensorD,
-  customModels,
-  pipelineDLLossesSchema,
-  pipelineDLOptimizersSchema,
-  pipelineDLMonitoringSchema,
-  pipelineDLMetricsSchema,
-  pipelineDLEarlyStoppingSchema,
-  pipelineDLLRSchedularSchema,
-  dataFileSchema,
-  trainingHyperParametersSchema,
 } from "./pipelineDL.general"
 import { objectKeys } from "ts-extras"
 
@@ -75,26 +66,26 @@ export const textTransformersSchema = z.object({
 
 export const textPretrainedModelsSchema = z.object({
   GloVe: z.object({
-    dim: z.number().default(300),
-    name: z.string().default("6B"),
-  }),
+    dim: z.number(),
+    name: z.string(),
+  }).optional(),
   FastText: z.object({
-    language: z.string().default("en"),
-  }),
+    language: z.string(),
+  }).optional(),
   Transformer: z.object({
-    d_model: z.number().default(512).optional(),
-    nhead: z.number().default(8).optional(),
-    num_encoder_layers: z.number().default(6).optional(),
-    num_decoder_layers: z.number().default(6).optional(),
-    dim_feedforward: z.number().default(2048).optional(),
-    dropout: z.number().default(0.1).optional(),
-    activation: z.string().default("<function relu>").optional(),
-    layer_norm_eps: z.number().default(1e-5).optional(),
-    batch_first: z.boolean().default(false).optional(),
-    norm_first: z.boolean().default(true).optional(),
+    d_model: z.number().optional(),
+    nhead: z.number().optional(),
+    num_encoder_layers: z.number().optional(),
+    num_decoder_layers: z.number().optional(),
+    dim_feedforward: z.number().optional(),
+    dropout: z.number().optional(),
+    activation: z.string().optional(),
+    layer_norm_eps: z.number().optional(),
+    batch_first: z.boolean().optional(),
+    norm_first: z.boolean().optional(),
     device: z.string().optional(),
-    dtype: TensorD.default("float32").optional(),
-  }),
+    dtype: TensorD.optional(),
+  }).optional(),
 })
 
 /** gives an array of transformers that can be used when mainTask = 'text' */
@@ -106,12 +97,9 @@ export const textPretrainedModels = objectKeys(textPretrainedModelsSchema.shape)
 export const pipelineDLTextSchema = z.object({
   mainTask: z.literal("text"),
   subTask: z
-    .enum(["classification", "summarization", "translation", "generation"])
-    .default("classification"),
+    .enum(["classification", "summarization", "translation", "generation"]),
   dataFormat: z
-    .enum(["csv", "plain-text", "pytorch-tensor", "pickle"])
-    .default("plain-text"),
-  transformers: z.array(z.enum(textTransformers)).default([]),
-  pretrainedModels: z.array(z.enum(textPretrainedModels)).default([]),
-  customModels: z.array(z.enum(customModels)).default([]),
+    .enum(["csv", "plain-text", "pytorch-tensor", "pickle"]),
+  transformers: z.array(z.enum(textTransformers)),
+  pretrainedModel: z.enum(textPretrainedModels),
 })

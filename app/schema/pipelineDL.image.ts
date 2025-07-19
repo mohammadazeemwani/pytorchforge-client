@@ -8,83 +8,107 @@ import {
 import { objectKeys } from "ts-extras"
 
 export const imageTransformersSchema = z.object({
-  Resize: z.object({
-    size: z.array(z.number()),
-    interpolation: Interpolation.optional(),
-  }),
-  RandomCrop: z.object({
-    size: z.array(z.number()),
-    padding: z.array(z.number()),
-    pad_if_needed: z.boolean().optional(),
-  }),
-  RandomHorizontalFlip: z.object({
-    p: z.number(),
-  }),
-  ColorJitter: z.object({
-    brightness: z.number(),
-    contrast: z.number(),
-    saturation: z.number(),
-    hue: z.number(),
-  }),
-  Grayscale: z.object({
-    num_output_channels: z.number(),
-  }),
-  RandomAdjustSharpness: z.object({
-    sharpness_factor: z.number(),
-    p: z.number().optional(),
-  }),
-  Normalize: z.object({
-    mean: z.array(z.number()),
-    std: z.array(z.number()),
-  }),
-  ConvertImageDtype: z.object({
-    dtype: TensorD,
-  }),
+  Resize: z
+    .object({
+      size: z.array(z.number()),
+      interpolation: Interpolation.optional(),
+    })
+    .optional(),
+  RandomCrop: z
+    .object({
+      size: z.array(z.number()),
+      padding: z.array(z.number()),
+      pad_if_needed: z.boolean().optional(),
+    })
+    .optional(),
+  RandomHorizontalFlip: z
+    .object({
+      p: z.number(),
+    })
+    .optional(),
+  ColorJitter: z
+    .object({
+      brightness: z.number(),
+      contrast: z.number(),
+      saturation: z.number(),
+      hue: z.number(),
+    })
+    .optional(),
+  Grayscale: z
+    .object({
+      num_output_channels: z.number(),
+    })
+    .optional(),
+  RandomAdjustSharpness: z
+    .object({
+      sharpness_factor: z.number(),
+      p: z.number().optional(),
+    })
+    .optional(),
+  Normalize: z
+    .object({
+      mean: z.array(z.number()),
+      std: z.array(z.number()),
+    })
+    .optional(),
+  ConvertImageDtype: z
+    .object({
+      dtype: TensorD,
+    })
+    .optional(),
   ToTensor: z
     .object({
       /** UI-ELEMENT:  selectMenu  */
       dtype: TensorD,
     })
     .optional(),
-  RandomErasing: z.object({
-    p: z.number(),
-    scale: z.array(z.number()),
-    ratio: z.array(z.number()),
-    value: z.number().optional(),
-  }),
-  GaussianBlur: z.object({
-    kernel_size: z.number(),
-    sigma: z.array(z.number()),
-  }),
+  RandomErasing: z
+    .object({
+      p: z.number(),
+      scale: z.array(z.number()),
+      ratio: z.array(z.number()),
+      value: z.number().optional(),
+    })
+    .optional(),
+  GaussianBlur: z
+    .object({
+      kernel_size: z.number(),
+      sigma: z.array(z.number()),
+    })
+    .optional(),
 })
 
 export const imagePretrainedModelsSchema = z.object({
   ResNet: z.object({
-    pretrained: z.boolean().default(true),
-    num_classes: z.number().default(1000),
-  }),
-  EfficientNet: z.object({}),
+    pretrained: z.boolean(),
+    num_classes: z.number(),
+  }).optional(),
+  EfficientNet: z.object({
+    width_mult: z.number(),
+    depth_mult: z.number(),
+    dropout: z.number()
+  }).optional(),
   VisionTransformer: z.object({
-    image_size: z.number().default(224),
-    patch_size: z.number().default(16),
-    num_layers: z.number().default(12),
-    num_heads: z.number().default(12),
-    hidden_dim: z.number().default(768),
-  }),
+    image_size: z.number(),
+    patch_size: z.number(),
+    num_layers: z.number(),
+    num_heads: z.number(),
+    hidden_dim: z.number(),
+  }).optional(),
   FasterRCNN: z.object({
-    backbone: z.string().default("resnet50"),
-    num_classes: z.number().default(91),
-    min_size: z.number().default(800),
-    max_size: z.number().default(1333),
-  }),
+    backbone: z.string(),
+    num_classes: z.number(),
+    min_size: z.number(),
+    max_size: z.number(),
+  }).optional(),
   MaskRCNN: z.object({
-    backbone: z.string().default("resnet50"),
-    num_classes: z.number().default(91),
-  }),
+    backbone: z.string(),
+    num_classes: z.number(),
+  }).optional(),
   DeepLabV3: z.object({
-    weights: z.string().default("resnet50"),
-    num_classes: z.number().default(21),
-  }),
+    weights: z.string(),
+    num_classes: z.number(),
+  }).optional(),
 })
 
 /** gives an array of transformers that can be used when mainTask = 'image' */
@@ -101,12 +125,10 @@ export const pipelineDLImageSchema = z.object({
       "generation",
       "object-detection",
       "image-segmentation",
-    ])
-    .default("classification"),
+    ]),
   dataFormat: z
-    .enum(["png", "jpeg", "jpg", "pytorch-tensor", "pickle"])
-    .default("png"),
-  transformers: z.array(z.enum(imageTransformers)).default([]),
-  pretrainedModels: z.array(z.enum(imagePretrainedModels)).default([]),
-  customModels: z.array(z.enum(customModels)).default([]),
+    .enum(["png", "jpeg", "jpg", "pytorch-tensor", "pickle"]),
+  transformers: z.array(z.enum(imageTransformers)),
+
+  pretrainedModel: z.enum(imagePretrainedModels),
 })

@@ -58,7 +58,7 @@ export function FormErrorProvider({
   React.useEffect(() => {
     if (shake) {
       // do the vibration stuff and root bg change.
-      navigator.vibrate(durationVibrate);
+      if (navigator.vibrate) navigator.vibrate(durationVibrate);
       document.documentElement.classList.add('error-glow')
     } else {
       document.documentElement.classList.remove('error-glow')

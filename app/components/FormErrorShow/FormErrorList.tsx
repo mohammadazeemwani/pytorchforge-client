@@ -27,6 +27,7 @@ export function FormErrorList({ className, ...delegated}: FormErrorListProps) {
         <li key={i}>
           {/* It is recommended to describe custom error messages in zod schema */}
           {/* Cz this will be a list below the form, not below each element */}
+          <strong className="italic">{error.path.join(', ')}</strong>{' '}
           {error.message}
         </li>
       ))}

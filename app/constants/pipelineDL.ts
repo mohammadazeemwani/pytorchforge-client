@@ -5,11 +5,12 @@ export const defaultTask: MainTask = 'image'
 
 /** Order matters. here */
 export const sectionSlugToLabel = {
-  "task": "Task",
-  "preProcessing": "Pre Processing",
-  "model": "Model",
-  "training": "Training",
-  "summary": "Summary"
+  "model": "Model", // 4
+  'dataLoading': "Data Loading", // 3
+  "task": "Task", // 1
+  "preProcessing": "Pre Processing", // 2
+  "training": "Training", // 5
+  "summary": "Summary", // 6
 }
 
 export const sectionSlugs = objectKeys(sectionSlugToLabel);

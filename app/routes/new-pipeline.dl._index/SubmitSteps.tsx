@@ -33,7 +33,7 @@ export function SubmitSteps({ className, form, isGoodToGoCallback, ...delegated}
   const { error, shakeForError } = useFormErrorContext();
 
   const nextHandler = React.useCallback(() => {
-    const stepSuccess = isGoodToGoCallback();
+    const stepSuccess = true && isGoodToGoCallback();
     if (stepSuccess) {
       goNext()
     } else {

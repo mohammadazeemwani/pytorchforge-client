@@ -3,10 +3,11 @@ import {
   pipelineDLMainTaskDiscriminatedSchema,
   pipelineDLSchema,
 } from "~/schema/pipelineDL"
-import type { MainTask, PipelineDL } from "~/types/pipelineDL"
+import type { MainTask, PipelineDL, SubTasks, SubTasksDiscriminated } from "~/types/pipelineDL"
 import { Interpolation, TensorD } from "~/schema/pipelineDL.general"
 import merge from "deepmerge"
 import { ZodBoolean, ZodEnum } from "zod/v4"
+import { defaultDataLoadingCode, type defaultDataLoadingCode_t } from "~/constants/pipelineDLDataLoading"
 
 /**
  *
@@ -46,6 +47,8 @@ export function getDefaultPipelineDLSchema(
       break
   }
   const commons: DeepPartial<PipelineDL> = {
+    dataLoading: getDefaultDataLoadingCode(discriminatedOnMainTask.mainTask!, discriminatedOnMainTask.subTask!),
+    usePreTrained: true,
     trainingHyperParameters: {
       batch_size: 32,
       learning_rate: 0.1,
@@ -62,6 +65,7 @@ export function getDefaultPipelineDLSchema(
       },
       RandomCrop: {
         size: [224, 224],
+        padding: []
       },
       RandomHorizontalFlip: {
         p: 0.5,
@@ -134,6 +138,7 @@ export function getDefaultPipelineDLSchema(
       Fade: {
         fade_in_len: 0,
         fade_out_len: 0,
+        fade_shape: 'half_sine'
       },
       Vol: {
         gain: 1.0,
@@ -145,6 +150,7 @@ export function getDefaultPipelineDLSchema(
       Spectrogram: {
         pad_mode: "reflect",
         onesided: true,
+        center: true
       },
       MelSpectrogram: {
         sample_rate: 16000,
@@ -168,6 +174,89 @@ export function getDefaultPipelineDLSchema(
         time_mask_param: 40,
       },
     },
+    pretrainedModelsData: {
+      ResNet: {
+        pretrained: true,
+        num_classes: 1000
+      },
+      EfficientNet: {
+        width_mult: 1.0,
+        depth_mult: 1.0,
+        dropout: 0.2
+      },
+      VisionTransformer: {
+        image_size: 224,
+        patch_size: 16,
+        num_layers: 12,
+        num_heads: 12,
+        hidden_dim: 768
+      },
+      FasterRCNN: {
+        backbone: 'resnet50',
+        num_classes: 91,
+        min_size: 800,
+        max_size: 1333
+      },
+      MaskRCNN: {
+        backbone: 'resnet50',
+        num_classes: 91  
+      },
+      DeepLabV3: {
+        weights: 'resnet50',
+        num_classes: 91  
+      },
+
+      // text
+      GloVe: {
+        dim: 300,
+        name: '6B'
+      },
+      FastText: {
+        language: 'en'
+      },
+      Transformer: {
+        d_model: 512,
+        nhead: 8,
+        num_encoder_layers: 6,
+        num_decoder_layers: 6,
+        dim_feedforward: 2048,
+        dropout: 0.1,
+        activation: "<function relu>",
+        layer_norm_eps: 1e-5,
+        batch_first: false,
+        norm_first: true,
+        dtype: 'float32'
+      },
+
+      // audio
+      Conformer: {
+        input_dim: 80,
+        num_heads: 4,
+        ffn_dim: 256,
+        num_layers: 6,
+        depthwise_conv_kernel_size: 31,
+        dropout: 0.0,
+        use_group_norm: false,
+        convolution_first: false
+      },
+      Wave2Letter: {
+        num_classes: 40,
+        input_type: 'waveform',
+        num_features: 1
+      },
+      WaveRNN: {
+        upsample_scales: [5, 5, 8],
+        n_classes: 256,
+        hop_length: 200,
+        n_res_block: 10,
+        n_rnn: 512,
+        n_fc: 512,
+        kernel_size: 5,
+        n_freq: 128,
+        n_hidden: 128,
+        n_output: 128
+      }
+    }
   }
 
   return merge.all([discriminatedOnMainTask, commons])
@@ -182,7 +271,7 @@ export function getAllowedSubtasks(mainTask: MainTask) {
   const subTaskSchema = variant!.shape.subTask
 
   // unwrapping the default <Remb. it>
-  const inner = subTaskSchema.def.innerType
+  const inner = subTaskSchema
 
   return inner.options
 }
@@ -192,7 +281,7 @@ export function getAllowedDataFormats(mainTask: MainTask) {
     return opt.shape.mainTask.value === mainTask
   })
   const dataFormatSchema = variant!.shape.dataFormat
-  const inner = dataFormatSchema.def.innerType
+  const inner = dataFormatSchema
   return inner.options
 }
 
@@ -201,8 +290,8 @@ export function getAllowedTransformers(mainTask: MainTask) {
     return opt.shape.mainTask.value === mainTask
   })
   const transformersSchema = variant!.shape.transformers
-  const inner = transformersSchema.def.innerType
-  return inner.def.element.options
+  const inner = transformersSchema.def
+  return inner.element.options
 }
 
 export function getAllowedInterpolation() {
@@ -223,31 +312,29 @@ export function getAllowedTensorD() {
 
 export function getAllowedAmplitudeToDB() {
   const inner =
-    pipelineDLSchema.def.left.shape.transformersData.shape.AmplitudeToDB.shape
-      .stype
-  const values = inner.options
-  return values
+    pipelineDLSchema.def.left.shape.transformersData.shape.AmplitudeToDB.unwrap()
+    const values = inner.shape.stype.options
+    return values
 }
 
 export function getAllowedResamplingMethod() {
   const inner =
-    pipelineDLSchema.def.left.shape.transformersData.shape.Resample.shape
-      .resampling_method
-  const values = inner.options
+    pipelineDLSchema.def.left.shape.transformersData.shape.Resample.unwrap()
+  const values = inner.shape.resampling_method.options
   return values
 }
 
 export function getAllowedFadeShape() {
   const inner =
-    pipelineDLSchema.def.left.shape.transformersData.shape.Fade.shape.fade_shape
-  const values = inner.options
+    pipelineDLSchema.def.left.shape.transformersData.shape.Fade.unwrap()
+  const values = inner.shape.fade_shape.options
   return values
 }
 
 export function getAllowedGainType() {
   const inner =
-    pipelineDLSchema.def.left.shape.transformersData.shape.Vol.shape.gain_type
-  const values = inner.options
+    pipelineDLSchema.def.left.shape.transformersData.shape.Vol.unwrap()
+  const values = inner.shape.gain_type.options
   return values
 }
 
@@ -267,14 +354,40 @@ export function getAllowedNormalized() {
   // })
   // return values
 
-  const inner = pipelineDLSchema.def.left.shape.transformersData.shape.Spectrogram.shape.normalized
-  const values = inner.unwrap().options
+  const inner = pipelineDLSchema.def.left.shape.transformersData.shape.Spectrogram.unwrap()
+  const values = inner.shape.normalized.unwrap().options
   return values;
 }
 
 export function getAllowedPadMode() {
   const inner =
-    pipelineDLSchema.def.left.shape.transformersData.shape.Spectrogram.shape.pad_mode
+    pipelineDLSchema.def.left.shape.transformersData.shape.Spectrogram.unwrap()
+  const values = inner.shape.pad_mode.unwrap().options
+  return values
+}
+
+
+export function getDefaultDataLoadingCode(
+  mainTask: MainTask,
+  subTask: SubTasks
+) {
+  return defaultDataLoadingCode[mainTask][subTask as keyof defaultDataLoadingCode_t[MainTask]];
+}
+
+
+export function getAllowedPreTrainedModel(mainTask: MainTask) {
+  const variant = pipelineDLMainTaskDiscriminatedSchema.options.find((opt) => {
+    return opt.shape.mainTask.value === mainTask
+  })
+  const preTrainedModelSchema = variant!.shape.pretrainedModel
+  const values = preTrainedModelSchema.options
+  return values
+}
+
+// doesn't depend on mainTask
+export function getAllowedCustomModel() {
+  const inner =
+    pipelineDLSchema.def.left.shape.customModels
   const values = inner.unwrap().options
   return values
 }

@@ -1,5 +1,4 @@
 import type { UseFormReturn } from "react-hook-form"
-import { useFormErrorContext } from "~/components/FormErrorShow/FormErrorContext"
 import { pipelineDLSchema } from "~/schema/pipelineDL"
 import type { PipelineDL } from "~/types/pipelineDL"
 
