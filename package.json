@@ -1,4 +1,5 @@
 {
+  "version": "0.0.1",
   "name": "public-client",
   "description": "A low code deep learning platform",
   "repository": "github:MLPipelines/pubilc-client",
@@ -67,6 +68,5 @@
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
     "vite-tsconfig-paths": "^5.1.4"
-  },
-  "version": "0.0.1"
+  }
 }
