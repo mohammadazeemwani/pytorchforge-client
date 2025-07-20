@@ -1,5 +1,7 @@
 {
   "name": "public-client",
+  "description": "A low code deep learning platform",
+  "repository": "github:MLPipelines/pubilc-client",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,6 +10,11 @@
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "loc": "cloc --exclude-dir=node_modules --exclude-lang=JSON ."
+  },
+  "author": {
+    "name": "MohammadAzeem",
+    "email": "me@mohammadazeem.in",
+    "url": "https://mohammadazeem.in"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.1",
