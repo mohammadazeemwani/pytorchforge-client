@@ -270,6 +270,12 @@ export function getDefaultPipelineDLSchema(
 
 /**
  * setting union to {} gives us the flexibility to set default only for some selective props
+ * 
+ * This is IMP; if we want some models not be added by default.
+ * but when they are added, we want some default values for them.
+ * THIS IS NOT THE INITIAL CUSTOM MODELS list.
+ * 
+ * THIS WILL OVERRIDE THE initial defaults.
  */
 export const customModelsEssentialDefaults: {
   [C in CustomModelType['name']]: Extract<CustomModelType, { name: C }> | {}

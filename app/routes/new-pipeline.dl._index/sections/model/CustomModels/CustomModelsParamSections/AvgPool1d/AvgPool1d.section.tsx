@@ -43,7 +43,7 @@ export function AvgPool1dSection({
       open={open}
       onOpenChange={setOpen}
     >
-      <DialogTrigger className={cn("cursor-pointer text-base-content", className)}>
+      <DialogTrigger title="adjust this layer" className={cn("cursor-pointer text-base-content", className)}>
         <Cog className="w-[1.4rem]" />
       </DialogTrigger>
       <DialogContent
