@@ -5,8 +5,9 @@ import {
 } from "~/schema/pipelineDL"
 import type { MainTask, PipelineDL, SubTasks, SubTasksDiscriminated } from "~/types/pipelineDL"
 import { Interpolation, TensorD } from "~/schema/pipelineDL.general"
+import type { CustomModelType } from "~/schema/pipelineDL.general"
 import merge from "deepmerge"
-import { ZodBoolean, ZodEnum } from "zod/v4"
+import { z, ZodBoolean, ZodEnum } from "zod/v4"
 import { defaultDataLoadingCode, type defaultDataLoadingCode_t } from "~/constants/pipelineDLDataLoading"
 
 /**
@@ -52,7 +53,7 @@ export function getDefaultPipelineDLSchema(
   const commons: DeepPartial<PipelineDL> = {
     // NOTE: We need to keep it undefined for future proof purposes. 
     // dataLoading: getDefaultDataLoadingCode(discriminatedOnMainTask.mainTask!, discriminatedOnMainTask.subTask!),
-    usePreTrained: true,
+    usePreTrained: false,
     trainingHyperParameters: {
       batch_size: 32,
       learning_rate: 0.1,
@@ -261,46 +262,138 @@ export function getDefaultPipelineDLSchema(
         n_output: 128
       }
     },
-    /**
-     * any default value needed will be added here and ya:
-     * as @haroon mentioned, customModelsData should contain atleast one by user.
-     * and we have to make user that customModels the array not data is not empty.
-     */
-    customModelsData: {
-      Linear: {},
-      Bilinear: {},
-      Conv1d: {},
-      Conv2d: {},
-      Conv3d: {},
-      ConvTranspose1d: {},
-      ConvTranspose2d: {},
-      ConvTranspose3d: {},
-      MaxPool1d: {},
-      MaxPool2d: {},
-      MaxPool3d: {},
-      AvgPool1d: {},
-      AvgPool2d: {},
-      AvgPool3d: {},
-      BatchNorm1d: {},
-      BatchNorm2d: {},
-      BatchNorm3d: {},
-      LayerNorm: {},
-      Transformer: {},
-      MultiheadAttention: {},
-      Dropout: {},
-      Dropout1d: {},
-      Dropout2d: {},
-      Dropout3d: {},
-      Embedding: {},
-      PixelShuffle: {},
-      Upsample: {},
-      LSTM: {},
-      Flatten: {},
-      Unfold: {}
-    }
+    customModels: []
   }
 
   return merge.all([discriminatedOnMainTask, commons])
+}
+
+/**
+ * setting union to {} gives us the flexibility to set default only for some selective props
+ */
+export const customModelsEssentialDefaults: {
+  [C in CustomModelType['name']]: Extract<CustomModelType, { name: C }> | {}
+} = {
+  Linear: {
+    name: 'Linear',
+    props: {}
+  },
+  Bilinear: {
+    name: 'Bilinear',
+    props: {}
+  },
+  Conv1d: {
+    name: 'Conv1d',
+    props: {}
+  },
+  Conv2d: {
+    name: 'Conv2d',
+    props: {}
+  },
+  Conv3d: {
+    name: 'Conv3d',
+    props: {}
+  },
+  ConvTranspose1d: {
+    name: 'ConvTranspose1d',
+    props: {}
+  },
+  ConvTranspose2d: {
+    name: 'ConvTranspose2d',
+    props: {}
+  },
+  ConvTranspose3d: {
+    name: 'ConvTranspose3d',
+    props: {}
+  },
+  MaxPool1d: {
+    name: 'MaxPool1d',
+    props: {}
+  },
+  MaxPool2d: {
+    name: 'MaxPool2d',
+    props: {}
+  },
+  MaxPool3d: {
+    name: 'MaxPool3d',
+    props: {}
+  },
+  AvgPool1d: {
+    name: 'AvgPool1d',
+    props: {}
+  },
+  AvgPool2d: {
+    name: 'AvgPool2d',
+    props: {}
+  },
+  AvgPool3d: {
+    name: 'AvgPool3d',
+    props: {}
+  },
+  BatchNorm1d: {
+    name: 'BatchNorm1d',
+    props: {}
+  },
+  BatchNorm2d: {
+    name: 'BatchNorm2d',
+    props: {}
+  },
+  BatchNorm3d: {
+    name: 'BatchNorm3d',
+    props: {}
+  },
+  LayerNorm: {
+    name: 'LayerNorm',
+    props: {}
+  },
+  Transformer: {
+    name: 'Transformer',
+    props: {}
+  },
+  MultiheadAttention: {
+    name: 'MultiheadAttention',
+    props: {}
+  },
+  Dropout: {
+    name: 'Dropout',
+    props: {}
+  },
+  Dropout1d: {
+    name: 'Dropout1d',
+    props: {}
+  },
+  Dropout2d: {
+    name: 'Dropout2d',
+    props: {}
+  },
+  Dropout3d: {
+    name: 'Dropout3d',
+    props: {}
+  },
+  Embedding: {
+    name: 'Embedding',
+    props: {}
+  },
+  PixelShuffle: {
+    name: 'PixelShuffle',
+    props: {}
+  },
+  Upsample: {
+    name: 'Upsample',
+    props: {}
+  },
+  LSTM: {
+    name: 'LSTM',
+    props: {}
+  },
+  Flatten: {
+    name: 'Flatten',
+    props: {}
+  },
+  Unfold: {
+    name: 'Unfold',
+    props: {}
+  }
 }
 
 export function getAllowedSubtasks(mainTask: MainTask) {

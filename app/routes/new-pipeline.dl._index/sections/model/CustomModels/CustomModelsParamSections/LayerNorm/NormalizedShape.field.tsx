@@ -12,18 +12,20 @@ import {
 import { InputNumberArray } from "~/components/InputNumberArray"
 
 type NormalizedShapeFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function NormalizedShapeField({
   className,
   form,
+  index,
   ...delegated
 }: NormalizedShapeFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.LayerNorm.normalized_shape"
+      name={`customModels.${index}.props.normalized_shape`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Normalized shape</FormLabel>

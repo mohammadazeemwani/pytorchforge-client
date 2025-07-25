@@ -22,17 +22,18 @@ import { ElementwiseAffineField } from "./ElementwiseAffine.field"
 export function LayerNormSection({
   className,
   form,
+  index,
   ...delegated
 }: CustomModelsFieldProps) {
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("customModelsData.LayerNorm", form.formState)
+  const { error } = form.getFieldState(`customModels.${index}`, form.formState)
 
   const resetSection = React.useCallback(() => {
-    form.resetField("customModelsData.LayerNorm")
+    form.resetField(`customModels.${index}`)
     setResetKey(k => k+1)
-  }, [form])
+  }, [form, index])
 
   return (
     <Dialog
@@ -53,9 +54,9 @@ export function LayerNormSection({
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6" key={resetKey}>
-          <NormalizedShapeField form={form} />
-          <EPSField form={form} />
-          <ElementwiseAffineField form={form} />
+          <NormalizedShapeField form={form} index={index} />
+          <EPSField form={form} index={index} />
+          <ElementwiseAffineField form={form} index={index} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">

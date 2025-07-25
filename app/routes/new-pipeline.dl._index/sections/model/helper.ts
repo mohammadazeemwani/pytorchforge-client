@@ -21,7 +21,6 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
     usePreTrained: true,
     customModels: true,
     pretrainedModelsData: true,
-    customModelsData: true
   });
   const schemaDiscriminatedVariant = pipelineDLSchema.def.right.options.find(
     (opt) => opt.shape.mainTask.value === mainTask
@@ -36,14 +35,13 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
   });
 
   // ----- custom model schema
-  const selectedCustomModels = form.getValues('customModels');
-  const allowedCustomModelsDataEntries = objectEntries(schemaNonDiscriminated.shape.customModelsData.shape).filter(e => {
-    return selectedCustomModels?.includes(e[0])
-  })
+  // const selectedCustomModels = form.getValues('customModels');
+  // const allowedCustomModelsDataEntries = objectEntries(schemaNonDiscriminated.shape.customModelsData.shape).filter(e => {
+  //   return selectedCustomModels?.includes(e[0])
+  // })
   const customModelsSchema = z.object({
     usePreTrained: z.literal(false),
     customModels: schemaNonDiscriminated.shape.customModels,
-    customModelsData: z.object(objectFromEntries(allowedCustomModelsDataEntries)),
   });
 
 
@@ -53,6 +51,7 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
   ])
 
   const data = form.getValues()
+  // console.log(data)
   const result = stepSchema.safeParse(data);
 
   return result;

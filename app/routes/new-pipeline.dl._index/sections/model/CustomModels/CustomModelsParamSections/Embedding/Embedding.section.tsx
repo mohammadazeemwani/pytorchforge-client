@@ -24,17 +24,18 @@ import { SparseField } from "./Sparse.field"
 export function EmbeddingSection({
   className,
   form,
+  index,
   ...delegated
 }: CustomModelsFieldProps) {
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("customModelsData.Embedding", form.formState)
+  const { error } = form.getFieldState(`customModels.${index}`, form.formState)
 
   const resetSection = React.useCallback(() => {
-    form.resetField("customModelsData.Embedding")
+    form.resetField(`customModels.${index}`)
     setResetKey(k => k+1)
-  }, [form])
+  }, [form, index])
 
   return (
     <Dialog
@@ -55,11 +56,11 @@ export function EmbeddingSection({
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6" key={resetKey}>
-          <NumEmbeddingsField form={form} />
-          <EmbeddingDimXField form={form} />
-          <PaddingIdxField form={form} />
-          <MaxNormField form={form} />
-          <SparseField form={form} />
+          <NumEmbeddingsField form={form} index={index} />
+          <EmbeddingDimXField form={form} index={index} />
+          <PaddingIdxField form={form} index={index} />
+          <MaxNormField form={form} index={index} />
+          <SparseField form={form} index={index} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">

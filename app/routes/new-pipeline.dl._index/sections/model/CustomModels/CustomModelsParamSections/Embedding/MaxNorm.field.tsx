@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type MaxNormFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function MaxNormField({
   className,
   form,
+  index,
   ...delegated
 }: MaxNormFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Embedding.max_norm"
+      name={`customModels.${index}.props.max_norm`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Maximum Norm</FormLabel>

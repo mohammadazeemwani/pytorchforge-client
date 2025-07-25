@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type MomentumFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function MomentumField({
   className,
   form,
+  index,
   ...delegated
 }: MomentumFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.BatchNorm2d.momentum"
+      name={`customModels.${index}.props.momentum`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Momentum</FormLabel>

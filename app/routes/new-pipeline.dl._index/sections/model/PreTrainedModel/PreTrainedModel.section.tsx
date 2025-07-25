@@ -8,14 +8,14 @@ import type { Value } from "~/components/ComboBoxResponsive";
 import { getPreTrainedParamModifierComponent } from "./preTrainedModel-param-section.mapper";
 import { RotateCwIcon } from "~/components/AnimatedIcons";
 
-type PreTrainedModelFieldProps = {
+type PreTrainedModelSectionProps = {
   form: UseFormReturn<PipelineDL>
 } & React.ComponentProps<'div'>
 
 /**
  * Here only one model needs to be selected and below it will be a cnotainer to chagne its props.
  */
-export function PreTrainedModelField({ form, className, ...delegated}: PreTrainedModelFieldProps) {
+export function PreTrainedModelSection({ form, className, ...delegated}: PreTrainedModelSectionProps) {
   const mainTask = form.watch('mainTask')
 
   const preTrainedModels = React.useMemo(() => {
@@ -47,13 +47,12 @@ export function PreTrainedModelField({ form, className, ...delegated}: PreTraine
     <div
       aria-description=""
       className={cn(
-        'prose dark:prose-invert',
         'flex flex-col gap-8 sm:gap-12',
         className
       )}
       {...delegated}
     >
-      <div className="flex justify-start gap-3 sm:gap-4 sm:justify-center">
+      <div className="flex gap-3 sm:gap-4 justify-center">
         <ComboBoxResponsive 
           values={preTrainedModels} 
           selectedValue={selectedModel}

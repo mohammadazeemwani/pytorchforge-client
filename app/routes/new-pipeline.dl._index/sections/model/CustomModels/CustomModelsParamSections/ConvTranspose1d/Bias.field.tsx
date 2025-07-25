@@ -12,14 +12,15 @@ import {
 } from "~/components/Form"
 
 type BiasFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number,
 } & React.ComponentProps<"div">
 
-export function BiasField({ className, form, ...delegated }: BiasFieldProps) {
+export function BiasField({ className, index, form, ...delegated }: BiasFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.ConvTranspose1d.bias"
+      name={`customModels.${index}.props.bias`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

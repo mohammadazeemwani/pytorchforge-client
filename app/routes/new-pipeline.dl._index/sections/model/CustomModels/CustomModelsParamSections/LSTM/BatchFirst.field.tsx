@@ -12,14 +12,15 @@ import {
 } from "~/components/Form"
 
 type BatchFirstFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function BatchFirstField({ className, form, ...delegated }: BatchFirstFieldProps) {
+export function BatchFirstField({ className, form, index, ...delegated }: BatchFirstFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.LSTM.batch_first"
+      name={`customModels.${index}.props.batch_first`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

@@ -12,18 +12,20 @@ import {
 } from "~/components/Form"
 
 type AddBiasKvFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function AddBiasKvField({
   className,
   form,
+  index,
   ...delegated
 }: AddBiasKvFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.MultiheadAttention.add_bias_kv"
+      name={`customModels.${index}.props.add_bias_kv`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

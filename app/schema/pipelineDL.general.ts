@@ -32,245 +32,342 @@ export const dataFileSchema = z
 
 export const dataLoadingSchema = z.string()
 export const usePreTrainedSchema = z.boolean()
-export const pipelineDLCustomModelsSchema = z.object({
-  Linear: z.object({
-    in_features: z.array(z.number()).nonempty('value can\'t be empty'),
-    out_features: z.array(z.number()).nonempty('value can\'t be empty'),
-    bias: z.boolean().optional(),
-  }).optional(),
+export const customModelsSchema = z.array(z.union([
+  z.object({
+    name: z.literal('Linear'),
+    props: z.object({
+      in_features: z.array(z.number()).nonempty('value can\'t be empty'),
+      out_features: z.array(z.number()).nonempty('value can\'t be empty'),
+      bias: z.boolean().optional(),
+    })
+  }),
 
-  Bilinear: z.object({
-    in1_features: z.array(z.number()).nonempty('value can\'t be empty'),
-    in2_features: z.array(z.number()).nonempty('value can\'t be empty'),
-    out_features: z.array(z.number()).nonempty('value can\'t be empty'),
-    bias: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Bilinear'),
+    props: z.object({
+      in1_features: z.array(z.number()).nonempty('value can\'t be empty'),
+      in2_features: z.array(z.number()).nonempty('value can\'t be empty'),
+      out_features: z.array(z.number()).nonempty('value can\'t be empty'),
+      bias: z.boolean().optional(),
+    })
+  }),
 
-  Conv1d: z.object({
-    in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-    groups: z.number().optional(),
-    bias: z.boolean().optional(),
-    padding_mode: z.string().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Conv1d'),
+    props: z.object({
+      in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+      groups: z.number().optional(),
+      bias: z.boolean().optional(),
+      padding_mode: z.string().optional(),
+    })
+  }),
 
-  Conv2d: z.object({
-    in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-    groups: z.number().optional(),
-    bias: z.boolean().optional(),
-    padding_mode: z.string().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Conv2d'),
+    props: z.object({
+      in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+      groups: z.number().optional(),
+      bias: z.boolean().optional(),
+      padding_mode: z.string().optional(),
+    })
+  }),
 
-  Conv3d: z.object({
-    in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-    groups: z.number().optional(),
-    bias: z.boolean().optional(),
-    padding_mode: z.string().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Conv3d'),
+    props: z.object({
+      in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+      groups: z.number().optional(),
+      bias: z.boolean().optional(),
+      padding_mode: z.string().optional(),
+    })
+  }),
 
-  ConvTranspose1d: z.object({
-    in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    output_padding: z.number().optional(),
-    bias: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('ConvTranspose1d'),
+    props: z.object({
+      in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      output_padding: z.number().optional(),
+      bias: z.boolean().optional(),
+    })
+  }),
 
-  ConvTranspose2d: z.object({
-    in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    output_padding: z.number().optional(),
-    bias: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('ConvTranspose2d'),
+    props: z.object({
+      in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      output_padding: z.number().optional(),
+      bias: z.boolean().optional(),
+    })
+  }),
 
-  ConvTranspose3d: z.object({
-    in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    output_padding: z.number().optional(),
-    bias: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('ConvTranspose3d'),
+    props: z.object({
+      in_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      out_channels: z.array(z.number()).nonempty('value can\'t be empty'),
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      output_padding: z.number().optional(),
+      bias: z.boolean().optional(),
+    })
+  }),
 
-  MaxPool1d: z.object({
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-    ceil_mode: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('MaxPool1d'),
+    props: z.object({
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+      ceil_mode: z.boolean().optional(),
+    })
+  }),
 
-  MaxPool2d: z.object({
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-    ceil_mode: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('MaxPool2d'),
+    props: z.object({
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+      ceil_mode: z.boolean().optional(),
+    })
+  }),
 
-  MaxPool3d: z.object({
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-    ceil_mode: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('MaxPool3d'),
+    props: z.object({
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+      ceil_mode: z.boolean().optional(),
+    })
+  }),
 
-  AvgPool1d: z.object({
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-    ceil_mode: z.boolean().optional(),
-    count_include_pad: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('AvgPool1d'),
+    props: z.object({
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+      ceil_mode: z.boolean().optional(),
+      count_include_pad: z.boolean().optional(),
+    })
+  }),
 
-  AvgPool2d: z.object({
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-    ceil_mode: z.boolean().optional(),
-    count_include_pad: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('AvgPool2d'),
+    props: z.object({
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+      ceil_mode: z.boolean().optional(),
+      count_include_pad: z.boolean().optional(),
+    })
+  }),
 
-  AvgPool3d: z.object({
-    kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-    ceil_mode: z.boolean().optional(),
-    count_include_pad: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('AvgPool3d'),
+    props: z.object({
+      kernel_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+      ceil_mode: z.boolean().optional(),
+      count_include_pad: z.boolean().optional(),
+    })
+  }),
 
-  BatchNorm1d: z.object({
-    num_features: z.number(),
-    eps: z.number().optional(),
-    momentum: z.number().optional(),
-    affine: z.boolean().optional(),
-    track_running_stats: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('BatchNorm1d'),
+    props: z.object({
+      num_features: z.number(),
+      eps: z.number().optional(),
+      momentum: z.number().optional(),
+      affine: z.boolean().optional(),
+      track_running_stats: z.boolean().optional(),
+    })
+  }),
 
-  BatchNorm2d: z.object({
-    num_features: z.number(),
-    eps: z.number().optional(),
-    momentum: z.number().optional(),
-    affine: z.boolean().optional(),
-    track_running_stats: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('BatchNorm2d'),
+    props: z.object({
+      num_features: z.number(),
+      eps: z.number().optional(),
+      momentum: z.number().optional(),
+      affine: z.boolean().optional(),
+      track_running_stats: z.boolean().optional(),
+    })
+  }),
 
-  BatchNorm3d: z.object({
-    num_features: z.number(),
-    eps: z.number().optional(),
-    momentum: z.number().optional(),
-    affine: z.boolean().optional(),
-    track_running_stats: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('BatchNorm3d'),
+    props: z.object({
+      num_features: z.number(),
+      eps: z.number().optional(),
+      momentum: z.number().optional(),
+      affine: z.boolean().optional(),
+      track_running_stats: z.boolean().optional(),
+    })
+  }),
 
-  LayerNorm: z.object({
-    normalized_shape: z.array(z.number()).nonempty('value can\'t be empty'),
-    eps: z.number().optional(),
-    elementwise_affine: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('LayerNorm'),
+    props: z.object({
+      normalized_shape: z.array(z.number()).nonempty('value can\'t be empty'),
+      eps: z.number().optional(),
+      elementwise_affine: z.boolean().optional(),
+    })
+  }),
 
-  Transformer: z.object({
-    d_model: z.number().optional(),
-    nhead: z.number().optional(),
-    num_encoder_layers: z.number().optional(),
-    num_decoder_layers: z.number().optional(),
-    dim_feedforward: z.number().optional(),
-    dropout: z.number().optional(),
-    activation: z.string().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Transformer'),
+    props: z.object({
+      d_model: z.number().optional(),
+      nhead: z.number().optional(),
+      num_encoder_layers: z.number().optional(),
+      num_decoder_layers: z.number().optional(),
+      dim_feedforward: z.number().optional(),
+      dropout: z.number().optional(),
+      activation: z.string().optional(),
+    })
+  }),
 
-  MultiheadAttention: z.object({
-    embed_dim: z.number(),
-    num_heads: z.number(),
-    dropout: z.number().optional(),
-    bias: z.boolean().optional(),
-    add_bias_kv: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('MultiheadAttention'),
+    props: z.object({
+      embed_dim: z.number(),
+      num_heads: z.number(),
+      dropout: z.number().optional(),
+      bias: z.boolean().optional(),
+      add_bias_kv: z.boolean().optional(),
+    })
+  }),
 
-  Dropout: z.object({
-    p: z.number(),
-    inplace: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Dropout'),
+    props: z.object({
+      p: z.number(),
+      inplace: z.boolean().optional(),
+    })
+  }),
 
-  Dropout1d: z.object({
-    p: z.number(),
-    inplace: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Dropout1d'),
+    props: z.object({
+      p: z.number(),
+      inplace: z.boolean().optional(),
+    })
+  }),
 
-  Dropout2d: z.object({
-    p: z.number(),
-    inplace: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Dropout2d'),
+    props: z.object({
+      p: z.number(),
+      inplace: z.boolean().optional(),
+    })
+  }),
 
-  Dropout3d: z.object({
-    p: z.number(),
-    inplace: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Dropout3d'),
+    props: z.object({
+      p: z.number(),
+      inplace: z.boolean().optional(),
+    })
+  }),
 
-  Embedding: z.object({
-    num_embeddings: z.number(),
-    embedding_dimx: z.number(),
-    padding_idx: z.number().optional(),
-    max_norm: z.number().optional(),
-    sparse: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Embedding'),
+    props: z.object({
+      num_embeddings: z.number(),
+      embedding_dimx: z.number(),
+      padding_idx: z.number().optional(),
+      max_norm: z.number().optional(),
+      sparse: z.boolean().optional(),
+    })
+  }),
 
-  PixelShuffle: z.object({
-    upscale_factor: z.number(),
-  }).optional(),
+  z.object({
+    name: z.literal('PixelShuffle'),
+    props: z.object({
+      upscale_factor: z.number(),
+    })
+  }),
 
-  Upsample: z.object({
-    size: z.number(),
-    scale_factor: z.number().optional(),
-    mode: Interpolation.optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('Upsample'),
+    props: z.object({
+      size: z.number(),
+      scale_factor: z.number().optional(),
+      mode: Interpolation.optional(),
+    })
+  }),
 
-  LSTM: z.object({
-    input_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    hidden_size: z.array(z.number()).nonempty('value can\'t be empty'),
-    num_layers: z.number().optional(),
-    batch_first: z.boolean().optional(),
-    bidirectional: z.boolean().optional(),
-  }).optional(),
+  z.object({
+    name: z.literal('LSTM'),
+    props: z.object({
+      input_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      hidden_size: z.array(z.number()).nonempty('value can\'t be empty'),
+      num_layers: z.number().optional(),
+      batch_first: z.boolean().optional(),
+      bidirectional: z.boolean().optional(),
+    })
+  }),
 
-  Flatten: z.object({
-    start_dim: z.number(),
-    end_dim: z.number(),
-  }).optional(),
+  z.object({
+    name: z.literal('Flatten'),
+    props: z.object({
+      start_dim: z.number(),
+      end_dim: z.number(),
+    })
+  }),
 
-  Unfold: z.object({
-    kernel_size: z.number(),
-    stride: z.number().optional(),
-    padding: z.number().optional(),
-    dilation: z.number().optional(),
-  }).optional(),
-})
-export const customModels = objectKeys(pipelineDLCustomModelsSchema.shape)
-export const customModelsSchema = z.array(z.enum(customModels), { error: 'At least one layer should be selected'}).nonempty()
+  z.object({
+    name: z.literal('Unfold'),
+    props: z.object({
+      kernel_size: z.number(),
+      stride: z.number().optional(),
+      padding: z.number().optional(),
+      dilation: z.number().optional(),
+    })
+  }),
+], {
+  error: (issue) => {
+    return { message: `Pass correct props for ${(issue.input as any)?.name}`}
+  }
+})).nonempty('At least one layer needs to be selected.')
+// Extract literal names from the union schema
+export const customModels = customModelsSchema.unwrap().options.map(e => e.shape.name.value)
+// export const customModelsSchema = z.array(z.enum(customModels), { error: 'At least one layer should be selected'}).nonempty()
+export type CustomModelType = z.infer<typeof customModelsSchema>[number];
+
 
 const ReductionSchema = z.enum(["None", "Mean", "Sum"])
 export const pipelineDLLossesSchema = z

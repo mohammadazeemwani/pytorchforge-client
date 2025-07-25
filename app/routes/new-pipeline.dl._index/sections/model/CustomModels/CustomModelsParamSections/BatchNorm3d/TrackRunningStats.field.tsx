@@ -12,18 +12,20 @@ import {
 } from "~/components/Form"
 
 type TrackRunningStatsFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function TrackRunningStatsField({
   className,
   form,
+  index,
   ...delegated
 }: TrackRunningStatsFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.BatchNorm3d.track_running_stats"
+      name={`customModels.${index}.props.track_running_stats`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type DropoutFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function DropoutField({
   className,
   form,
+  index,
   ...delegated
 }: DropoutFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Transformer.dropout"
+      name={`customModels.${index}.props.dropout`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Dropout</FormLabel>

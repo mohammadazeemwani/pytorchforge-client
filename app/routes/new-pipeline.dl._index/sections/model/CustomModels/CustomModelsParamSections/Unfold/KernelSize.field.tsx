@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type KernelSizeFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function KernelSizeField({
   className,
   form,
+  index,
   ...delegated
 }: KernelSizeFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Unfold.kernel_size"
+      name={`customModels.${index}.props.kernel_size`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Kernel size</FormLabel>

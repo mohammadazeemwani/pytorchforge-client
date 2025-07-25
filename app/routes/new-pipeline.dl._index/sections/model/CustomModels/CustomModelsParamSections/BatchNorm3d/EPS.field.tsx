@@ -12,14 +12,15 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type EPSFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function EPSField({ className, form, ...delegated }: EPSFieldProps) {
+export function EPSField({ className, form, index, ...delegated }: EPSFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.BatchNorm3d.eps"
+      name={`customModels.${index}.props.eps`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Epsilon (ε)</FormLabel>

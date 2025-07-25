@@ -33,7 +33,7 @@ export function TransformersReorder({
   return (
     <div
       aria-description=""
-      className={cn("prose dark:prose-invert", className)}
+      className={cn(className)}
       {...delegated}
     >
       {transformers?.length ? (

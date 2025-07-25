@@ -12,18 +12,20 @@ import {
 import { Input } from "~/components/Input"
 
 type ActivationFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function ActivationField({
   className,
   form,
+  index,
   ...delegated
 }: ActivationFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Transformer.activation"
+      name={`customModels.${index}.props.activation`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Activation</FormLabel>

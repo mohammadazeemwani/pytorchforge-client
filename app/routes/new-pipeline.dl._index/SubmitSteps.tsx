@@ -12,7 +12,6 @@ import { StepBackButton, StepNextButton, useStepContext } from "~/components/Ste
 import { cn } from "~/utils/general";
 import type { UseFormReturn } from "react-hook-form";
 import type { PipelineDL } from "~/types/pipelineDL";
-import { isGoodToGo as isGoodToGo_Step1 } from "./sections/task/helper";
 import { useFormErrorContext } from "~/components/FormErrorShow/FormErrorContext";
 
 type SubmitStepsProps = {

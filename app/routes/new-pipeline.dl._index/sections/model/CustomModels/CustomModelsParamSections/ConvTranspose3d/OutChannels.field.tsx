@@ -12,18 +12,20 @@ import {
 import { InputNumberArray } from "~/components/InputNumberArray"
 
 type OutChannelsFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function OutChannelsField({
   className,
   form,
+  index,
   ...delegated
 }: OutChannelsFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.ConvTranspose3d.out_channels"
+      name={`customModels.${index}.props.out_channels`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Output channels</FormLabel>

@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type NumEncoderLayersFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function NumEncoderLayersField({
   className,
   form,
+  index,
   ...delegated
 }: NumEncoderLayersFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Transformer.num_encoder_layers"
+      name={`customModels.${index}.props.num_encoder_layers`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Num of encoder layers</FormLabel>

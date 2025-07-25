@@ -15,7 +15,6 @@ import { Cog, RotateCwIcon } from "~/components/AnimatedIcons"
 import { FreqMaskParamField } from "./FreqMaskParam.field"
 import { IIDMasksField } from "./IIDMasks.field"
 
-
 /**
  * delegated props are not applied
  */
@@ -27,24 +26,24 @@ export function FrequencyMaskingSection({
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("transformersData.FrequencyMasking", form.formState)
+  const { error } = form.getFieldState(
+    "transformersData.FrequencyMasking",
+    form.formState,
+  )
 
   const resetSection = React.useCallback(() => {
     form.resetField("transformersData.FrequencyMasking")
-    setResetKey(k => k+1)
+    setResetKey((k) => k + 1)
   }, [form])
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={setOpen}
-    >
-      <DialogTrigger className={cn("cursor-pointer text-base-content", className)}>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger
+        className={cn("cursor-pointer text-base-content", className)}
+      >
         <Cog className="w-[1.4rem]" />
       </DialogTrigger>
-      <DialogContent
-        className={cn("prose dark:prose-invert", "")}
-      >
+      <DialogContent>
         <DialogHeader>
           <DialogTitle className="mt-0">Params of FrequencyMasking</DialogTitle>
           <DialogDescription className="sr-only">
@@ -59,9 +58,7 @@ export function FrequencyMaskingSection({
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">
           <div className="flex items-center gap-1.5">
-            <DialogClose className="w-full btn flex-3/4">
-              Close
-            </DialogClose>
+            <DialogClose className="w-full btn flex-3/4">Close</DialogClose>
             <button
               title="reset the values in this section"
               onClick={resetSection}

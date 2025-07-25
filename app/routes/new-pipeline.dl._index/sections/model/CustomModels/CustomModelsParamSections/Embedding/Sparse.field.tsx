@@ -12,14 +12,15 @@ import {
 } from "~/components/Form"
 
 type SparseFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function SparseField({ className, form, ...delegated }: SparseFieldProps) {
+export function SparseField({ className, form, index, ...delegated }: SparseFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Embedding.sparse"
+      name={`customModels.${index}.props.sparse`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

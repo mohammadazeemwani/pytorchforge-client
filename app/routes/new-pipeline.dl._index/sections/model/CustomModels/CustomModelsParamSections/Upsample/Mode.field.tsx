@@ -19,16 +19,17 @@ import {
 import { getAllowedInterpolation } from "~/helpers/pipelineDL";
 
 type ModeFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<'div'>
 
-export function ModeField({ className, form, ...delegated}: ModeFieldProps) {
+export function ModeField({ className, form, index, ...delegated}: ModeFieldProps) {
   const allowedInterpolation = getAllowedInterpolation()
   
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Upsample.mode"
+      name={`customModels.${index}.props.mode`}
       render={({ field }) => (
         <FormItem className={cn('', className)} {...delegated}>
           <FormLabel>Interpolation</FormLabel>

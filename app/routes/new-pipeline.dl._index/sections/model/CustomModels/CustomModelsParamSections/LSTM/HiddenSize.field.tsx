@@ -12,18 +12,20 @@ import {
 import { InputNumberArray } from "~/components/InputNumberArray"
 
 type HiddenSizeFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function HiddenSizeField({
   className,
   form,
+  index,
   ...delegated
 }: HiddenSizeFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.LSTM.hidden_size"
+      name={`customModels.${index}.props.hidden_size`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Hidden size</FormLabel>

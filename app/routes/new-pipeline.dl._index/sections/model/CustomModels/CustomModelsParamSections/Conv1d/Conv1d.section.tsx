@@ -28,17 +28,18 @@ import { PaddingModeField } from "./PaddingMode.field"
 export function Conv1dSection({
   className,
   form,
+  index,
   ...delegated
 }: CustomModelsFieldProps) {
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("customModelsData.Conv1d", form.formState)
+  const { error } = form.getFieldState(`customModels.${index}`, form.formState)
 
   const resetSection = React.useCallback(() => {
-    form.resetField("customModelsData.Conv1d")
+    form.resetField(`customModels.${index}`)
     setResetKey(k => k+1)
-  }, [form])
+  }, [form, index])
 
   return (
     <Dialog
@@ -59,15 +60,15 @@ export function Conv1dSection({
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6" key={resetKey}>
-          <InChannelsField form={form} />
-          <OutChannelsField form={form} />
-          <KernelSizeField form={form} />
-          <StrideField form={form} />
-          <PaddingField form={form} />
-          <DilationField form={form} />
-          <GroupsField form={form} />
-          <BiasField form={form} />
-          <PaddingModeField form={form} />
+          <InChannelsField form={form} index={index} />
+          <OutChannelsField form={form} index={index} />
+          <KernelSizeField form={form} index={index} />
+          <StrideField form={form} index={index} />
+          <PaddingField form={form} index={index} />
+          <DilationField form={form} index={index} />
+          <GroupsField form={form} index={index} />
+          <BiasField form={form} index={index} />
+          <PaddingModeField form={form} index={index} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">

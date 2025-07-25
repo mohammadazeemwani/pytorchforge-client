@@ -12,18 +12,20 @@ import {
 } from "~/components/Form"
 
 type AffineFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function AffineField({
   className,
   form,
+  index,
   ...delegated
 }: AffineFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.BatchNorm2d.affine"
+      name={`customModels.${index}.props.affine`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

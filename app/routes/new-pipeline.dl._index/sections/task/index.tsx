@@ -35,7 +35,6 @@ export function TaskSection({ className, form, ...delegated}: TaskSectionProps) 
     <div
       aria-description=""
       className={cn(
-        'prose dark:prose-invert',
         className,
       )}
       {...delegated}

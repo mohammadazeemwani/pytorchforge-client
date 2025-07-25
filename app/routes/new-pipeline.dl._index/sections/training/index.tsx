@@ -14,7 +14,6 @@ export function TrainingSection({ className, ...delegated}: TrainingSectionProps
     <div
       aria-description=""
       className={cn(
-        'prose dark:prose-invert',
         className
       )}
       {...delegated}

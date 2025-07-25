@@ -24,17 +24,18 @@ import { TrackRunningStatsField } from "./TrackRunningStats.field"
 export function BatchNorm2dSection({
   className,
   form,
+  index,
   ...delegated
 }: CustomModelsFieldProps) {
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("customModelsData.BatchNorm2d", form.formState)
+  const { error } = form.getFieldState(`customModels.${index}`, form.formState)
 
   const resetSection = React.useCallback(() => {
-    form.resetField("customModelsData.BatchNorm2d")
+    form.resetField(`customModels.${index}`)
     setResetKey(k => k+1)
-  }, [form])
+  }, [form, index])
 
   return (
     <Dialog
@@ -55,11 +56,11 @@ export function BatchNorm2dSection({
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6" key={resetKey}>
-          <NumFeaturesField form={form} />
-          <EPSField form={form} />
-          <MomentumField form={form} />
-          <AffineField form={form} />
-          <TrackRunningStatsField form={form} />
+          <NumFeaturesField form={form} index={index} />
+          <EPSField form={form} index={index} />
+          <MomentumField form={form} index={index} />
+          <AffineField form={form} index={index} />
+          <TrackRunningStatsField form={form} index={index} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">

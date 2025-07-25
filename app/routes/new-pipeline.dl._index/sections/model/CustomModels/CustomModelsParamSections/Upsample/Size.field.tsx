@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type SizeFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function SizeField({
   className,
   form,
+  index,
   ...delegated
 }: SizeFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Upsample.size"
+      name={`customModels.${index}.props.size`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Size</FormLabel>

@@ -1,10 +1,17 @@
-import { pipelineDLSchema } from "~/schema/pipelineDL";
-import { z } from "zod/v4";
+import type { SubmitHandler, SubmitErrorHandler } from "react-hook-form";
+import type { PipelineDL } from "~/types/pipelineDL";
 
-export function onSubmit(values: z.infer<typeof pipelineDLSchema>) {
+export const onSubmit: SubmitHandler<PipelineDL> = async (data) => {
   console.log(
     'Form submitted and validated values are',
-    values
+    data
+  )
+}
+
+export const onError: SubmitErrorHandler<PipelineDL> = async (errors) => {
+  console.log(
+    'Form submition errors',
+    errors
   )
 }
 

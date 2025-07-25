@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type EmbedDimFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function EmbedDimField({
   className,
   form,
+  index,
   ...delegated
 }: EmbedDimFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.MultiheadAttention.embed_dim"
+      name={`customModels.${index}.props.embed_dim`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Embedding Dimension</FormLabel>

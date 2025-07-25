@@ -12,18 +12,20 @@ import {
 } from "~/components/Form"
 
 type ElementwiseAffineFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function ElementwiseAffineField({
   className,
   form,
+  index,
   ...delegated
 }: ElementwiseAffineFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.LayerNorm.elementwise_affine"
+      name={`customModels.${index}.props.elementwise_affine`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

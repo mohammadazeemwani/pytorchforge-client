@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type PaddingFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function PaddingField({
   className,
   form,
+  index,
   ...delegated
 }: PaddingFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Unfold.padding"
+      name={`customModels.${index}.props.padding`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Padding</FormLabel>

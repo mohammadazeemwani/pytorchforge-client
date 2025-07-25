@@ -22,17 +22,18 @@ import { ModeField } from "./Mode.field" // basically interpolation mode
 export function UpsampleSection({
   className,
   form,
+  index,
   ...delegated
 }: CustomModelsFieldProps) {
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("customModelsData.Upsample", form.formState)
+  const { error } = form.getFieldState(`customModels.${index}`, form.formState)
 
   const resetSection = React.useCallback(() => {
-    form.resetField("customModelsData.Upsample")
+    form.resetField(`customModels.${index}`)
     setResetKey(k => k+1)
-  }, [form])
+  }, [form, index])
 
   return (
     <Dialog
@@ -53,9 +54,9 @@ export function UpsampleSection({
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6" key={resetKey}>
-          <SizeField form={form} />
-          <ScaleFactorField form={form} />
-          <ModeField form={form} />
+          <SizeField form={form} index={index} />
+          <ScaleFactorField form={form} index={index} />
+          <ModeField form={form} index={index} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">

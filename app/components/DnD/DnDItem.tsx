@@ -21,13 +21,6 @@ type DnDItemProps =
   children: React.ReactNode
   /** Children to render when gear icon is clicked */
   }
-& ( 
-| { gearChildren: undefined }
-| {
-  
-  }
-)
-
 /**
  * - Renders the given children inside a div.
  * - Each div will have a drag handle on the left most side.

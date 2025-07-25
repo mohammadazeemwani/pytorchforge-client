@@ -13,14 +13,15 @@ import { InputNumber } from "~/components/InputNumber";
 
 
 type GroupsFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function GroupsField({ className, form, ...delegated }: GroupsFieldProps) {
+export function GroupsField({ className, form, index, ...delegated }: GroupsFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Conv1d.groups"
+      name={`customModels.${index}.props.groups`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Groups</FormLabel>

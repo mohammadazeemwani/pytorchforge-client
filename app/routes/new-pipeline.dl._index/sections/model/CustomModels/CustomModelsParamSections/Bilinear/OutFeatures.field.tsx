@@ -12,19 +12,21 @@ import {
 import { InputNumberArray } from "~/components/InputNumberArray";
 
 type OutFeaturesFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<'div'>
 
 export function OutFeaturesField({ 
   className, 
   form,
+  index,
   ...delegated
 }: OutFeaturesFieldProps) {
   
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Bilinear.out_features"
+      name={`customModels.${index}.props.out_features`}
       render={({ field }) => (
         <FormItem className={cn('', className)} {...delegated}>
           <FormLabel>Out features</FormLabel>

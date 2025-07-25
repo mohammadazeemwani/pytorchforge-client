@@ -12,19 +12,21 @@ import {
 import { InputNumberArray } from "~/components/InputNumberArray";
 
 type In2FeaturesFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<'div'>
 
 export function In2FeaturesField({ 
   className, 
   form,
+  index,
   ...delegated
 }: In2FeaturesFieldProps) {
   
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Bilinear.in2_features"
+      name={`customModels.${index}.props.in2_features`}
       render={({ field }) => (
         <FormItem className={cn('', className)} {...delegated}>
           <FormLabel>Input 2 Feature Size</FormLabel>

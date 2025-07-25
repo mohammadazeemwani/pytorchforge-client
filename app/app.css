@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@plugin 'tailwind-scrollbar';
 @custom-variant dark (&:where([data-theme="coffee"] *));
 
 @plugin "daisyui" {
@@ -34,8 +35,8 @@
   --color-success-content: oklch(96% 0.059 95.617);
   --color-warning: oklch(64% 0.222 41.116);
   --color-warning-content: oklch(96% 0.059 95.617);
-  --color-error: oklch(70% 0.191 22.216);
-  --color-error-content: oklch(40% 0.123 38.172);
+  --color-error: oklch(67.8% 0.211 28.8deg);
+  --color-error-content: oklch(97% 0.013 17.38);
   --radius-selector: 0.25rem;
   --radius-field: 0.5rem;
   --radius-box: 0.5rem;
@@ -96,17 +97,42 @@
   --header-gutter: 1rem;
 }
 
-body {
-  overflow-y: scroll;
+
+
+/*---------------------------------- Scrollbar -------------------------------------*/
+@utility sb {
+  @apply scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-transparent
 }
+
+
+
+
+* {
+  @apply sb
+}
+
+
 * {
   scroll-behavior: smooth;
   box-sizing: border-box;
 }
-html {
+/* *::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+} */
+
+
+/* *::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} */
+
+/* html {
   overflow: -moz-scrollbars-vertical; 
   overflow-y: scroll;
-}
+} */
 
 .custom-body {
   @apply w-full mx-auto max-w-[90%] md:max-w-[690px]
@@ -163,4 +189,47 @@ h1, h2, h3, h4, h5, h6 {
 /*---------------------------------- CodeMirror Editor -------------------------------------*/
 .cm-editor, .cm-scroller {
   border-radius: 6px;
+}
+
+
+
+
+
+/*---------------------------------- Keyframes -------------------------------------*/
+
+/* Example use: animate-[wiggle_1s_ease-in-out_infinite] */
+@keyframes wiggle {
+  0% {
+    transform: skewX(9deg);
+  }
+  10% {
+    transform: skewX(-8deg);
+  }
+  20% {
+    transform: skewX(7deg);
+  }
+  30% {
+    transform: skewX(-6deg);
+  }
+  40% {
+    transform: skewX(5deg);
+  }
+  50% {
+    transform: skewX(-4deg);
+  }
+  60% {
+    transform: skewX(3deg);
+  }
+  70% {
+    transform: skewX(-2deg);
+  }
+  80% {
+    transform: skewX(1deg);
+  }
+  90% {
+    transform: skewX(0deg);
+  }
+  100% {
+    transform: skewX(0deg);
+  }
 }

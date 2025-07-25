@@ -25,28 +25,26 @@ export function GrayscaleSection({
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("transformersData.Grayscale", form.formState)
+  const { error } = form.getFieldState(
+    "transformersData.Grayscale",
+    form.formState,
+  )
 
   const resetSection = React.useCallback(() => {
     form.resetField("transformersData.Grayscale")
-    setResetKey(k => k+1)
+    setResetKey((k) => k + 1)
   }, [form])
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={setOpen}
-    >
-      <DialogTrigger className={cn("cursor-pointer text-base-content", className)}>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger
+        className={cn("cursor-pointer text-base-content", className)}
+      >
         <Cog className="w-[1.4rem]" />
       </DialogTrigger>
-      <DialogContent
-        className={cn("prose dark:prose-invert", "")}
-      >
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle className="mt-0">
-            Params of Grayscale
-          </DialogTitle>
+          <DialogTitle className="mt-0">Params of Grayscale</DialogTitle>
           <DialogDescription className="sr-only">
             change params of transformer
           </DialogDescription>
@@ -58,9 +56,7 @@ export function GrayscaleSection({
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">
           <div className="flex items-center gap-1.5">
-            <DialogClose className="w-full btn flex-3/4">
-              Close
-            </DialogClose>
+            <DialogClose className="w-full btn flex-3/4">Close</DialogClose>
             <button
               title="reset the values in this section"
               onClick={resetSection}

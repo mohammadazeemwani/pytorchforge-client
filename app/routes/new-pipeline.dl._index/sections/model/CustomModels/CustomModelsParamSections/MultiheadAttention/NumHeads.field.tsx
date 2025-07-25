@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type NumHeadsFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function NumHeadsField({
   className,
   form,
+  index,
   ...delegated
 }: NumHeadsFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.MultiheadAttention.num_heads"
+      name={`customModels.${index}.props.num_heads`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Number of Heads</FormLabel>

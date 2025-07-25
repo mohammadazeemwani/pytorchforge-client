@@ -23,17 +23,18 @@ import { BiasField } from "./Bias.field"
 export function BilinearSection({
   className,
   form,
+  index,
   ...delegated
 }: CustomModelsFieldProps) {
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("customModelsData.Bilinear", form.formState)
+  const { error } = form.getFieldState(`customModels.${index}`, form.formState)
 
   const resetSection = React.useCallback(() => {
-    form.resetField("customModelsData.Bilinear")
+    form.resetField(`customModels.${index}`)
     setResetKey(k => k+1)
-  }, [form])
+  }, [form, index])
 
   return (
     <Dialog
@@ -54,10 +55,10 @@ export function BilinearSection({
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6" key={resetKey}>
-          <In1FeaturesField form={form} />
-          <In2FeaturesField form={form} />
-          <OutFeaturesField form={form} />
-          <BiasField form={form} />
+          <In1FeaturesField form={form} index={index} />
+          <In2FeaturesField form={form} index={index} />
+          <OutFeaturesField form={form} index={index} />
+          <BiasField form={form} index={index} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">

@@ -14,7 +14,19 @@ import {
   audioTransformersSchema,
   audioPretrainedModelsSchema,
 } from "./pipelineDL.audio"
-import { customModelsSchema, dataFileSchema, dataLoadingSchema, pipelineDLEarlyStoppingSchema, pipelineDLLossesSchema, pipelineDLLRSchedularSchema, pipelineDLMetricsSchema, pipelineDLMonitoringSchema, pipelineDLOptimizersSchema, trainingHyperParametersSchema, usePreTrainedSchema } from "./pipelineDL.general"
+import { 
+  customModelsSchema, 
+  dataFileSchema, 
+  dataLoadingSchema, 
+  pipelineDLEarlyStoppingSchema, 
+  pipelineDLLossesSchema, 
+  pipelineDLLRSchedularSchema, 
+  pipelineDLMetricsSchema, 
+  pipelineDLMonitoringSchema, 
+  pipelineDLOptimizersSchema, 
+  trainingHyperParametersSchema, 
+  usePreTrainedSchema 
+} from "./pipelineDL.general"
 
 
 // There is no need for discriminated unioin cz. at the last when we will submit form, 
@@ -31,7 +43,6 @@ export const pipelineDLPretrainedModelsSchema = z.object({
   ...audioPretrainedModelsSchema.shape,
 })
 
-import { pipelineDLCustomModelsSchema } from "./pipelineDL.general"
 
 
 export const pipelineDLMainTaskDiscriminatedSchema = z.discriminatedUnion("mainTask", [
@@ -62,6 +73,7 @@ export const pipelineDLSchema = z
   .object({
     dataFile: dataFileSchema,
     dataLoading: dataLoadingSchema,
+    // customModels: customModelsSchema,
     customModels: customModelsSchema,
     usePreTrained: usePreTrainedSchema,
     losses: pipelineDLLossesSchema,
@@ -76,7 +88,6 @@ export const pipelineDLSchema = z
     // which at the end will be filtered. [these are data objects]
     transformersData: pipelineDLTransformersSchema,
     pretrainedModelsData: pipelineDLPretrainedModelsSchema,
-    customModelsData: pipelineDLCustomModelsSchema
   })
   .and(pipelineDLMainTaskDiscriminatedSchema)
 

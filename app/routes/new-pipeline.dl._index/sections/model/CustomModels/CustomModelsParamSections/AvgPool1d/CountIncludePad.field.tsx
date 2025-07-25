@@ -12,18 +12,20 @@ import {
 } from "~/components/Form"
 
 type CountIncludePadFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function CountIncludePadField({
   className,
   form,
+  index,
   ...delegated
 }: CountIncludePadFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.AvgPool1d.count_include_pad"
+      name={`customModels.${index}.props.count_include_pad`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

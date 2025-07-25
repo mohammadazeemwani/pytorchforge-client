@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type UpscaleFactorFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function UpscaleFactorField({
   className,
   form,
+  index,
   ...delegated
 }: UpscaleFactorFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.PixelShuffle.upscale_factor"
+      name={`customModels.${index}.props.upscale_factor`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Upscale factor</FormLabel>

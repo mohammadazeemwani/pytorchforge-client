@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type DimFeedforwardFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function DimFeedforwardField({
   className,
   form,
+  index,
   ...delegated
 }: DimFeedforwardFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Transformer.dim_feedforward"
+      name={`customModels.${index}.props.dim_feedforward`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Feedforward Layer Size</FormLabel>

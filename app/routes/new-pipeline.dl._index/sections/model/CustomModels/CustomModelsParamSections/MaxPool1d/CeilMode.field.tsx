@@ -12,14 +12,15 @@ import {
 } from "~/components/Form"
 
 type CeilModeFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function CeilModeField({ className, form, ...delegated }: CeilModeFieldProps) {
+export function CeilModeField({ className, form, index, ...delegated }: CeilModeFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.MaxPool1d.ceil_mode"
+      name={`customModels.${index}.props.ceil_mode`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

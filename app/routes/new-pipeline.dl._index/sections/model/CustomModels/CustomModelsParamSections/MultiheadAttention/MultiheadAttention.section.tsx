@@ -24,17 +24,18 @@ import { AddBiasKvField } from "./AddBiasKv.field"
 export function MultiheadAttentionSection({
   className,
   form,
+  index,
   ...delegated
 }: CustomModelsFieldProps) {
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("customModelsData.MultiheadAttention", form.formState)
+  const { error } = form.getFieldState(`customModels.${index}`, form.formState)
 
   const resetSection = React.useCallback(() => {
-    form.resetField("customModelsData.MultiheadAttention")
+    form.resetField(`customModels.${index}`)
     setResetKey(k => k+1)
-  }, [form])
+  }, [form, index])
 
   return (
     <Dialog
@@ -55,11 +56,11 @@ export function MultiheadAttentionSection({
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6" key={resetKey}>
-          <EmbedDimField form={form} />
-          <NumHeadsField form={form} />
-          <DropoutField form={form} />
-          <BiasField form={form} />
-          <AddBiasKvField form={form} />
+          <EmbedDimField form={form} index={index} />
+          <NumHeadsField form={form} index={index} />
+          <DropoutField form={form} index={index} />
+          <BiasField form={form} index={index} />
+          <AddBiasKvField form={form} index={index} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">

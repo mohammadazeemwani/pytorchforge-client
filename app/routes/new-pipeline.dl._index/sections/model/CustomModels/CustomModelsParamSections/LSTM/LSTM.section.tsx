@@ -24,17 +24,18 @@ import { BidirectionalField } from "./Bidirectional.field"
 export function LSTMSection({
   className,
   form,
+  index,
   ...delegated
 }: CustomModelsFieldProps) {
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("customModelsData.LSTM", form.formState)
+  const { error } = form.getFieldState(`customModels.${index}`, form.formState)
 
   const resetSection = React.useCallback(() => {
-    form.resetField("customModelsData.LSTM")
+    form.resetField(`customModels.${index}`)
     setResetKey(k => k+1)
-  }, [form])
+  }, [form, index])
 
   return (
     <Dialog
@@ -55,11 +56,11 @@ export function LSTMSection({
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6" key={resetKey}>
-          <InputSizeField form={form} />
-          <HiddenSizeField form={form} />
-          <NumLayersField form={form} />
-          <BatchFirstField form={form} />
-          <BidirectionalField form={form} />
+          <InputSizeField form={form} index={index} />
+          <HiddenSizeField form={form} index={index} />
+          <NumLayersField form={form} index={index} />
+          <BatchFirstField form={form} index={index} />
+          <BidirectionalField form={form} index={index} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">

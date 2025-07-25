@@ -32,7 +32,6 @@ export function DataLoadingSection({ className, form, ...delegated}: DataLoading
     <div
       aria-description=""
       className={cn(
-        'prose dark:prose-invert',
         className,
       )}
       {...delegated}

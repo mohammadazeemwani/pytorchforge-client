@@ -12,14 +12,15 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type NHeadFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function NHeadField({ className, form, ...delegated }: NHeadFieldProps) {
+export function NHeadField({ className, form, index, ...delegated }: NHeadFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Transformer.nhead"
+      name={`customModels.${index}.props.nhead`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Num of heads</FormLabel>

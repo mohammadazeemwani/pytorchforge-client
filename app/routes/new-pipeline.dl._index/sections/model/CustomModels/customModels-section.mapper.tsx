@@ -2,7 +2,6 @@ import React from "react"
 import type { ComponentType } from "react"
 import type { PipelineDL, CustomModels } from "~/types/pipelineDL"
 import type { UseFormReturn } from "react-hook-form"
-import { CircleAlert } from "lucide-react"
 import { LinearSection } from "./CustomModelsParamSections/Linear/Linear.section"
 import { BilinearSection } from "./CustomModelsParamSections/Bilinear/Bilinear.section"
 import { Conv1dSection } from "./CustomModelsParamSections/Conv1d/Conv1d.section"
@@ -35,11 +34,12 @@ import { FlattenSection } from "./CustomModelsParamSections/Flatten/Flatten.sect
 import { UnfoldSection } from "./CustomModelsParamSections/Unfold/Unfold.section"
 
 export type CustomModelsFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 const customModel2SectionMapper: Record<
-  CustomModels,
+  CustomModels['name'],
   ComponentType<CustomModelsFieldProps>
 > = {
   Linear: LinearSection,
@@ -78,7 +78,7 @@ export function CustomModelParamModifierComponent({
   modelName,
   props,
 }: {
-  modelName: CustomModels;
+  modelName: CustomModels['name'];
   props: CustomModelsFieldProps;
 }) {
   const Component = customModel2SectionMapper[modelName];

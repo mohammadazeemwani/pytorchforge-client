@@ -12,18 +12,20 @@ import {
 import { InputNumberArray } from "~/components/InputNumberArray"
 
 type InChannelsFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function InChannelsField({
   className,
   form,
+  index,
   ...delegated
 }: InChannelsFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.ConvTranspose1d.in_channels"
+      name={`customModels.${index}.props.in_channels`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Input channels</FormLabel>

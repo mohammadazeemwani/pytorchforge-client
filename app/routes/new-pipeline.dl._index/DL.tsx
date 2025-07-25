@@ -14,7 +14,7 @@ import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
 import { pipelineDLSchema } from "~/schema/pipelineDL"
 import type { PipelineDL } from "~/types/pipelineDL"
 import { getDefaultPipelineDLSchema } from "~/helpers/pipelineDL"
-import { SubmitSteps } from "./SubmitSteps"
+import { onError, onSubmit } from "./helper"
 import { FormErrorList } from "~/components/FormErrorShow/FormErrorList"
 
 type DLProps = {} & React.ComponentProps<"div">
@@ -38,13 +38,14 @@ export function DL({ className, ...delegated }: DLProps) {
       aria-description=""
       className={cn(
         "prose dark:prose-invert", 
+        '!max-w-none',
         className
       )}
       {...delegated}
     >
       <StepNavigator slugToLabelMapper={sectionSlugToLabel} />
       <FormContext {...form}>
-        <form >
+        <form onSubmit={form.handleSubmit(onSubmit, onError)}>
           <SectionRouter
             section={sectionSlugs[currentStep - 1]}
             form={form}

@@ -12,18 +12,20 @@ import {
 import { InputNumberArray } from "~/components/InputNumberArray"
 
 type InputSizeFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function InputSizeField({
   className,
   form,
+  index,
   ...delegated
 }: InputSizeFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.LSTM.input_size"
+      name={`customModels.${index}.props.input_size`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Input size</FormLabel>

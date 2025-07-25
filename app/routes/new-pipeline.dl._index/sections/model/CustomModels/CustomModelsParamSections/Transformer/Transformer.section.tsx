@@ -26,17 +26,18 @@ import { ActivationField } from "./Activation.field";
 export function TransformerSection({
   className,
   form,
+  index,
   ...delegated
 }: CustomModelsFieldProps) {
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("customModelsData.Transformer", form.formState)
+  const { error } = form.getFieldState(`customModels.${index}`, form.formState)
 
   const resetSection = React.useCallback(() => {
-    form.resetField("customModelsData.Transformer")
+    form.resetField(`customModels.${index}`)
     setResetKey(k => k+1)
-  }, [form])
+  }, [form, index])
 
   return (
     <Dialog
@@ -57,13 +58,13 @@ export function TransformerSection({
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6" key={resetKey}>
-          <DModelField form={form} />
-          <NHeadField form={form} />
-          <NumEncoderLayersField form={form} />
-          <NumDecoderLayersField form={form} />
-          <DimFeedforwardField form={form} />
-          <DropoutField form={form} />
-          <ActivationField form={form} />
+          <DModelField form={form} index={index} />
+          <NHeadField form={form} index={index} />
+          <NumEncoderLayersField form={form} index={index} />
+          <NumDecoderLayersField form={form} index={index} />
+          <DimFeedforwardField form={form} index={index} />
+          <DropoutField form={form} index={index} />
+          <ActivationField form={form} index={index} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">

@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type DilationFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function DilationField({
   className,
   form,
+  index,
   ...delegated
 }: DilationFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.AvgPool2d.dilation"
+      name={`customModels.${index}.props.dilation`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Dilation</FormLabel>

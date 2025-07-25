@@ -13,14 +13,15 @@ import { InputNumber } from "~/components/InputNumber";
 
 
 type NumLayersFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function NumLayersField({ className, form, ...delegated }: NumLayersFieldProps) {
+export function NumLayersField({ className, form, index, ...delegated }: NumLayersFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.LSTM.num_layers"
+      name={`customModels.${index}.props.num_layers`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Number of layers</FormLabel>

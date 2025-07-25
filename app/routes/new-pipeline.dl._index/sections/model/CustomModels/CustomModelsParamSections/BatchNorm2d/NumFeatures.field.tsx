@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type NumFeaturesFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function NumFeaturesField({
   className,
   form,
+  index,
   ...delegated
 }: NumFeaturesFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.BatchNorm2d.num_features"
+      name={`customModels.${index}.props.num_features`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Number of features</FormLabel>

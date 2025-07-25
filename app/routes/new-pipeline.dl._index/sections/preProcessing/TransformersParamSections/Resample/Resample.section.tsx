@@ -20,7 +20,6 @@ import { RolloffField } from "./Rolloff.field"
 import { BetaField } from "./Beta.field"
 import { DtypeField } from "./Dtype.field"
 
-
 /**
  * delegated props are not applied
  */
@@ -32,24 +31,24 @@ export function ResampleSection({
   const [open, setOpen] = React.useState(false)
   const [resetKey, setResetKey] = React.useState(0)
 
-  const { error } = form.getFieldState("transformersData.Resample", form.formState)
+  const { error } = form.getFieldState(
+    "transformersData.Resample",
+    form.formState,
+  )
 
   const resetSection = React.useCallback(() => {
     form.resetField("transformersData.Resample")
-    setResetKey(k => k+1)
+    setResetKey((k) => k + 1)
   }, [form])
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={setOpen}
-    >
-      <DialogTrigger className={cn("cursor-pointer text-base-content", className)}>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger
+        className={cn("cursor-pointer text-base-content", className)}
+      >
         <Cog className="w-[1.4rem]" />
       </DialogTrigger>
-      <DialogContent
-        className={cn("prose dark:prose-invert", "")}
-      >
+      <DialogContent>
         <DialogHeader>
           <DialogTitle className="mt-0">Params of Resample</DialogTitle>
           <DialogDescription className="sr-only">
@@ -64,14 +63,12 @@ export function ResampleSection({
           <LowpassFilterWidthField form={form} />
           <RolloffField form={form} />
           <BetaField form={form} />
-          <DtypeField form={form} /> 
+          <DtypeField form={form} />
         </div>
 
         <DialogFooter className="mt-4 flex flex-col sm:flex-col">
           <div className="flex items-center gap-1.5">
-            <DialogClose className="w-full btn flex-3/4">
-              Close
-            </DialogClose>
+            <DialogClose className="w-full btn flex-3/4">Close</DialogClose>
             <button
               title="reset the values in this section"
               onClick={resetSection}

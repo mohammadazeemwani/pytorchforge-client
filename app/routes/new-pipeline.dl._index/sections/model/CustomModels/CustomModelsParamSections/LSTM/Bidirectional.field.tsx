@@ -12,14 +12,15 @@ import {
 } from "~/components/Form"
 
 type BidirectionalFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function BidirectionalField({ className, form, ...delegated }: BidirectionalFieldProps) {
+export function BidirectionalField({ className, form, index, ...delegated }: BidirectionalFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.LSTM.bidirectional"
+      name={`customModels.${index}.props.bidirectional`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

@@ -12,31 +12,32 @@ import {
 } from "~/components/Form"
 
 type InplaceFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function InplaceField({ className, form, ...delegated }: InplaceFieldProps) {
+export function InplaceField({ className, form, index, ...delegated }: InplaceFieldProps) {
   return (
     <FormField
-      control={form.control}
-      name="customModelsData.Dropout.inplace"
-      render={({ field }) => (
-        <FormItem
-          className={cn("flex gap-2 items-center", className)}
-          {...delegated}
-        >
-          <FormLabel>Apply In-Place</FormLabel>
-          <FormControl>
-            <input
-              type="checkbox"
-              className="checkbox scale-[0.8]"
-              checked={field.value}
-              onChange={field.onChange}
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
+    control={form.control}
+    name={`customModels.${index}.props.inplace`}
+    render={({ field }) => (
+      <FormItem
+        className={cn("flex gap-2 items-center", className)}
+        {...delegated}
+      >
+        <FormLabel>Apply In-Place</FormLabel>
+        <FormControl>
+          <input
+            type="checkbox"
+            className="checkbox scale-[0.8]"
+            checked={field.value}
+            onChange={field.onChange}
+          />
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    )}
     />
   )
 }

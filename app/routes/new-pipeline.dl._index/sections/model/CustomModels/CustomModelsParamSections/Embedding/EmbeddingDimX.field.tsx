@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type EmbeddingDimXFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function EmbeddingDimXField({
   className,
   form,
+  index,
   ...delegated
 }: EmbeddingDimXFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Embedding.embedding_dimx"
+      name={`customModels.${index}.props.embedding_dimx`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Embedding Dimension</FormLabel>

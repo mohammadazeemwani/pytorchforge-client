@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type PFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function PField({
   className,
   form,
+  index,
   ...delegated
 }: PFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Dropout3d.p"
+      name={`customModels.${index}.props.p`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Probability</FormLabel>

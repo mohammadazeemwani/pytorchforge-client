@@ -7,8 +7,8 @@ import { SubmitSteps } from "../../SubmitSteps";
 import { isGoodToGo } from "./helper";
 import { useFormErrorContext } from "~/components/FormErrorShow/FormErrorContext";
 import { UsePreTrainedCheckField } from "./UsePreTrainedCheck.field";
-import { PreTrainedModelField } from "./PreTrainedModel/PreTrainedModel.field";
-import { CustomModelField } from "./CustomModels/CustomModels.field";
+import { PreTrainedModelSection } from "./PreTrainedModel/PreTrainedModel.section";
+import { CustomModelsSection } from "./CustomModels/CustomModels.section";
 
 
 type ModelSectionProps = {
@@ -34,7 +34,6 @@ export function ModelSection({ className, form, ...delegated}: ModelSectionProps
     <div
       aria-description=""
       className={cn(
-        'prose dark:prose-invert',
         className,
       )}
       {...delegated}
@@ -51,9 +50,9 @@ export function ModelSection({ className, form, ...delegated}: ModelSectionProps
           className="mx-auto"
         />
         {usePretrained ? (
-          <PreTrainedModelField form={form} />
+          <PreTrainedModelSection form={form} />
         ): (
-          <CustomModelField form={form} />
+          <CustomModelsSection form={form} />
         )}
       </div>
       <SubmitSteps 

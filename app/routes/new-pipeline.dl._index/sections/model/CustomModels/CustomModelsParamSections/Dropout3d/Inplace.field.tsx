@@ -12,14 +12,15 @@ import {
 } from "~/components/Form"
 
 type InplaceFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
-export function InplaceField({ className, form, ...delegated }: InplaceFieldProps) {
+export function InplaceField({ className, form, index, ...delegated }: InplaceFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Dropout3d.inplace"
+      name={`customModels.${index}.props.inplace`}
       render={({ field }) => (
         <FormItem
           className={cn("flex gap-2 items-center", className)}

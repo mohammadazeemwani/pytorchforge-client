@@ -12,18 +12,20 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { InputNumber } from "~/components/InputNumber"
 
 type StartDimFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<"div">
 
 export function StartDimField({
   className,
   form,
+  index,
   ...delegated
 }: StartDimFieldProps) {
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Flatten.start_dim"
+      name={`customModels.${index}.props.start_dim`}
       render={({ field }) => (
         <FormItem className={cn("", className)} {...delegated}>
           <FormLabel>Start dimension</FormLabel>

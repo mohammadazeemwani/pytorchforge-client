@@ -4,15 +4,16 @@ import {closestCenter, DndContext, KeyboardSensor, PointerSensor, TouchSensor, u
 import {arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy} from '@dnd-kit/sortable';
 
 
-type DnDContainerProps = {
+export type DnDContainerProps = {
   items: string[],
   /** This is the callback that will be called with newItemsArray */
-  onUpdate: (newItemsArray: string[]) => void,
+  onUpdate?: (newItemsArray: string[]) => void,
+  move?: (from: number, to: number) => void,
   children: React.ReactNode
 } & React.ComponentProps<'div'>
 
 /** List of DnDItem shouild strictly be directly rendered inside it */
-export function DnDContainer({ className, items, onUpdate, children, ...delegated}: DnDContainerProps) {
+export function DnDContainer({ className, items, onUpdate, move, children, ...delegated}: DnDContainerProps) {
   
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -27,7 +28,8 @@ export function DnDContainer({ className, items, onUpdate, children, ...delegate
       const newIndex = items.indexOf(`${over?.id}`);
 
       const newItems = arrayMove(items, oldIndex, newIndex);
-      onUpdate(newItems)
+      onUpdate?.(newItems)
+      move?.(oldIndex, newIndex)
     }
   }, [items])
   

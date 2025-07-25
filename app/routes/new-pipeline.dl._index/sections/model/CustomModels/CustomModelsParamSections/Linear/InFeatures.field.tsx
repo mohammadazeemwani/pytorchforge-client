@@ -12,19 +12,21 @@ import {
 import { InputNumberArray } from "~/components/InputNumberArray";
 
 type InFeaturesFieldProps = {
-  form: UseFormReturn<PipelineDL>
+  form: UseFormReturn<PipelineDL>,
+  index: number
 } & React.ComponentProps<'div'>
 
 export function InFeaturesField({ 
   className, 
   form,
+  index,
   ...delegated
 }: InFeaturesFieldProps) {
   
   return (
     <FormField
       control={form.control}
-      name="customModelsData.Linear.in_features"
+      name={`customModels.${index}.props.in_features`}
       render={({ field }) => (
         <FormItem className={cn('', className)} {...delegated}>
           <FormLabel>In features</FormLabel>
