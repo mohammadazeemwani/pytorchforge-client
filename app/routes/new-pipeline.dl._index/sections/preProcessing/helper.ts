@@ -23,7 +23,7 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
   });
   const selectedTransformers = form.getValues('transformers')
   const allowedTransformersDataEntries = objectEntries(schemaNonDiscriminated.shape.transformersData.shape).filter(e => {
-    return selectedTransformers?.includes(e[0] as any)
+    return selectedTransformers.includes(e[0] as any)
   })
 
   const schemaDiscriminatedVariant = pipelineDLSchema.def.right.options.find(

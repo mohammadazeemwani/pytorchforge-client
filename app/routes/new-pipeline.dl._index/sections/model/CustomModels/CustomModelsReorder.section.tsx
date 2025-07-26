@@ -43,7 +43,7 @@ export function CustomModelsReorder({ form, fieldArrayOptions, className, ...del
           move={onMove}
           className={cn(
             "px-2 py-4 gap-2",
-            'max-h-[56vh] overflow-scroll scroll-auto!',
+            'max-h-[56vh] overflow-y-scroll scroll-auto!',
           )}
         >
           {fields.map((field, index) => {

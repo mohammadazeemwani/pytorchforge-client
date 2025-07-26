@@ -30,8 +30,8 @@ export function WeightField({
           <FormLabel>Weight</FormLabel>
           <InputNumberArray
             field={field}
-            placeholder="5, 5, 8"
-            helperText="Enter numbers separated by commas (e.g., 800, 600, 3)"
+            placeholder="0.3, 0.7"
+            helperText="manual rescale weight given to each class eg: [0.3, 0.7]"
           />
           <FormMessage />
         </FormItem>

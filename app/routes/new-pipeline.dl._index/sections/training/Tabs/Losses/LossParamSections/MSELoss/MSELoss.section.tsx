@@ -16,9 +16,9 @@ export function MSELossSection({
       className={cn(className)}
       {...delegated}
     >
+      <ReductionField form={form} />
       <SizeAverageField form={form} />
       <ReduceField form={form} />
-      <ReductionField form={form} />
     </div>
   )
 }

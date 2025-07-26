@@ -10,7 +10,7 @@ import { LossesSection } from "./Tabs/Losses/Losses.section";
 import { OptimizersSection } from "./Tabs/Optimizers/Optimizers.section";
 import { MetricsSection } from "./Tabs/Metrics/Metrics.section";
 import { LRSchedularsSection } from "./Tabs/LRSchedulars/LRSchedulars.section";
-import { MonitoringSection } from "./Monitoring/Monitoring.section";
+import { MonitoringSection } from "./Tabs/Monitoring/Monitoring.section";
 import { TrainingHyperParametersSection } from "./TrainingHyperParameters/TrainingHyperParameters.section";
 import { EarlyStoppingSection } from "./EarlyStopping/EarlyStopping.section";
 
@@ -51,12 +51,20 @@ export function TrainingSection({ className, form, ...delegated}: TrainingSectio
       >
       {/* name of each tab group should be unique */}
       <div className="tabs tabs-lift">
-        <input type="radio" name="training" className="tab" aria-label="Loss" defaultChecked/>
+        <label className="flex gap-[0.45rem] tab">
+          <input type="radio" name="training" defaultChecked />
+          <span>Loss</span>
+          <div aria-label="status" className="mt-[-0.5rem] status status-warning"></div>
+        </label>
         <div className="tab-content bg-base-100 border-base-300 p-6">
           <LossesSection form={form} />
         </div>
 
-        <input type="radio" name="training" className="tab" aria-label="Optimizer" />
+        <label className="flex gap-[0.45rem] tab">
+          <input type="radio" name="training" defaultChecked />
+          <span>Optimizer</span>
+          <div aria-label="status" className="mt-[-0.5rem] status status-warning"></div>
+        </label>
         <div className="tab-content bg-base-100 border-base-300 p-6">
           <OptimizersSection form={form} />
         </div>
@@ -70,9 +78,13 @@ export function TrainingSection({ className, form, ...delegated}: TrainingSectio
         <div className="tab-content bg-base-100 border-base-300 p-6">
           <LRSchedularsSection form={form} />
         </div>
+
+        <input type="radio" name="training" className="tab" aria-label="Monitoring" />
+        <div className="tab-content bg-base-100 border-base-300 p-6">
+          <MonitoringSection form={form} />
+        </div>
       </div>
 
-      <MonitoringSection form={form} />
       <TrainingHyperParametersSection form={form} />
       <EarlyStoppingSection form={form} />
 

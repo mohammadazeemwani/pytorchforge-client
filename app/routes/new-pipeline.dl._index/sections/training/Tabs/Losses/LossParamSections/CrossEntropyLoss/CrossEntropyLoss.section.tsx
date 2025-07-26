@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "~/utils/general"
 import type { LossSectionProps } from "../../loss-param-section.mapper"
-import { WeightField } from "./weight.field"
+import { WeightField } from "./Weight.field"
 import { SizeAverageField } from "./SizeAverage.field"
 import { IgnoreIndexField } from "./IgnoreIndex.field"
 import { ReduceField } from "./Reduce.field"

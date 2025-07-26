@@ -3,9 +3,8 @@ import {
   pipelineDLMainTaskDiscriminatedSchema,
   pipelineDLSchema,
 } from "~/schema/pipelineDL"
-import type { MainTask, PipelineDL, SubTasks, SubTasksDiscriminated } from "~/types/pipelineDL"
+import type { MainTask, Metrics, PipelineDL, SubTasks, CustomModels } from "~/types/pipelineDL"
 import { EarlyStoppingMonitorSchema, Interpolation, MetricAverageSchema, MetricTaskSchema, PipelineDLModeSchema, ReductionSchema, TensorD } from "~/schema/pipelineDL.general"
-import type { CustomModelType } from "~/schema/pipelineDL.general"
 import merge from "deepmerge"
 import { z, ZodBoolean, ZodEnum } from "zod/v4"
 import { defaultDataLoadingCode, type defaultDataLoadingCode_t } from "~/constants/pipelineDLDataLoading"
@@ -55,20 +54,6 @@ export function getDefaultPipelineDLSchema(
     // NOTE: We need to keep it undefined for future proof purposes. 
     // dataLoading: getDefaultDataLoadingCode(discriminatedOnMainTask.mainTask!, discriminatedOnMainTask.subTask!),
     usePreTrained: false,
-    trainingHyperParameters: {
-      batch_size: 32,
-      learning_rate: 0.1,
-      epochs: 10,
-      weight_decay: 0,
-    },
-    earlyStopping: {
-      patience: 5,
-      min_delta: undefined,
-      mode: undefined,
-      monitor: undefined,
-      verbose: false,
-      restore_best_weights: true
-    },
     transformersData: {
       Resize: {
         size: [224, 224],
@@ -342,33 +327,34 @@ export function getDefaultPipelineDLSchema(
       }
     },
 
-    metric: 'Accuracy',
+    metrics: [],
     metricsData: {
       Accuracy: {
-        task: 'binary',
+        task: 'multiclass',
         num_classes: undefined,
         threshold: 0.5,
         top_k: undefined,
         average: 'none'
       },
       F1Score: {
-        task: 'binary',
+        task: 'multiclass',
         num_classes: undefined,
         threshold: 0.5,
         top_k: undefined,
         average: 'none'
       },
       Recall: {
-        task: 'binary',
+        task: 'multiclass',
         num_classes: undefined,
         threshold: 0.5,
         top_k: undefined,
         average: 'none'
       },
       MeanAbsoluteError: {
-        num_outputs: undefined,
+        num_outputs: 1,
       }
     },
+
     lrSchedular: 'ReduceLROnPlateau',
     lrSchedularsData: {
       ReduceLROnPlateau: {
@@ -380,6 +366,20 @@ export function getDefaultPipelineDLSchema(
     },
 
     monitoring: ['use_tensorboard', 'use_mlflow'],
+    trainingHyperParameters: {
+      batch_size: 32,
+      learning_rate: 0.1,
+      epochs: 10,
+      weight_decay: 0,
+    },
+    earlyStopping: {
+      patience: 5,
+      min_delta: undefined,
+      mode: undefined,
+      monitor: 'val_loss',
+      verbose: false,
+      restore_best_weights: true
+    },
     
   }
 
@@ -396,7 +396,7 @@ export function getDefaultPipelineDLSchema(
  * THIS WILL OVERRIDE THE initial defaults.
  */
 export const customModelsEssentialDefaults: {
-  [C in CustomModelType['name']]: Extract<CustomModelType, { name: C }> | {}
+  [C in CustomModels['name']]: Extract<CustomModels, { name: C }> | {}
 } = {
   Linear: {
     name: 'Linear',
@@ -663,12 +663,12 @@ export function getAllowedOptimizers() {
   return values;
 }
 
-
 export function getAllowedMetrics() {
-  const inner = pipelineDLSchema.def.left.shape.metric
-  const values = inner.options
-  return values
+  const inner = pipelineDLSchema.def.left.shape.metrics
+  const values = inner.unwrap().options
+  return values;
 }
+
 export function getAllowedMetricTasks() {
   return MetricTaskSchema.options
 }

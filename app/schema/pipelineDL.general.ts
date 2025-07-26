@@ -475,14 +475,14 @@ export const pipelineDLOptimizersSchema = z
 export const optimizerSchema = z.enum(objectKeys(pipelineDLOptimizersSchema.shape))
 
 
-export const MetricTaskSchema = z.enum(["binary", "multiclass", "multilabel"])
+export const MetricTaskSchema = z.enum(["multiclass", "multilabel"])
 export const MetricAverageSchema = z.enum(["micro", "macro", "weighted", "none"])
 export const pipelineDLMetricsSchema = z
   .object({
     Accuracy: z
       .object({
         task: MetricTaskSchema,
-        num_classes: z.number().optional(),
+        num_classes: z.number(),
         threshold: z.number().optional(),
         top_k: z.number().optional(),
         average: MetricAverageSchema.optional(),
@@ -492,7 +492,7 @@ export const pipelineDLMetricsSchema = z
     F1Score: z
       .object({
         task: MetricTaskSchema,
-        num_classes: z.number().optional(),
+        num_classes: z.number(),
         threshold: z.number().optional(),
         top_k: z.number().optional(),
         average: MetricAverageSchema.optional(),
@@ -502,7 +502,7 @@ export const pipelineDLMetricsSchema = z
     Recall: z
       .object({
         task: MetricTaskSchema,
-        num_classes: z.number().optional(),
+        num_classes: z.number(),
         threshold: z.number().optional(),
         top_k: z.number().optional(),
         average: MetricAverageSchema.optional(),
@@ -515,7 +515,9 @@ export const pipelineDLMetricsSchema = z
       })
       .optional(),
   })
-export const metricSchema = z.enum(objectKeys(pipelineDLMetricsSchema.shape))
+// can be empty.
+
+export const metricsSchema = z.array(z.enum(objectKeys(pipelineDLMetricsSchema.shape)))
 
 
 export const PipelineDLModeSchema = z.enum(["min", "max"])

@@ -20,7 +20,7 @@ import {
   dataLoadingSchema, 
   lossSchema, 
   lrSchedularSchema, 
-  metricSchema, 
+  metricsSchema, 
   optimizerSchema, 
   pipelineDLEarlyStoppingSchema, 
   pipelineDLLossesSchema, 
@@ -87,7 +87,7 @@ export const pipelineDLSchema = z
     optimizer: optimizerSchema,
     optimizersData: pipelineDLOptimizersSchema,
 
-    metric: metricSchema,
+    metrics: metricsSchema,
     metricsData: pipelineDLMetricsSchema,
 
     lrSchedular: lrSchedularSchema,

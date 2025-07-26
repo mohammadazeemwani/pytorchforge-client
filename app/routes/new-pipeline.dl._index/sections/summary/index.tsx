@@ -8,10 +8,10 @@ type SummarySectionProps = {
   form: UseFormReturn<PipelineDL>
 } & React.ComponentProps<'div'>
 
-export function SummarySection({ className, ...delegated}: SummarySectionProps) {
+export function SummarySection({ className, form, ...delegated}: SummarySectionProps) {
   return (
     <div
-      aria-description=""
+      aria-description="summary section"
       className={cn(
         className
       )}
