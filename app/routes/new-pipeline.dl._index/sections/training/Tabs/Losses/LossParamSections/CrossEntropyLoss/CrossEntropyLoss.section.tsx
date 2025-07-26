@@ -20,8 +20,8 @@ export function CrossEntropyLossSection({
       {...delegated}
     >
       <WeightField form={form} />
-      <SizeAverageField form={form} />
       <IgnoreIndexField form={form} />
+      <SizeAverageField form={form} />
       <ReduceField form={form} />
       <ReductionField form={form} />
       <LabelSmoothingField form={form} />
