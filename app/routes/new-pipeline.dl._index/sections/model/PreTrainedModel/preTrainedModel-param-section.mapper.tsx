@@ -47,7 +47,7 @@ export function getPreTrainedParamModifierComponent(
       {...props} 
       className={cn(
         'flex flex-col gap-5 sm:gap-8',
-        'w-[65%] sm:w-full sm:grid sm:grid-cols-2',
+        "w-[90%] sm:w-full sm:grid sm:grid-cols-2 items-start",
         props.className
       )}
     />

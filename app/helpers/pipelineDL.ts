@@ -4,11 +4,12 @@ import {
   pipelineDLSchema,
 } from "~/schema/pipelineDL"
 import type { MainTask, PipelineDL, SubTasks, SubTasksDiscriminated } from "~/types/pipelineDL"
-import { Interpolation, TensorD } from "~/schema/pipelineDL.general"
+import { EarlyStoppingMonitorSchema, Interpolation, MetricAverageSchema, MetricTaskSchema, PipelineDLModeSchema, ReductionSchema, TensorD } from "~/schema/pipelineDL.general"
 import type { CustomModelType } from "~/schema/pipelineDL.general"
 import merge from "deepmerge"
 import { z, ZodBoolean, ZodEnum } from "zod/v4"
 import { defaultDataLoadingCode, type defaultDataLoadingCode_t } from "~/constants/pipelineDLDataLoading"
+import { objectKeys } from "ts-extras"
 
 /**
  *
@@ -62,6 +63,11 @@ export function getDefaultPipelineDLSchema(
     },
     earlyStopping: {
       patience: 5,
+      min_delta: undefined,
+      mode: undefined,
+      monitor: undefined,
+      verbose: false,
+      restore_best_weights: true
     },
     transformersData: {
       Resize: {
@@ -262,7 +268,119 @@ export function getDefaultPipelineDLSchema(
         n_output: 128
       }
     },
-    customModels: []
+    customModels: [],
+    loss: 'CrossEntropyLoss',
+    lossesData: {
+      CrossEntropyLoss: {
+        weight: undefined,
+        size_average: false,
+        ignore_index: -100,
+        reduce: false,
+        reduction: 'Mean',
+        label_smoothing: 0.0
+      },
+      BCELoss: {
+        weight: undefined,
+        size_average: false,
+        reduce: false,
+        reduction: 'Mean'
+      },
+      BCEWithLogitsLoss: {
+        weight: undefined,
+        size_average: false,
+        reduce: false,
+        reduction: 'Mean',
+        pos_weight: undefined,
+      },
+      MSELoss: {
+        size_average: false,
+        reduce: false,
+        reduction: 'Mean'
+      },
+      L1Loss: {
+        size_average: false,
+        reduce: false,
+        reduction: 'Mean'
+      }
+    },
+
+    optimizer: 'Adam',
+    optimizersData: {
+      Adam: {
+        lr: 1e-3,
+        betas: [0.9, 0.999],
+        eps: 1e-8,
+        weight_decay: 0,
+        amsgrad: false,
+      },
+      SDG: {
+        lr: 1e-3,
+        momentum: 0,
+        weight_decay: 0,
+        dampening: 0,
+        nesterov: false
+      },
+      RMSprop: {
+        lr: 1e-2,
+        alpha: 0.99,
+        eps: 1e-8,
+        weight_decay: 0,
+        momentum: 0,
+        centered: false,
+      },
+      Adagrad: {
+        lr: 1e-2,
+        lr_decay: 0,
+        weight_decay: 0,
+        initial_accumulator: 0
+      },
+      NAdam: {
+        lr: 2e-3,
+        betas: [0.9, 0.999],
+        eps: 1e-8,
+        weight_decay: 0
+      }
+    },
+
+    metric: 'Accuracy',
+    metricsData: {
+      Accuracy: {
+        task: 'binary',
+        num_classes: undefined,
+        threshold: 0.5,
+        top_k: undefined,
+        average: 'none'
+      },
+      F1Score: {
+        task: 'binary',
+        num_classes: undefined,
+        threshold: 0.5,
+        top_k: undefined,
+        average: 'none'
+      },
+      Recall: {
+        task: 'binary',
+        num_classes: undefined,
+        threshold: 0.5,
+        top_k: undefined,
+        average: 'none'
+      },
+      MeanAbsoluteError: {
+        num_outputs: undefined,
+      }
+    },
+    lrSchedular: 'ReduceLROnPlateau',
+    lrSchedularsData: {
+      ReduceLROnPlateau: {
+        patience: 10,
+        factor: 0.1,
+        mode: 'min',
+        threshold: 1e-4
+      }
+    },
+
+    monitoring: ['use_tensorboard', 'use_mlflow'],
+    
   }
 
   return merge.all([discriminatedOnMainTask, commons])
@@ -530,4 +648,56 @@ export function getAllowedCustomModels() {
     pipelineDLSchema.def.left.shape.customModels
   const values = inner.unwrap().options
   return values
+}
+
+
+export function getAllowedLosses() {
+  const inner = pipelineDLSchema.def.left.shape.loss
+  const values = inner.options
+  return values;
+}
+
+export function getAllowedOptimizers() {
+  const inner = pipelineDLSchema.def.left.shape.optimizer
+  const values = inner.options
+  return values;
+}
+
+
+export function getAllowedMetrics() {
+  const inner = pipelineDLSchema.def.left.shape.metric
+  const values = inner.options
+  return values
+}
+export function getAllowedMetricTasks() {
+  return MetricTaskSchema.options
+}
+export function getAllowedMetricAverage() {
+  return MetricAverageSchema.options
+}
+
+export function getAllowedLRSchedulars() {
+  const inner = pipelineDLSchema.def.left.shape.lrSchedular
+  const values = inner.options
+  return values
+}
+/**
+ * used in LR Schedulars and EarlyStopping as well. [as of 26 July 2025]
+ */
+export function getAllowedPipelineDLModeSchema() {
+  return PipelineDLModeSchema.options
+}
+
+export function getAllowedMonitoring() {
+  const inner = pipelineDLSchema.def.left.shape.monitoring
+  const values = inner.unwrap().unwrap().options
+  return values;
+}
+
+export function getAllowedReduction() {
+  return ReductionSchema.options
+}
+
+export function getAllowedEarlyStoppingMonitors() {
+  return EarlyStoppingMonitorSchema.options
 }

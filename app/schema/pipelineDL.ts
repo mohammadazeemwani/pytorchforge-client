@@ -18,6 +18,10 @@ import {
   customModelsSchema, 
   dataFileSchema, 
   dataLoadingSchema, 
+  lossSchema, 
+  lrSchedularSchema, 
+  metricSchema, 
+  optimizerSchema, 
   pipelineDLEarlyStoppingSchema, 
   pipelineDLLossesSchema, 
   pipelineDLLRSchedularSchema, 
@@ -76,13 +80,22 @@ export const pipelineDLSchema = z
     // customModels: customModelsSchema,
     customModels: customModelsSchema,
     usePreTrained: usePreTrainedSchema,
-    losses: pipelineDLLossesSchema,
-    optimizers: pipelineDLOptimizersSchema,
+
+    loss: lossSchema,
+    lossesData: pipelineDLLossesSchema,
+
+    optimizer: optimizerSchema,
+    optimizersData: pipelineDLOptimizersSchema,
+
+    metric: metricSchema,
+    metricsData: pipelineDLMetricsSchema,
+
+    lrSchedular: lrSchedularSchema,
+    lrSchedularsData: pipelineDLLRSchedularSchema,
+    
     monitoring: pipelineDLMonitoringSchema,
-    metrics: pipelineDLMetricsSchema,
     trainingHyperParameters: trainingHyperParametersSchema,
     earlyStopping: pipelineDLEarlyStoppingSchema,
-    lrSchedular: pipelineDLLRSchedularSchema,
 
     // these are object type to store all param values,
     // which at the end will be filtered. [these are data objects]

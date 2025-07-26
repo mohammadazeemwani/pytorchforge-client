@@ -44,6 +44,7 @@ export function TransformersSelectField({ className, form, ...delegated}: Transf
               onValueChange={field.onChange}
               animation={2}
               maxCount={3}
+              placeholder="Select transformers"
               />
           </FormControl>
           <FormMessage />

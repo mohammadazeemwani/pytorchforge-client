@@ -369,7 +369,7 @@ export const customModels = customModelsSchema.unwrap().options.map(e => e.shape
 export type CustomModelType = z.infer<typeof customModelsSchema>[number];
 
 
-const ReductionSchema = z.enum(["None", "Mean", "Sum"])
+export const ReductionSchema = z.enum(["None", "Mean", "Sum"])
 export const pipelineDLLossesSchema = z
   .object({
     CrossEntropyLoss: z
@@ -418,7 +418,8 @@ export const pipelineDLLossesSchema = z
       })
       .optional(),
   })
-  .default({})
+export const lossSchema = z.enum(objectKeys(pipelineDLLossesSchema.shape))
+
 
 export const pipelineDLOptimizersSchema = z
   .object({
@@ -438,7 +439,7 @@ export const pipelineDLOptimizersSchema = z
         momentum: z.number().optional(),
         weight_decay: z.number().optional(),
         dampening: z.number().optional(),
-        nesterov: z.number().optional(),
+        nesterov: z.boolean().optional(),
       })
       .optional(),
 
@@ -457,7 +458,7 @@ export const pipelineDLOptimizersSchema = z
       .object({
         lr: z.number().optional(),
         lr_decay: z.number().optional(),
-        weighti_decay: z.number().optional(),
+        weight_decay: z.number().optional(),
         initial_accumulator: z.number().optional(),
       })
       .optional(),
@@ -465,13 +466,70 @@ export const pipelineDLOptimizersSchema = z
     NAdam: z
       .object({
         lr: z.number().optional(),
-        betas: z.number().optional(),
+        betas: z.array(z.number()).optional(),
         eps: z.number().optional(),
         weight_decay: z.number().optional(),
       })
       .optional(),
   })
-  .default({})
+export const optimizerSchema = z.enum(objectKeys(pipelineDLOptimizersSchema.shape))
+
+
+export const MetricTaskSchema = z.enum(["binary", "multiclass", "multilabel"])
+export const MetricAverageSchema = z.enum(["micro", "macro", "weighted", "none"])
+export const pipelineDLMetricsSchema = z
+  .object({
+    Accuracy: z
+      .object({
+        task: MetricTaskSchema,
+        num_classes: z.number().optional(),
+        threshold: z.number().optional(),
+        top_k: z.number().optional(),
+        average: MetricAverageSchema.optional(),
+      })
+      .optional(),
+
+    F1Score: z
+      .object({
+        task: MetricTaskSchema,
+        num_classes: z.number().optional(),
+        threshold: z.number().optional(),
+        top_k: z.number().optional(),
+        average: MetricAverageSchema.optional(),
+      })
+      .optional(),
+
+    Recall: z
+      .object({
+        task: MetricTaskSchema,
+        num_classes: z.number().optional(),
+        threshold: z.number().optional(),
+        top_k: z.number().optional(),
+        average: MetricAverageSchema.optional(),
+      })
+      .optional(),
+
+    MeanAbsoluteError: z
+      .object({
+        num_outputs: z.number().optional(),
+      })
+      .optional(),
+  })
+export const metricSchema = z.enum(objectKeys(pipelineDLMetricsSchema.shape))
+
+
+export const PipelineDLModeSchema = z.enum(["min", "max"])
+export const pipelineDLLRSchedularSchema = z
+  .object({
+    ReduceLROnPlateau: z.object({
+      patience: z.number(),
+      factor: z.number().optional(),
+      mode: PipelineDLModeSchema.optional(),
+      threshold: z.number().optional(),
+    }),
+  })
+export const lrSchedularSchema = z.enum(objectKeys(pipelineDLLRSchedularSchema.shape))
+
 
 /**
  * They don't have types.
@@ -492,86 +550,22 @@ export const pipelineDLMonitoringSchema = z
   )
   .default([])
 
-const TaskSchema = z.enum(["binary", "multiclass", "multilabel"])
-const AverageSchema = z.enum(["micro", "macro", "weighted", "none"])
-export const pipelineDLMetricsSchema = z
-  .object({
-    Accuracy: z
-      .object({
-        task: TaskSchema,
-        num_classes: z.number().optional(),
-        threshold: z.number().optional(),
-        top_k: z.number().optional(),
-        average: AverageSchema.optional(),
-      })
-      .optional(),
-
-    F1Score: z
-      .object({
-        task: TaskSchema,
-        num_classes: z.number().optional(),
-        threshold: z.number().optional(),
-        top_k: z.number().optional(),
-        average: AverageSchema.optional(),
-      })
-      .optional(),
-
-    Recall: z
-      .object({
-        task: TaskSchema,
-        num_classes: z.number().optional(),
-        threshold: z.number().optional(),
-        top_k: z.number().optional(),
-        average: AverageSchema.optional(),
-      })
-      .optional(),
-
-    MeanAbsoluteError: z
-      .object({
-        num_outputs: z.number().optional(),
-      })
-      .optional(),
-  })
-  .default({})
 
 export const trainingHyperParametersSchema = z
   .object({
-    batch_size: z.number().default(32),
-    learning_rate: z.number().default(0.1),
-    epochs: z.number().default(10),
-    weight_decay: z.number().default(0),
-  })
-  .default({
-    batch_size: 32,
-    learning_rate: 0.1,
-    epochs: 10,
-    weight_decay: 0,
+    batch_size: z.number(),
+    learning_rate: z.number(),
+    epochs: z.number(),
+    weight_decay: z.number(),
   })
 
-const ModeSchema = z.enum(["min", "max"])
-const MonitorSchema = z.enum(["val_loss"])
+export const EarlyStoppingMonitorSchema = z.enum(["val_loss"])
 export const pipelineDLEarlyStoppingSchema = z
   .object({
-    patience: z.number().default(5),
+    patience: z.number(),
     min_delta: z.number().optional(),
-    mode: ModeSchema.optional(),
-    monitor: MonitorSchema.optional(),
+    mode: PipelineDLModeSchema.optional(),
+    monitor: EarlyStoppingMonitorSchema.optional(),
     verbose: z.boolean().optional(),
     restore_best_weights: z.boolean().optional(),
-  })
-  .default({
-    patience: 5,
-  })
-
-export const pipelineDLLRSchedularSchema = z
-  .object({
-    ReduceLROnPlateau: z.object({
-      patience: z.number(),
-      factor: z.number().optional(),
-      mode: ModeSchema.optional(),
-      threshold: z.number().optional(),
-    }),
-  })
-  .default({
-    ReduceLROnPlateau: { patience: 10 },
   })

@@ -16,12 +16,12 @@ export type UnifiedTransformers = Transformers extends (infer ItemType)[] ? Item
 
 export type PreTrainedModels = PipelineDL['pretrainedModel']
 export type CustomModels = PipelineDL['customModels'][number]
-export type Losses = PipelineDL['losses']
-export type Optimizers = PipelineDL['optimizers']
-export type Monitoring = PipelineDL['monitoring']
-export type Metrics = PipelineDL['metrics']
-export type EarlyStopping = PipelineDL['earlyStopping']
+export type Loss = PipelineDL['loss']
+export type Optimizer = PipelineDL['optimizer']
+export type Metric = PipelineDL['metric']
 export type LRSchedular = PipelineDL['lrSchedular']
+export type Monitoring = PipelineDL['monitoring']
+export type EarlyStopping = PipelineDL['earlyStopping']
 
 /**
  * It is highly recommended to all the isGoodToGo functions to use unified parser to parse error strings.  
