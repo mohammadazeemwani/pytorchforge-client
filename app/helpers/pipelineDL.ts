@@ -303,7 +303,7 @@ export function getDefaultPipelineDLSchema(
         betas: [0.9, 0.999],
         eps: 1e-8,
         weight_decay: 0,
-        amsgrad: false,
+        amsgrad: true,
       },
       SDG: {
         lr: 1e-3,
