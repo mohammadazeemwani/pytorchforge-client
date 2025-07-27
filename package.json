@@ -39,6 +39,7 @@
     "@uiw/codemirror-theme-gruvbox-dark": "^4.24.1",
     "@uiw/codemirror-theme-monokai": "^4.24.1",
     "@uiw/react-codemirror": "^4.24.1",
+    "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
