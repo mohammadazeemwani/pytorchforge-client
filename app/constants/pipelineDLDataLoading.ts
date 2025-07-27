@@ -47,7 +47,7 @@ export const defaultDataLoadingCode: defaultDataLoadingCode_t = {
         else:
             return {'image': image, 'label': label}
 
-def get_image_classification_loader(root, batch_size=32, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=32, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = ImageClassificationDataset(root=root, split=split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
     'generation': `class ImageGenerationDataset(Dataset):
@@ -94,7 +94,7 @@ def get_image_classification_loader(root, batch_size=32, split='train', shuffle=
         else:
             return item
 
-def get_image_generation_loader(root, batch_size=16, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=16, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = ImageGenerationDataset(root=root, split=split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
     'image-segmentation': `class SegmentationDataset(Dataset):
@@ -132,7 +132,7 @@ def get_image_generation_loader(root, batch_size=16, split='train', shuffle=True
         else:
             return {'image': image, 'mask': mask}
 
-def get_segmentation_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = SegmentationDataset(root=root, split=split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
     'object-detection': `class ObjectDetectionDataset(Dataset):
@@ -178,7 +178,7 @@ def get_segmentation_loader(root, batch_size=8, split='train', shuffle=True, tra
         else:
             return {'image': image, **target}
 
-def get_object_detection_loader(root, batch_size=4, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=4, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = ObjectDetectionDataset(root=root, split=split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, 
                       collate_fn=lambda x: tuple(zip(*x)))`,
@@ -218,7 +218,7 @@ def get_object_detection_loader(root, batch_size=4, split='train', shuffle=True,
         else:
             return item
 
-def get_text_classification_loader(root, batch_size=32, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=32, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = TextClassificationDataset(root, split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
     'generation': `class TextGenerationDataset(Dataset):
@@ -254,7 +254,7 @@ def get_text_classification_loader(root, batch_size=32, split='train', shuffle=T
         }
         return format_handlers.get(self.return_format, lambda x:x)(item)
 
-def get_text_generation_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = TextGenerationDataset(root, split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
     'summarization': `class TextPairDataset(Dataset):
@@ -285,7 +285,7 @@ def get_text_generation_loader(root, batch_size=8, split='train', shuffle=True, 
         }
         return format_handlers.get(self.return_format, lambda x:x)(item)
 
-def get_text_pair_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = TextPairDataset(root, split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
     'translation': `class TextPairDataset(Dataset):
@@ -316,7 +316,7 @@ def get_text_pair_loader(root, batch_size=8, split='train', shuffle=True, transf
         }
         return format_handlers.get(self.return_format, lambda x:x)(item)
 
-def get_text_pair_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = TextPairDataset(root, split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`
   },
@@ -379,7 +379,7 @@ def get_text_pair_loader(root, batch_size=8, split='train', shuffle=True, transf
         else:
             return {'audio': waveform, 'label': label}
 
-def get_audio_classification_loader(root, batch_size=16, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=16, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = AudioClassificationDataset(root=root, split=split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
     'conversion': `class AudioConversionDataset(Dataset):
@@ -427,7 +427,7 @@ def get_audio_classification_loader(root, batch_size=16, split='train', shuffle=
         else:
             return waveform[:, :self.clip_samples]
 
-def get_audio_conversion_loader(root, batch_size=4, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=4, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = AudioConversionDataset(root=root, split=split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
     'generation': `class AudioGenerationDataset(Dataset):
@@ -513,7 +513,7 @@ def get_audio_conversion_loader(root, batch_size=4, split='train', shuffle=True,
         else:
             return item
 
-def get_audio_generation_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=8, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = AudioGenerationDataset(root=root, split=split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
     'recognition': `class AudioClassificationDataset(Dataset):
@@ -574,7 +574,7 @@ def get_audio_generation_loader(root, batch_size=8, split='train', shuffle=True,
         else:
             return {'audio': waveform, 'label': label}
 
-def get_audio_classification_loader(root, batch_size=16, split='train', shuffle=True, transforms=None, **kwargs):
+def custom_loader(root, batch_size=16, split='train', shuffle=True, transforms=None, **kwargs):
     dataset = AudioClassificationDataset(root=root, split=split, transforms=transforms, **kwargs)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)`,
   }
