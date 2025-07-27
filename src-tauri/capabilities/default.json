@@ -10,6 +10,8 @@
     "core:webview:default",
     "dialog:default",
     "fs:allow-write-text-file",
-    "updater:default"
+    "updater:default",
+    "process:default",
+    "process:allow-restart"
   ]
 }

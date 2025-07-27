@@ -17,6 +17,7 @@ import { cn } from "./utils/general"
 import React from "react"
 import SideBar from "./components/SideBar/SideBar"
 import MainLinksBar from "./components/MainLinksBar"
+import { checkForAppUpdates } from "updater"
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -103,6 +104,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  React.useEffect(() => {
+    (async () => {
+      await checkForAppUpdates()
+    })()
+  }, [])
+
   return <Outlet />
 }
 
