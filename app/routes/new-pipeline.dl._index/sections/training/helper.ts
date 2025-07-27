@@ -65,7 +65,6 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
   const stepSchema = restFormSchema.and(metricsSchema)
 
   const data = form.getValues()
-  console.log(data)
   const result = stepSchema.safeParse(data);
 
   return result;

@@ -56,6 +56,8 @@ export function DnDItem(props: DnDItemProps) {
       aria-description=""
       className={cn(
         'prose dark:prose-invert',
+        'bg-base-100 flex items-center',
+        'border border-base-content/30 pl-1 sm:pl-[0.3rem] pr-2 py-1 rounded-field',
         className
       )}
       {...delegated}

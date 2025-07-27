@@ -15,3 +15,7 @@ export const applicationVersion = "1.0.1"
 
 export const formShakeErrorDuration = 0.4
 export const formVibrateErrorDuration = [100, 50, 100]
+
+export const apiServer = {
+  host: 'http://localhost:8000'
+}

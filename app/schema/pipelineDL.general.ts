@@ -27,8 +27,12 @@ export const arrayNumberSchema = z
 export const TensorD = z.enum(["float32", "float64", "int32", "int64"]) // Example
 export type TensorDType = z.infer<typeof TensorD>
 
-export const dataFileSchema = z
-  .file({ error: 'Data File needs to be selected'})
+export const dataSourceSchema = z.object({
+  type: z.enum(['file', 'folder']),
+  value: z.string()
+}, {
+  error: 'Select a file or folder as source'
+})
 
 export const dataLoadingSchema = z.string()
 export const usePreTrainedSchema = z.boolean()
@@ -362,7 +366,9 @@ export const customModelsSchema = z.array(z.union([
   error: (issue) => {
     return { message: `Pass correct props for ${(issue.input as any)?.name}`}
   }
-})).nonempty('At least one layer needs to be selected.')
+}))
+// non empty-ness will be checked in helpers of models
+
 // Extract literal names from the union schema
 export const customModels = customModelsSchema.unwrap().options.map(e => e.shape.name.value)
 // export const customModelsSchema = z.array(z.enum(customModels), { error: 'At least one layer should be selected'}).nonempty()

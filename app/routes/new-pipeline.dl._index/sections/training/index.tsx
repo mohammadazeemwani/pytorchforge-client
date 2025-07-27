@@ -61,7 +61,7 @@ export function TrainingSection({ className, form, ...delegated}: TrainingSectio
         </div>
 
         <label className="flex gap-[0.45rem] tab">
-          <input type="radio" name="training" defaultChecked />
+          <input type="radio" name="training" />
           <span>Optimizer</span>
           <div aria-label="status" className="mt-[-0.5rem] status status-warning"></div>
         </label>

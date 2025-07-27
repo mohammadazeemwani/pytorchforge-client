@@ -2,7 +2,6 @@ import React from "react"
 import type { Route } from "./+types/route"
 import { sectionCount } from "~/constants/pipelineDL"
 import { StepContextProvider } from "~/components/StepNavigator"
-import { FormErrorProvider } from "~/components/FormErrorShow/FormErrorContext"
 import { DL } from "./DL"
 
 export function meta({}: Route.MetaArgs) {
@@ -18,9 +17,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Home({}: Route.ComponentProps) {
   return (
     <StepContextProvider totalSteps={sectionCount}>
-    <FormErrorProvider>
       <DL />
-    </FormErrorProvider>
     </StepContextProvider>
   )
 }

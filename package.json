@@ -1,8 +1,8 @@
 {
   "version": "0.0.1",
-  "name": "public-client",
+  "name": "client",
   "description": "A low code deep learning platform",
-  "repository": "github:MLPipelines/pubilc-client",
+  "repository": "github:MLPipelines/client",
   "private": true,
   "type": "module",
   "scripts": {

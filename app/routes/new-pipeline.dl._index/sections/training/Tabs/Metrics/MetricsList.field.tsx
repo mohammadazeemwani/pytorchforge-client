@@ -55,7 +55,7 @@ export function MetricsListField({
                         '',
                       )}
                     >
-                      <span>
+                      <span className="ml-1.5">
                         {metric}
                       </span>
                       <div className="ml-auto flex items-center gap-2">

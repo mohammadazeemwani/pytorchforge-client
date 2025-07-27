@@ -51,6 +51,13 @@ export function getDefaultPipelineDLSchema(
       break
   }
   const commons: DeepPartial<PipelineDL> = {
+    dataSource: {
+      type: 'file',
+      // NOTE: it is imp. that we keep this undefined cz if value is null picked up by Picker, we reset the field.
+      // cz setValue will not take undefined.
+      value: undefined
+    },
+    
     // NOTE: We need to keep it undefined for future proof purposes. 
     // dataLoading: getDefaultDataLoadingCode(discriminatedOnMainTask.mainTask!, discriminatedOnMainTask.subTask!),
     usePreTrained: false,
@@ -61,7 +68,7 @@ export function getDefaultPipelineDLSchema(
       },
       RandomCrop: {
         size: [224, 224],
-        padding: []
+        padding: [0]
       },
       RandomHorizontalFlip: {
         p: 0.5,
@@ -331,21 +338,21 @@ export function getDefaultPipelineDLSchema(
     metricsData: {
       Accuracy: {
         task: 'multiclass',
-        num_classes: undefined,
+        num_classes: 2,
         threshold: 0.5,
         top_k: undefined,
         average: 'none'
       },
       F1Score: {
         task: 'multiclass',
-        num_classes: undefined,
+        num_classes: 2,
         threshold: 0.5,
         top_k: undefined,
         average: 'none'
       },
       Recall: {
         task: 'multiclass',
-        num_classes: undefined,
+        num_classes: 2,
         threshold: 0.5,
         top_k: undefined,
         average: 'none'

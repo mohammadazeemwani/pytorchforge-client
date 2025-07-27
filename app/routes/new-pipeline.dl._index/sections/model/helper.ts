@@ -41,7 +41,7 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
   // })
   const customModelsSchema = z.object({
     usePreTrained: z.literal(false),
-    customModels: schemaNonDiscriminated.shape.customModels,
+    customModels: schemaNonDiscriminated.shape.customModels.nonempty('At least one layer needs to be selected'),
   });
 
 

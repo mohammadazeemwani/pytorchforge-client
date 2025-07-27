@@ -4,12 +4,14 @@ import { motion, type Variant, type Variants } from "motion/react"
 import { cn } from "~/utils/general"
 import { formShakeErrorDuration as defShakeDur } from "~/constants/general"
 import { formVibrateErrorDuration as defVibrDur } from "~/constants/general"
+import type { UseFormReturn, UseFormSetError } from "react-hook-form"
+import type { PipelineDL } from "~/types/pipelineDL"
 type FormErrorContext = {
   error: ZodError<any> | null // yes it can be any, cz what fields are in which step should not effect it
   setError: React.Dispatch<React.SetStateAction<ZodError<any> | null>>;
   
   /** duration for shake can be changed on the FormErrorContext provider */
-  shakeForError: () => void
+  shakeForError: () => void,
 }
 
 export const FormErrorContext = React.createContext<FormErrorContext | null>(
@@ -21,7 +23,7 @@ type FormErrorProvider = {
   /** in seconds, like: 0.4 */
   durationShake?: number
   /** in ms, like: 200 */
-  durationVibrate?: number[]
+  durationVibrate?: number[],
 }
 
 export function FormErrorProvider({
@@ -70,7 +72,7 @@ export function FormErrorProvider({
       value={{
         error,
         setError,
-        shakeForError
+        shakeForError,
       }}
     >
       <motion.div 

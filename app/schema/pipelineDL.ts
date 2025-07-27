@@ -16,8 +16,8 @@ import {
 } from "./pipelineDL.audio"
 import { 
   customModelsSchema, 
-  dataFileSchema, 
   dataLoadingSchema, 
+  dataSourceSchema, 
   lossSchema, 
   lrSchedularSchema, 
   metricsSchema, 
@@ -75,7 +75,8 @@ export const pipelineDLMainTaskDiscriminatedSchema = z.discriminatedUnion("mainT
  */
 export const pipelineDLSchema = z
   .object({
-    dataFile: dataFileSchema,
+    dataSource: dataSourceSchema,
+
     dataLoading: dataLoadingSchema,
     // customModels: customModelsSchema,
     customModels: customModelsSchema,
@@ -103,4 +104,3 @@ export const pipelineDLSchema = z
     pretrainedModelsData: pipelineDLPretrainedModelsSchema,
   })
   .and(pipelineDLMainTaskDiscriminatedSchema)
-

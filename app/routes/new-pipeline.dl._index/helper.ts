@@ -9,6 +9,8 @@ export const onSubmit: SubmitHandler<PipelineDL> = async (data) => {
 }
 
 export const onError: SubmitErrorHandler<PipelineDL> = async (errors) => {
+
+  // make a error component and render that instead of logging in future.
   console.log(
     'Form submition errors',
     errors

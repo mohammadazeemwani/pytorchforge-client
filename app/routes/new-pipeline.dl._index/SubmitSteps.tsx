@@ -45,7 +45,6 @@ export function SubmitSteps({ className, form, isGoodToGoCallback, ...delegated}
     <div
       aria-description=""
       className={cn(
-        'prose dark:prose-invert',
         'flex justify-between',
         className
       )}

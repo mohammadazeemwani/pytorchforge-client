@@ -2,6 +2,7 @@ import React from "react"
 import { cn } from "~/utils/general"
 import { SectionRouter } from "./SectionRouter"
 import { sectionSlugToLabel, sectionSlugs, defaultTask } from "~/constants/pipelineDL"
+import { apiServer } from "~/constants/general"
 import {
   StepBackButton,
   StepNavigator,
@@ -16,6 +17,7 @@ import type { PipelineDL } from "~/types/pipelineDL"
 import { getDefaultPipelineDLSchema } from "~/helpers/pipelineDL"
 import { onError, onSubmit } from "./helper"
 import { FormErrorList } from "~/components/FormErrorShow/FormErrorList"
+import { FormErrorProvider } from "~/components/FormErrorShow/FormErrorContext"
 
 type DLProps = {} & React.ComponentProps<"div">
 
@@ -33,7 +35,8 @@ export function DL({ className, ...delegated }: DLProps) {
     form.reset(getDefaultPipelineDLSchema(mainTask))
   }, [mainTask])
 
-  return (
+  return ( 
+    <FormErrorProvider>
     <section
       aria-description=""
       className={cn(
@@ -45,14 +48,17 @@ export function DL({ className, ...delegated }: DLProps) {
     >
       <StepNavigator slugToLabelMapper={sectionSlugToLabel} />
       <FormContext {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+        <form 
+          action={`${apiServer.host}/generate`}
+        >
           <SectionRouter
             section={sectionSlugs[currentStep - 1]}
             form={form}
           />
         </form>
       </FormContext>
-      <FormErrorList className="" />
+      <FormErrorList setFormError={form.setError} />
     </section>
+    </FormErrorProvider>
   )
 }

@@ -6,7 +6,7 @@ import type { PipelineDL } from "~/types/pipelineDL";
 import { MainTaskField } from "./MainTask.field";
 import { SubTaskField } from "./SubTask.field";
 import { DataFormatField } from "./DataFormat.field";
-import { DataFileField } from "./DataFile.field";
+import { DataSourceField } from "./DataSource.field";
 import { SubmitSteps } from "../../SubmitSteps";
 import { isGoodToGo } from "./helper";
 import { useFormErrorContext } from "~/components/FormErrorShow/FormErrorContext";
@@ -58,7 +58,7 @@ export function TaskSection({ className, form, ...delegated}: TaskSectionProps) 
           form={form}
           className="w-[75%]"
         />
-        <DataFileField
+        <DataSourceField
           form={form}
           className="w-[75%]"
         />

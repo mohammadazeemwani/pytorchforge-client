@@ -17,7 +17,7 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
 
   // schema for this very step
   const schemaNonDiscriminated = pipelineDLSchema.def.left.pick({
-    dataFile: true
+    dataSource: true
   });
 
   const schemaDiscriminatedVariant = pipelineDLSchema.def.right.options.find(
@@ -33,6 +33,5 @@ export function isGoodToGo({ form }: isGoodToGoProps) {
 
   const data = form.getValues()
   const result = stepSchema.safeParse(data);
-
   return result;
 }
