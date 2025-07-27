@@ -10,7 +10,7 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "loc": "cloc --exclude-dir=node_modules --exclude-lang=JSON .",
+    "loc": "cloc --exclude-dir=node_modules .",
     "tauri": "tauri",
     "tauri-dev": "npx tauri dev",
     "tauri-build": "npx tauri build"
