@@ -38,6 +38,7 @@
     "@tauri-apps/api": "^2.7.0",
     "@tauri-apps/plugin-dialog": "^2.3.1",
     "@tauri-apps/plugin-fs": "^2.4.1",
+    "@tauri-apps/plugin-updater": "^2.9.0",
     "@uiw/codemirror-theme-gruvbox-dark": "^4.24.1",
     "@uiw/codemirror-theme-monokai": "^4.24.1",
     "@uiw/react-codemirror": "^4.24.1",

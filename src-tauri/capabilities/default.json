@@ -9,6 +9,7 @@
     "core:window:default",
     "core:webview:default",
     "dialog:default",
-    "fs:allow-write-text-file"
+    "fs:allow-write-text-file",
+    "updater:default"
   ]
 }
