@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          ref: ${{ github.sha }}
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -55,6 +56,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.sha }}
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -115,6 +117,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -140,6 +144,17 @@ jobs:
 
       - name: Install frontend dependencies
         run: npm ci
+
+      - name: Verify version consistency
+        run: |
+          PACKAGE_VERSION=$(node -pe "require('./package.json').version")
+          echo "Building version: $PACKAGE_VERSION"
+          echo "Expected version: ${{ needs.check-version.outputs.new_version }}"
+          if [ "$PACKAGE_VERSION" != "${{ needs.check-version.outputs.new_version }}" ]; then
+            echo "❌ Version mismatch! Expected ${{ needs.check-version.outputs.new_version }}, got $PACKAGE_VERSION"
+            exit 1
+          fi
+          echo "✅ Version verified: $PACKAGE_VERSION"
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
