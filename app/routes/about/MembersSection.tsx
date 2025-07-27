@@ -25,7 +25,7 @@ export function MembersSection({ className, ...delegated}: MembersSectionProps) 
       )}
       {...delegated}
     >
-      <h2>Members</h2>
+      {/* <h2>Members</h2> */}
       <div
         className={cn(
           'mt-9 flex flex-col items-stretch gap-[1rem]',
