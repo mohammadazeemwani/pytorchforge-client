@@ -49,7 +49,7 @@ export function DL({ className, ...delegated }: DLProps) {
       <StepNavigator slugToLabelMapper={sectionSlugToLabel} />
       <FormContext {...form}>
         <form 
-          action={`${apiServer.host}/generate`}
+          onSubmit={form.handleSubmit(onSubmit, onError)}
         >
           <SectionRouter
             section={sectionSlugs[currentStep - 1]}

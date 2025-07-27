@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1",
+  "version": "0.0.6",
   "name": "client",
   "description": "A low code deep learning platform",
   "repository": "github:MLPipelines/client",
@@ -10,7 +10,7 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "loc": "cloc --exclude-dir=node_modules --exclude-lang=JSON .",
+    "loc": "cloc --exclude-dir=node_modules .",
     "tauri": "tauri",
     "tauri-dev": "npx tauri dev",
     "tauri-build": "npx tauri build"
@@ -39,6 +39,7 @@
     "@uiw/codemirror-theme-gruvbox-dark": "^4.24.1",
     "@uiw/codemirror-theme-monokai": "^4.24.1",
     "@uiw/react-codemirror": "^4.24.1",
+    "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

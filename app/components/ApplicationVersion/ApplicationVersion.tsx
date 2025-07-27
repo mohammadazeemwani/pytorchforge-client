@@ -1,12 +1,21 @@
 import React from 'react';
-import { applicationVersion } from '../../constants/general'
 import { cn } from '~/utils/general';
+import { getVersion } from '@tauri-apps/api/app';
 
 type ApplicationVersionProps = {
 
 } & React.ComponentProps<'div'>
 
 function ApplicationVersion({ className}: ApplicationVersionProps) {
+  const [version, setVersion] = React.useState<string | null>(null);
+  React.useEffect(() => {
+    const updateVersion = async () => {
+      const appVersion = await getVersion();
+      setVersion(appVersion)
+    }
+    updateVersion();
+  }, [])
+
   return (
     <div 
       className={cn(
@@ -16,7 +25,7 @@ function ApplicationVersion({ className}: ApplicationVersionProps) {
       )}
     >
       <span>v</span>
-      <span>{applicationVersion}</span>
+      <span>{version}</span>
     </div>
   );
 }
