@@ -1,13 +1,51 @@
-name: "Release"
+name: "Auto Release on Version Change"
 
 on:
   push:
     branches:
-      - release
+      - main
+    paths:
+      - 'src-tauri/tauri.conf.json'
+      - 'package.json'
 
 jobs:
-  # First job: Create the release
+  # Check if this is a version bump
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      should_release: ${{ steps.check.outputs.should_release }}
+      new_version: ${{ steps.check.outputs.new_version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      
+      - name: Check for version change
+        id: check
+        run: |
+          # Get current version from tauri.conf.json
+          CURRENT_VERSION=$(node -pe "require('./src-tauri/tauri.conf.json').package.version")
+          echo "Current version: $CURRENT_VERSION"
+          
+          # Check if this tag already exists
+          if git rev-parse "v$CURRENT_VERSION" >/dev/null 2>&1; then
+            echo "Tag v$CURRENT_VERSION already exists, skipping release"
+            echo "should_release=false" >> $GITHUB_OUTPUT
+          else
+            echo "New version detected: $CURRENT_VERSION"
+            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "new_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          fi
+
+  # Create the release
   create-release:
+    needs: check-version
+    if: needs.check-version.outputs.should_release == 'true'
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -16,27 +54,23 @@ jobs:
       release_upload_url: ${{ steps.create-release.outputs.upload_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Get version
-        run: echo "PACKAGE_VERSION=$(node -pe "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
+      
       - name: Create release
         id: create-release
         uses: actions/github-script@v7
         with:
           script: |
+            const version = "${{ needs.check-version.outputs.new_version }}";
             const { data } = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: `v${process.env.PACKAGE_VERSION}`,
-              name: `Release v${process.env.PACKAGE_VERSION}`,
+              tag_name: `v${version}`,
+              name: `Release v${version}`,
               body: `## What's Changed
             
             ### Downloads
             - **Windows**: Download the \`.msi\` installer
-            - **macOS**: Download the \`.dmg\` file (Intel) or \`.app.tar.gz\` (Apple Silicon)
+            - **macOS**: Download the \`.dmg\` file (Intel) or \`.app.tar.gz\` (Apple Silicon)  
             - **Linux**: Download the \`.AppImage\` or \`.deb\` package
             
             See the assets below to download and install this version.`,
@@ -45,9 +79,10 @@ jobs:
             });
             return data.id;
 
-  # Second job: Build and upload assets
+  # Build and upload assets
   build-tauri:
-    needs: create-release
+    needs: [check-version, create-release]
+    if: needs.check-version.outputs.should_release == 'true'
     permissions:
       contents: write
     strategy:
@@ -96,20 +131,6 @@ jobs:
 
       - name: Install frontend dependencies
         run: npm ci
-
-      # Fix potential case sensitivity issues on Linux
-      - name: Fix case sensitivity issues (Linux only)
-        if: matrix.platform == 'ubuntu-22.04'
-        run: |
-          # Check if the file exists with different casing
-          find . -name "*weight*" -type f | head -10
-          find . -name "*Weight*" -type f | head -10
-          
-          # Create a symlink or copy if needed (adjust path as necessary)
-          if [ ! -f "app/routes/new-pipeline.dl._index/sections/training/Tabs/Losses/LossParamSections/CrossEntropyLoss/Weight.field" ]; then
-            echo "Looking for Weight.field file..."
-            find . -name "*Weight.field*" -type f | head -5
-          fi
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
