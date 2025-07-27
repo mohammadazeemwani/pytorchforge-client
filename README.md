@@ -5,6 +5,9 @@ This repository uses tauri as a build tool.
 # Prerequisites
 Make sure you adhere to the [prerequisites](https://v2.tauri.app/start/prerequisites/) to use tauri.
 
+# Tops
+- After v0.0.19, auto update is stable.
+> needs a little tweaking but can confirm it is working @27-07-2025[macOS Sequoia 15.5 arm64]
 
 
 # Develop 
