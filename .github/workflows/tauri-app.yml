@@ -5,7 +5,6 @@ on:
     branches:
       - main
     paths:
-      - 'src-tauri/tauri.conf.json'
       - 'package.json'
 
 jobs:
@@ -28,9 +27,9 @@ jobs:
       - name: Check for version change
         id: check
         run: |
-          # Get current version from tauri.conf.json
-          CURRENT_VERSION=$(node -pe "require('./src-tauri/tauri.conf.json').package.version")
-          echo "Current version: $CURRENT_VERSION"
+          # Get current version from package.json (source of truth)
+          CURRENT_VERSION=$(node -pe "require('./package.json').version")
+          echo "Current version from package.json: $CURRENT_VERSION"
           
           # Check if this tag already exists
           if git rev-parse "v$CURRENT_VERSION" >/dev/null 2>&1; then
@@ -42,7 +41,7 @@ jobs:
             echo "new_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
           fi
 
-  # Create the release
+  # Sync version and create release
   create-release:
     needs: check-version
     if: needs.check-version.outputs.should_release == 'true'
@@ -54,6 +53,36 @@ jobs:
       release_upload_url: ${{ steps.create-release.outputs.upload_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      
+      - name: Sync version to tauri.conf.json
+        run: |
+          PACKAGE_VERSION="${{ needs.check-version.outputs.new_version }}"
+          echo "Syncing version $PACKAGE_VERSION to tauri.conf.json"
+          
+          # Update the version in tauri.conf.json using Node.js
+          node -e "
+            const fs = require('fs');
+            const path = './src-tauri/tauri.conf.json';
+            const config = JSON.parse(fs.readFileSync(path, 'utf8'));
+            config.version = '$PACKAGE_VERSION';
+            fs.writeFileSync(path, JSON.stringify(config, null, 2) + '\n');
+            console.log('Updated tauri.conf.json version to:', config.package.version);
+          "
+      
+      - name: Commit version sync
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add src-tauri/tauri.conf.json
+          git diff --staged --quiet || git commit -m "chore: sync tauri.conf.json version to ${{ needs.check-version.outputs.new_version }}"
+          git push
       
       - name: Create release
         id: create-release
