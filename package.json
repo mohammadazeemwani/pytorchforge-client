@@ -6,7 +6,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "preversion": "[ -f ./tauri-initialize-for-build.sh ] && bash ./tauri-initialize-for-build.sh",
+    "preversion": "node update-tauri-version.js",
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
