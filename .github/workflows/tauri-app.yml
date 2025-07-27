@@ -73,7 +73,7 @@ jobs:
             const config = JSON.parse(fs.readFileSync(path, 'utf8'));
             config.version = '$PACKAGE_VERSION';
             fs.writeFileSync(path, JSON.stringify(config, null, 2) + '\n');
-            console.log('Updated tauri.conf.json version to:', config.package.version);
+            console.log('Updated tauri.conf.json version to:', config.version);
           "
       
       - name: Commit version sync
