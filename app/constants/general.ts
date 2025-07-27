@@ -11,8 +11,6 @@ export const themeTypeToName: Record<Theme, string> = {
   dark: "coffee",
 }
 
-export const applicationVersion = "0.0.2"
-
 export const formShakeErrorDuration = 0.4
 export const formVibrateErrorDuration = [100, 50, 100]
 
