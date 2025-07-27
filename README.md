@@ -20,6 +20,11 @@ Now run the project locally
 ```bash
 npx tauri dev
 ```
+OR 
+```bash
+npm run tauri-dev
+```
+
 
 # Use client
 If you are an API developer or want to run the client,

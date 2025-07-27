@@ -11,7 +11,9 @@
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "loc": "cloc --exclude-dir=node_modules --exclude-lang=JSON .",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "tauri-dev": "npx tauri dev",
+    "tauri-build": "npx tauri build"
   },
   "author": {
     "name": "MohammadAzeem",
