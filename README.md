@@ -1,9 +1,14 @@
 # ML Pipelines Public Client
-This repository will serve as the main public client that will be accessible. All over the globe.
-> Live: https://pipeline-ui.pages.dev/
-> Old deployment: https://26b9963d.pipeline-ui.pages.dev/
+This repository will serve as the main public client that will be accessible. All over the globe.  
+This repository uses tauri as a build tool.
 
-# Run locally 
+# Prerequisites
+Make sure you adhere to the [prerequisites](https://v2.tauri.app/start/prerequisites/) to use tauri.
+
+
+
+# Develop 
+If you just want to use the client, head over to [Use client](#use-client)
 To run the project locally, follow below commands: 
 
 First, we have to do `npm install` to install the dependencies
@@ -13,5 +18,9 @@ npm install
 
 Now run the project locally
 ```bash
-npm run dev
+npx tauri dev
 ```
+
+# Use client
+If you are an API developer or want to run the client,
+use the pre built binaries in the realeases.

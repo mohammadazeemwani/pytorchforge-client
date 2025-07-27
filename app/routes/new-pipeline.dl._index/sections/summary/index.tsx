@@ -14,7 +14,8 @@ export function SummarySection({ className, form, ...delegated}: SummarySectionP
   const finalConfig = React.useMemo(() => {
     return structurizePipelineDLFormData(form.getValues())
   }, [form])
-  
+  console.log(finalConfig)
+
   // At this point, we know form has no errors
   React.useEffect(() => {
     form.clearErrors()

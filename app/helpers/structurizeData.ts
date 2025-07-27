@@ -22,14 +22,18 @@ export function structurizePipelineDLFormData(data: DeepPartial<PipelineDL>) {
     })),
     model: {
       use_pretrained: data.usePreTrained,
-      pretrained: {
-        name: data.pretrainedModel,
-        params: data.pretrainedModelsData![data.pretrainedModel!]
-      },
-      layers: data.customModels!.map(layer => ({
-        type: layer!.name,
-        params: layer!.props
-      }))
+      pretrained: data.usePreTrained 
+        ? {
+          name: data.pretrainedModel,
+          params: data.pretrainedModelsData![data.pretrainedModel!]
+        }
+        : undefined,
+      layers: !data.usePreTrained 
+        ? data.customModels!.map(layer => ({
+          type: layer!.name,
+          params: layer!.props
+        })) 
+        : undefined,
     },
     training: {
       loss: {
