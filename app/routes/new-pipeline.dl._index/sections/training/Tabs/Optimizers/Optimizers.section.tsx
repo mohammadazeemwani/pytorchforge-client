@@ -38,7 +38,6 @@ export function OptimizersSection({
 
   const resetSection = React.useCallback(() => {
     const resetFieldKey = `optimizersData.${selectedOptimizer?.label}`
-    console.log(resetFieldKey)
     form.resetField(resetFieldKey as any)
   }, [selectedOptimizer, form])
 

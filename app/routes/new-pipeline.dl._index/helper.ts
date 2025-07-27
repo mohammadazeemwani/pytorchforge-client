@@ -4,15 +4,12 @@ import axios from 'axios'
 import { apiServer } from "~/constants/general";
 import { structurizePipelineDLFormData } from "~/helpers/structurizeData";
 
-export const onSubmit: SubmitHandler<PipelineDL> = async (values) => {
-  console.log(
-    'Form submitted and validated values are',
-    values
-  );
+export const submitToServer = async (values: PipelineDL) => {
   const serverCompliantConfig = structurizePipelineDLFormData(values);
   const data = await axios.post(`${apiServer.host}/generate`, serverCompliantConfig)
-
-  console.log(data)
+  return {
+    pyCode: data.data.generated_code as string
+  }
 }
 
 export const onError: SubmitErrorHandler<PipelineDL> = async (errors) => {

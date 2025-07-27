@@ -40,7 +40,6 @@ export function LRSchedularsSection({
 
   const resetSection = React.useCallback(() => {
     const resetFieldKey = `lrSchedularsData.${selectedLRSchedular?.label}`
-    console.log(resetFieldKey)
     form.resetField(resetFieldKey as any)
   }, [selectedLRSchedular, form])
 

@@ -37,7 +37,6 @@ export function LossesSection({ form, className, ...delegated}: LossesSectionPro
 
   const resetSection = React.useCallback(() => {
     const resetFieldKey = `lossesData.${selectedLoss?.label}`
-    console.log(resetFieldKey)
     form.resetField(resetFieldKey as any)
   }, [selectedLoss, form])
 

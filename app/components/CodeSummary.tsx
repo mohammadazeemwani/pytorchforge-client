@@ -1,19 +1,28 @@
 import React from "react";
 import { cn } from "~/utils/general";
-import { CopyOverlay } from "./CopyContent";
+import { CopyContent, CopyOverlay } from "./CopyContent";
+import { DownloadContent, DownloadOverlay } from "./DownloadContent";
 
 type CodeSummaryProps = {
   /** Label of the accordian */
   label?: string,
+  showCopyButton?: boolean,
+
+  /** when passed, download button will be shown */
+  downloadFileName?: string
   code: string
-} & React.ComponentProps<'details'>
+} &  React.ComponentProps<'details'>
 
 export function CodeSummary({ 
   className,
-  label="Summary", 
+  label, 
+  showCopyButton=true,
+  downloadFileName,
   code,
   ...delegated
 }: CodeSummaryProps) {
+
+  if (label)
   return (
     <details
       aria-description=""
@@ -30,13 +39,46 @@ export function CodeSummary({
           >
           {code}
         </pre>
-        <CopyOverlay 
-          content={code} 
-          position="top-right"
-          className="absolute inset-0 pointer-events-none"
-          buttonClassName="pointer-events-auto"
-        />
+        <div className="absolute top-2 right-2 flex gap-1">
+          {showCopyButton && (
+            <CopyContent content={code} />
+          )}
+          {downloadFileName && (
+            <DownloadContent 
+              content={code}
+              filename={downloadFileName}
+            />
+          )}
+        </div>
       </div>
     </details>
+  )
+
+  if (!label) 
+    
+  return (
+    <div 
+      className={cn(
+        'relative',
+        className
+      )}
+    >
+      <pre 
+        className="bg-base-200 text-base-content"
+        >
+        {code}
+      </pre>
+        <div className="absolute top-2 right-2 flex gap-1">
+          {showCopyButton && (
+            <CopyContent content={code} />
+          )}
+          {downloadFileName && (
+            <DownloadContent 
+              content={code}
+              filename={downloadFileName}
+            />
+          )}
+        </div>
+    </div>
   )
 }
