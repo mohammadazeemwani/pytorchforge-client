@@ -30,8 +30,7 @@ export const members: Member[] = [
     altText: 'Image of Suhaib, a maintainer of MLPipelines',
     name: 'Suhaib',
     description: [
-      'I explored various machine learning and deep learning models, focusing on understanding their architectures, functions, and key parameters. I worked extensively with PyTorch, analyzing how its models could be effectively used in practical applications.',
-      'Feel free to <a class="link" href="https://www.linkedin.com/in/suhaib-ahmad-759808223" target="__blank">reach-out</a>.'
+      'I explored various machine learning and deep learning models, focusing on understanding their architectures, functions, and key parameters. I worked extensively with PyTorch, analyzing how its models could be effectively used in practical applications. I worked on inference section and also the templates that get generated. Feel free to <a class="link" href="https://www.linkedin.com/in/suhaib-ahmad-759808223" target="__blank">reach-out</a>',
     ]
   },
 ]
